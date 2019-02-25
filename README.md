@@ -1,5 +1,7 @@
 # webcontracts
 
+client side w/ front end to demo smart contracts
+
 ## Project setup
 ```
 npm install
