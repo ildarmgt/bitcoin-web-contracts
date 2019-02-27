@@ -1,12 +1,13 @@
 <template>
-  <div id="app">
-    placeholder
+  <div>
+    <router-view></router-view>
+    app.vue
   </div>
 </template>
 
 <script>
   export default {
-    name: 'app'
+    name: 'App'
   }
 </script>
 
