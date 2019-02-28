@@ -1,0 +1,54 @@
+* {
+  /* only so I can see divs */
+  /* border: 1px solid red; */
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url('../fonts/Montserrat/Montserrat-Light.ttf');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat";
+  text-align: center;
+  font-size: 2vh;
+}
+
+.button {
+  display: inline-block;
+
+  padding: 1vh 2vh;
+  margin: 1vh 1vh;
+  font-size: 2vh;
+  border-radius: 2vh;
+
+  background-color: rgba(17, 17, 51, 0.726);
+  color: white;
+
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: rgba(17, 17, 51, 1);
+}
+
+.title {
+  display: inline-block;
+  font-size: 5vh;
+  color:rgb(17, 17, 51);
+  margin: 1vh 1vh;
+}
+
+.app {
+  display: inline-block;
+}
+
+.warning {
+  color:rgb(149, 149, 167);
+}
+
+.view {
+  margin: 2vh 0;
+}
