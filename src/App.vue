@@ -27,13 +27,19 @@
 </script>
 
 <style>
+  .app {
+    display: inline-block;
+    width: 85%;
+  }
+
   .title {
     display: inline-block;
     /* color:rgb(17, 17, 51); */
     color:rgb(255, 255, 255);
     background-color: rgb(17, 17, 51);
-    margin: 1vmin 1vmin;
-    padding: 1.5vmin 10vw;
+    margin: 1vmin 0;
+    padding: 1.5vmin 0;
+    width: 100%;
     text-decoration: none;
   }
 
@@ -43,8 +49,8 @@
   }
 
   .view {
-  margin-top: 2vmin;
-  margin-bottom: 2vmin;
+    margin-top: 2vmin;
+    margin-bottom: 2vmin;
   }
 
 </style>

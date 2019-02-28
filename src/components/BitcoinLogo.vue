@@ -15,14 +15,13 @@
     font-weight: 700;
 
     display: inline-block;
-    /* margin: 1vh; */
 
     width: 5vmin;
     height: 5vmin;
     border-radius: 5vmin;
     font-size: 5vmin;
-    line-height: 5vmin;
-    padding: 0.3vmax 0.3vmax 0.2vmax 0.3vmax;
+    line-height: 5.3vmin;
+    padding: 0.7vmin;
     text-align: center;
     vertical-align: middle;
 

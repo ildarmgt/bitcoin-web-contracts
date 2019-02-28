@@ -1,6 +1,6 @@
 <template>
   <div>
-    PuzzleDelay_Intro.vue
+    (TODO)
 
   </div>
 </template>

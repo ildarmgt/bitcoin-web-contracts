@@ -4,7 +4,7 @@
 }
 
 @font-face {
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   src: url('../fonts/Montserrat/Montserrat-Light.ttf');
 }
 
@@ -13,11 +13,28 @@ body {
   padding: 0;
   font-family: 'Montserrat';
   text-align: center;
-  font-size: 3vmin;
+  font-size: 2.5vmin;
 }
 
 .title {
   font-size: 5vmin;
+}
+
+h1 {
+  display: inline-block;
+
+  padding: 1vmin 2vmin;
+  margin: 1vmin 1vmin;
+  font-size: 3vmin;
+  background-color: rgb(17, 17, 51);
+
+  /* border-radius: 3vmin; */
+  /* background-color:orange; */
+  /* background-color: rgb(17, 17, 51); */
+  color: white;
+  margin-bottom: 3vmin;
+  text-decoration: none;
+  font-weight: normal;
 }
 
 .text_light {
@@ -37,21 +54,34 @@ div {
   margin: 1vmin 1vmin;
   font-size: 3vmin;
   border-radius: 3vmin;
-
-  background-color: rgba(17, 17, 51, 0.726);
+  opacity: 0.726;
+  background-color: rgb(17, 17, 51);
   color: white;
 
   text-decoration: none;
 }
 
 .button:hover {
-  background-color: rgba(17, 17, 51, 1);
+  opacity: 1;
 }
 
 .button:active {
   transform: translateY(0.2vmin);
 }
 
-.app {
-  display: inline-block;
+li {
+  margin-bottom: 2vmin;
+  line-height: 3.5vmin;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: red;
 }
