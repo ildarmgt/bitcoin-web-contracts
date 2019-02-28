@@ -34,11 +34,18 @@ body {
   background-color: rgba(17, 17, 51, 1);
 }
 
+.button:active {
+  transform: translateY(0.2vh);
+}
+
 .title {
   display: inline-block;
-  font-size: 5vh;
-  color:rgb(17, 17, 51);
+  font-size: 4vh;
+  /* color:rgb(17, 17, 51); */
+  color:rgb(255, 255, 255);
+  background-color: rgb(17, 17, 51);
   margin: 1vh 1vh;
+  padding: 1.5vh 10vw;
 }
 
 .app {
@@ -47,8 +54,14 @@ body {
 
 .warning {
   color:rgb(149, 149, 167);
+  font-size: 1.5vh;
 }
 
 .view {
   margin: 2vh 0;
+}
+
+.clean {
+  text-decoration: none;
+  color:rgb(149, 149, 167);
 }

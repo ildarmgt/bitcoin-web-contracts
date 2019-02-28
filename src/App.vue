@@ -1,8 +1,7 @@
 <template>
   <div class="app">
     <div class="title">
-      Bitcoin Smart Contracts
-
+      <span class="gold">Bitcoin</span> Smart Contracts
     </div>
 
     <div class="view">
@@ -11,6 +10,13 @@
 
     <div class="warning">
       Warning: Demonstration only. Not reviewed for public use.
+    </div>
+
+    <div class="footer">
+      <a href="https://github.com/ildarmgt/bitcoin-web-contracts" class="clean">
+        Source Code
+      </a>
+      <div class="clean">ildarmgt@gmail.com</div>
     </div>
 
   </div>
@@ -22,6 +28,12 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+  .footer {
+    margin: 3vh 0 0 0;
+    font-size: 1.5vh;
+  }
+  .gold {
+    color:rgb(255, 218, 51);
+  }
 </style>
