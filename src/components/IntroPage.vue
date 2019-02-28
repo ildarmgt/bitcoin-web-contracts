@@ -1,9 +1,9 @@
 <template>
   <div>
     <div>
-      Bitcoin Decentralized Applications (dApps)
+      Decentralized Applications (dApps):
     </div>
-    <div>
+    <div class="view">
       <DappList></DappList>
     </div>
   </div>

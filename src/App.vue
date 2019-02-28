@@ -1,15 +1,16 @@
 <template>
   <div class="app">
-    <div class="">
-      <h2>Bitcoin Smart Contracts Demonstration</h2>
+    <div class="title">
+      Bitcoin Smart Contracts
+
     </div>
 
-    <div>
+    <div class="view">
       <router-view></router-view>
     </div>
 
-    <div>
-      (Demonstration only. Do not use.)
+    <div class="warning">
+      Warning: Demonstration only. Not reviewed for public use.
     </div>
 
   </div>

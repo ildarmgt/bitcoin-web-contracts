@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div>
-      <router-link to="/inheritance">Inheritance Contract</router-link>
-    </div>
-    <div>
-      <router-link to="/puzzledelay">Puzzle Delay</router-link>
-    </div>
+
+      <router-link to="/inheritance" class="button">Inheritance dApp</router-link>
+
+
+      <router-link to="/puzzledelay" class="button">Puzzle Delay dApp</router-link>
+
   </div>
 </template>
 
