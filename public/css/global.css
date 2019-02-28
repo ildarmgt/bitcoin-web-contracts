@@ -1,0 +1,15 @@
+* {
+  /* only so I can see divs */
+  border: 1px solid red;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url('../fonts/Montserrat/Montserrat-Light.ttf');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat";
+}

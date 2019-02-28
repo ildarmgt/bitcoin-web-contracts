@@ -1,8 +1,11 @@
 <template>
   <div>
-    dapplist.vue
-    <div>Inheritance Contract</div>
-    <div>Puzzle Unlock</div>
+    <div>
+      <router-link to="/inheritance">Inheritance Contract</router-link>
+    </div>
+    <div>
+      <router-link to="/puzzledelay">Puzzle Delay</router-link>
+    </div>
   </div>
 </template>
 

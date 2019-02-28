@@ -5,13 +5,18 @@ import App from './App.vue';
 
 // components
 import IntroPage from './components/IntroPage';
+import Inheritance_Intro from './components/inheritance/Inheritance_Intro';
+import PuzzleDelay_Intro from './components/puzzledelay/PuzzleDelay_Intro';
+
 
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
-  mode: 'history', // not hash router
+  // mode: 'history', // needs to be off for offline routing
   routes: [
-    { path: '/', component: IntroPage }
+    { path: '/', component: IntroPage },
+    { path: '/inheritance', component: Inheritance_Intro },
+    { path: '/puzzledelay', component: PuzzleDelay_Intro }
   ]
 });
 

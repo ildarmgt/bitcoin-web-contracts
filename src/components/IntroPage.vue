@@ -1,14 +1,11 @@
 <template>
   <div>
-    intropage.vue
     <div>
-      Bitcoin Smart Contracts
+      Bitcoin Decentralized Applications (dApps)
     </div>
     <div>
-      Demonstration Decentralized Applications (dApps)
       <DappList></DappList>
     </div>
-    (Do not use)
   </div>
 </template>
 
