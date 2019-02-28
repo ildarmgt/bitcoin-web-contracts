@@ -38,6 +38,16 @@ body {
   transform: translateY(0.2vh);
 }
 
+.title {
+  display: inline-block;
+  font-size: 4vh;
+  /* color:rgb(17, 17, 51); */
+  color:rgb(255, 255, 255);
+  background-color: rgb(17, 17, 51);
+  margin: 1vh 1vh;
+  padding: 1.5vh 10vw;
+}
+
 .app {
   display: inline-block;
 }

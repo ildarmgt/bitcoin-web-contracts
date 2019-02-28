@@ -14,7 +14,7 @@
 
     <div class="footer">
       <a href="https://github.com/ildarmgt/bitcoin-web-contracts" class="clean">
-        {{'< '}}Source Code{{' >'}}
+        {{"< "}}Source Code{{' >'}}
       </a>
       <div class="clean">ildarmgt@gmail.com</div>
     </div>
