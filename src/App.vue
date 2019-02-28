@@ -1,54 +1,50 @@
 <template>
   <div class="app">
+
     <router-link to="/" class="title">
-      <span class="gold">Bitcoin</span> Smart Contracts
+      <span class="bitcoin">Bitcoin</span> Smart Contracts
     </router-link>
 
     <div class="view">
       <router-view></router-view>
     </div>
 
-    <div class="warning">
-      Warning: Demonstration only. Not reviewed for public use.
-    </div>
+    <Footer />
 
-    <div class="footer">
-      <a href="https://github.com/ildarmgt/bitcoin-web-contracts" class="clean">
-        &lt; Source Code &gt;
-      </a>
-      <div class="clean">ildarmgt@gmail.com</div>
-    </div>
 
   </div>
 </template>
 
 <script>
+  import Footer from './components/Footer';
+
   export default {
-    name: 'App'
+    name: 'App',
+    components: {
+      Footer
+    }
   }
 </script>
 
-<style scoped>
+<style>
   .title {
     display: inline-block;
-    font-size: 4vh;
     /* color:rgb(17, 17, 51); */
     color:rgb(255, 255, 255);
     background-color: rgb(17, 17, 51);
-    margin: 1vh 1vh;
-    padding: 1.5vh 10vw;
+    margin: 1vmin 1vmin;
+    padding: 1.5vmin 10vw;
     text-decoration: none;
   }
 
-  .footer {
-    margin: 3vh 0 0 0;
-    font-size: 1.5vh;
-  }
-  .gold {
-    color:rgb(255, 218, 51);
+  .bitcoin {
+    /* color:rgb(255, 218, 51); */
+    color:orange;
   }
 
-  div {
-    cursor: default;
+  .view {
+  margin-top: 2vmin;
+  margin-bottom: 2vmin;
   }
+
 </style>

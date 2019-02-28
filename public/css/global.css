@@ -11,18 +11,32 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   text-align: center;
-  font-size: 2vh;
+  font-size: 3vmin;
+}
+
+.title {
+  font-size: 5vmin;
+}
+
+.text_light {
+  text-decoration: none;
+  color:rgb(149, 149, 167);
+  font-size: 2vmin;
+}
+
+div {
+  cursor: default;
 }
 
 .button {
   display: inline-block;
 
-  padding: 1vh 2vh;
-  margin: 1vh 1vh;
-  font-size: 2vh;
-  border-radius: 2vh;
+  padding: 1vmin 2vmin;
+  margin: 1vmin 1vmin;
+  font-size: 3vmin;
+  border-radius: 3vmin;
 
   background-color: rgba(17, 17, 51, 0.726);
   color: white;
@@ -35,33 +49,9 @@ body {
 }
 
 .button:active {
-  transform: translateY(0.2vh);
-}
-
-.title {
-  display: inline-block;
-  font-size: 4vh;
-  /* color:rgb(17, 17, 51); */
-  color:rgb(255, 255, 255);
-  background-color: rgb(17, 17, 51);
-  margin: 1vh 1vh;
-  padding: 1.5vh 10vw;
+  transform: translateY(0.2vmin);
 }
 
 .app {
   display: inline-block;
-}
-
-.warning {
-  color:rgb(149, 149, 167);
-  font-size: 1.5vh;
-}
-
-.view {
-  margin: 2vh 0;
-}
-
-.clean {
-  text-decoration: none;
-  color:rgb(149, 149, 167);
 }
