@@ -8,7 +8,7 @@
 <script>
   export default {
     name: 'PuzzleDelay'
-  }
+  };
 </script>
 
 <style>

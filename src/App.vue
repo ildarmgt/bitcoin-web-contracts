@@ -18,7 +18,7 @@
       Header,
       Footer
     }
-  }
+  };
 </script>
 
 <style>

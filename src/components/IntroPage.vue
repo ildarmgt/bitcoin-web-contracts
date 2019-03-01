@@ -17,7 +17,7 @@
     components: {
       DappList
     }
-  }
+  };
 </script>
 
 <style>

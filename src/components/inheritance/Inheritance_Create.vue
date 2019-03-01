@@ -23,7 +23,7 @@
 <script>
   export default {
     name: 'Inheritance_Create'
-  }
+  };
 </script>
 
 <style scoped>

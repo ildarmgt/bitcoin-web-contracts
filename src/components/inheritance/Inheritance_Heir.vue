@@ -9,7 +9,7 @@
 <script>
   export default {
     name: 'Inheritance_Heir'
-  }
+  };
 </script>
 
 <style>

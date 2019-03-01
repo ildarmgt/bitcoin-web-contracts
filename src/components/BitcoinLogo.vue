@@ -5,7 +5,7 @@
 <script>
   export default {
     name: 'BitcoinLogo'
-  }
+  };
 </script>
 
 <style scoped>

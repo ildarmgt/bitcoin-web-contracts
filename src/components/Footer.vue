@@ -28,7 +28,7 @@
     components: {
       BitcoinLogo
     }
-  }
+  };
 </script>
 
 <style>
