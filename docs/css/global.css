@@ -27,10 +27,7 @@ h1 {
   margin: 1vmin 1vmin;
   font-size: 3vmin;
   background-color: rgb(17, 17, 51);
-
-  /* border-radius: 3vmin; */
-  /* background-color:orange; */
-  /* background-color: rgb(17, 17, 51); */
+  opacity: 0.8;
   color: white;
   margin-bottom: 3vmin;
   text-decoration: none;
@@ -54,24 +51,47 @@ div {
   margin: 1vmin 1vmin;
   font-size: 3vmin;
   border-radius: 3vmin;
-  opacity: 0.726;
+  opacity: 0.65;
   background-color: rgb(17, 17, 51);
   color: white;
 
   text-decoration: none;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .button:hover {
   opacity: 1;
+  cursor: pointer;
 }
 
 .button:active {
   transform: translateY(0.2vmin);
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 0;
+  list-style-position: outside;
+}
+
 li {
   margin-bottom: 2vmin;
   line-height: 3.5vmin;
+  text-indent: -2.5vmin;
+  padding-left: 2.5vmin;
+}
+
+ul li::before {
+  color: rgb(17, 17, 51);
+  color: rgba(17, 17, 51, 0.7);
+  content: "\25CF";
+  position: relative;
+  font-size: 2vmin;
+  left: -1vmin;
 }
 
 .orange {
@@ -84,4 +104,11 @@ li {
 
 .green {
   background-color: red;
+}
+
+.noselect {
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
 }
