@@ -1,5 +1,5 @@
 <template>
-  <a href="https://bitcoin.org/" class="logo">₿</a>
+  <a href="https://bitcoin.org/" class="logo noselect">₿</a>
 </template>
 
 <script>
@@ -30,11 +30,6 @@
     /* opacity: 0.6; */
 
     transform: rotate(20deg);
-
-    -webkit-user-select: none;
-    -moz-user-select: -moz-none;
-    -ms-user-select: none;
-    user-select: none;
 
     text-decoration: none;
   }

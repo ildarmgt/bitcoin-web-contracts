@@ -1,26 +1,21 @@
 <template>
   <div class="app">
-
-    <router-link to="/" class="title">
-      <span class="bitcoin">Bitcoin</span> Smart Contracts
-    </router-link>
-
+    <Header />
     <div class="view">
-      <router-view></router-view>
+      <router-view />
     </div>
-
     <Footer />
-
-
   </div>
 </template>
 
 <script>
   import Footer from './components/Footer';
+  import Header from './components/Header';
 
   export default {
     name: 'App',
     components: {
+      Header,
       Footer
     }
   }
@@ -32,25 +27,8 @@
     width: 85%;
   }
 
-  .title {
-    display: inline-block;
-    /* color:rgb(17, 17, 51); */
-    color:rgb(255, 255, 255);
-    background-color: rgb(17, 17, 51);
-    margin: 1vmin 0;
-    padding: 1.5vmin 0;
-    width: 100%;
-    text-decoration: none;
-  }
-
-  .bitcoin {
-    /* color:rgb(255, 218, 51); */
-    color:orange;
-  }
-
   .view {
     margin-top: 2vmin;
     margin-bottom: 2vmin;
   }
-
 </style>

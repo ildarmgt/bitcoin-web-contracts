@@ -1,6 +1,8 @@
 # webcontracts
 
-client side w/ front end to demo smart contracts
+Client side w/ front end smart contracts demo
+
+Build (in docs/) can be used offline & air grapped computers
 
 ## Project setup
 ```

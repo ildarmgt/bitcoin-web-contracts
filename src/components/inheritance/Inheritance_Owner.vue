@@ -1,13 +1,12 @@
 <template>
-  <div>
-    (TODO)
-
+  <div class="inheritance_owner">
+    owner stuff
   </div>
 </template>
 
 <script>
   export default {
-    name: 'PuzzleDelay_Intro'
+    name: 'Inheritance_Owner'
   }
 </script>
 

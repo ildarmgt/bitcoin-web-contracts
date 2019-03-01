@@ -1,19 +1,22 @@
 <template>
   <div class="footer">
 
-    <div class="footer_warning text_light">
+    <div class="footer__warning text_light">
       Warning: Demonstration only. Not reviewed for public use.
     </div>
 
-    <a class="footer_source text_light" href="https://github.com/ildarmgt/bitcoin-web-contracts">
+    <a class="footer__source text_light" href="https://github.com/ildarmgt/bitcoin-web-contracts">
       &lt; Source Code &gt;
     </a>
 
-    <div class="footer_email text_light">
+    <div class="footer__email text_light">
       ildarmgt@gmail.com
     </div>
+
     <br>
+
     <BitcoinLogo />
+
   </div>
 </template>
 
@@ -34,17 +37,17 @@
     vertical-align: middle;
   }
 
-  .footer_warning {
+  .footer__warning {
     display: block;
     margin: 0 1vmin;
   }
 
-  .footer_source {
+  .footer__source {
     display: inline-block;
     margin: 1vmin;
   }
 
-  .footer_email {
+  .footer__email {
     display: inline-block;
     margin: 1vmin;
   }
