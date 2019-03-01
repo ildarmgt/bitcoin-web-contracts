@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      Decentralized Applications (dApps):
+      My Decentralized Applications (dApps):
     </div>
     <div class="view">
       <DappList></DappList>
