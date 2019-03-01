@@ -25,9 +25,9 @@
       :meaningSelected="lastSelection"
     />
 
-    <Inheritance_Create v-if="showCreate" />
-    <Inheritance_Owner v-if="showOwner" />
-    <Inheritance_Heir v-if="showHeir" />
+    <Inheritance_Create v-if="isSelected('create')" />
+    <Inheritance_Owner v-if="isSelected('owner')" />
+    <Inheritance_Heir v-if="isSelected('heir')" />
 
   </div>
 </template>
@@ -56,14 +56,8 @@
       }
     },
     computed: {
-      showCreate () {
-        return this.lastSelection == 'create'
-      },
-      showOwner () {
-        return this.lastSelection == 'owner'
-      },
-      showHeir () {
-        return this.lastSelection == 'heir'
+      isSelected (value) {
+        return this.lastSelection == value;
       }
     }
   };
