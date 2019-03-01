@@ -39,7 +39,6 @@
       // on click, if not already selected, emit it selected,
       // otherwise emit no selection
       onButtonClick () {
-        console.log(this.meaning + ' clicked')
         if (this.meaning == this.meaningSelected) {
           this.$emit('selectionChoice', '');
         } else {

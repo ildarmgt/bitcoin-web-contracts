@@ -52,7 +52,6 @@
     }),
     methods: {
       onButtonSelect (value) {
-        console.log('selection:', value);
         this.lastSelection = value;
       }
     },
