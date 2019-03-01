@@ -2,7 +2,7 @@
   <div>
     <h1>Inheritance Contract dApp</h1>
     <div class="description">
-      An inactivity-dependent digital will enforced by the Bitcoin network:
+      A digital will based on inactivity time and enforced by the Bitcoin network:
       <ul>
         <li>
           The key of party <span class="key_blue">"Owner"</span> can access the funds at any time.
