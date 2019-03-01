@@ -1,6 +1,6 @@
 <template>
   <router-link to="/" class="title">
-    My <span class="title__bitcoin">Bitcoin</span> Smart Contracts
+    <span class="title__bitcoin">Bitcoin</span> Smart Contracts
   </router-link>
 </template>
 

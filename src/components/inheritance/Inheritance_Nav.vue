@@ -1,40 +1,70 @@
 <template>
   <div class="inheritance_nav">
-    <div
-      @click="onCreateSelect"
-      class="button orange"
-    >Create this contract</div>
-    <div
-      @click="onOwnerSpendSelect"
-      class="button blue"
-    >Spend as Owner</div>
-    <div
-      @click="onHeirSpendSelect"
-      class="button green"
-    >Spend as Heir</div>
+
+    <Inheritance_Button
+      @selectionChoice="onButtonSelect"
+      :color="'orange'"
+      :meaning="'create'"
+      :buttonText="'Create this contract'"
+      :meaningSelected="lastSelection"
+    />
+
+    <Inheritance_Button
+      :color="'blue'"
+      :meaning="'owner'"
+      :buttonText="'Spend as Owner'"
+      @selectionChoice="onButtonSelect"
+      :meaningSelected="lastSelection"
+    />
+
+    <Inheritance_Button
+      :color="'green'"
+      :meaning="'heir'"
+      :buttonText="'Spend as Heir'"
+      @selectionChoice="onButtonSelect"
+      :meaningSelected="lastSelection"
+    />
+
+    <Inheritance_Create v-if="showCreate" />
+    <Inheritance_Owner v-if="showOwner" />
+    <Inheritance_Heir v-if="showHeir" />
+
   </div>
 </template>
 
 <script>
+  import Inheritance_Button from './Inheritance_Button';
+
+  import Inheritance_Create from './Inheritance_Create';
+  import Inheritance_Owner from './Inheritance_Owner';
+  import Inheritance_Heir from './Inheritance_Heir';
+
   export default {
     name: 'Inheritance_Nav',
-    data () {
-      return {
-        lastSelected: null
+    components: {
+      Inheritance_Button,
+      Inheritance_Create,
+      Inheritance_Owner,
+      Inheritance_Heir
+    },
+    data: () => ({
+      lastSelection: ''
+    }),
+    methods: {
+      onButtonSelect (value) {
+        console.log('selection:', value);
+        this.lastSelection = value;
       }
     },
-    methods: {
-      onCreateSelect () {
-        this.lastSelected = 'create';
-        this.$emit('selected', this.lastSelected);
+    computed: {
+      showCreate () {
+        return this.lastSelection == 'create'
       },
-      onOwnerSpendSelect () {
-        this.lastSelected = 'owner';
-        this.$emit('selected', this.lastSelected)
+      showOwner () {
+        return this.lastSelection == 'owner'
       },
-      onHeirSpendSelect () {
-        this.lastSelected = 'heir';
-        this.$emit('selected', this.lastSelected)
+      showHeir () {
+        return this.lastSelection == 'heir'
       }
     }
   };

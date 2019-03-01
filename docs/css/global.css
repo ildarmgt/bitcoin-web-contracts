@@ -8,6 +8,10 @@
   src: url('../fonts/Montserrat/Montserrat-Light.ttf');
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -41,17 +45,17 @@ h1 {
   padding: 1vmin 2vmin;
 
   font-size: 3vmin;
+  font-weight: 700;
 
-  background-color: rgb(17, 17, 51);
-  color: white;
+  /* background-color: rgb(17, 17, 51);
+  color: white; */
 
-  /* background-color: none;
-  color: rgb(17, 17, 51); */
+  background-color: none;
+  color: rgb(17, 17, 51);
 
   /* opacity: 0.8; */
   margin-bottom: 3vmin;
   text-decoration: none;
-  font-weight: normal;
 }
 
 .text_light {
@@ -81,7 +85,7 @@ div {
   -ms-user-select: none;
   user-select: none;
 
-  transition: opacity 0.3s;
+  transition: opacity 0.1s;
 }
 
 .button:hover {

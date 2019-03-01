@@ -2,7 +2,7 @@
 
 Client side w/ front end smart contracts demo
 
-Build (in docs/) can be used offline & air grapped computers
+Build (in `./docs/`) can be used offline & on air grapped computers
 
 ## Project setup
 ```

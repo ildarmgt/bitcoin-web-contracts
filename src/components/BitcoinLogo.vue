@@ -27,7 +27,7 @@
 
     background: orange;
     color: white;
-    /* opacity: 0.6; */
+    opacity: 0.6;
 
     transform: rotate(20deg);
 
