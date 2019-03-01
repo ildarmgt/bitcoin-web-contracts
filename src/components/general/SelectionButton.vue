@@ -8,7 +8,7 @@
 
 <script>
   export default {
-    name: 'Inheritance_Button',
+    name: 'SelectionButton',
     props: {
       // background color of the button
       color: {default: ''},

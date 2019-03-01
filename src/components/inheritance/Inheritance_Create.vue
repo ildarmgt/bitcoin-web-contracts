@@ -15,37 +15,6 @@
       or
       <div class="button">Use Known</div>
 
-
-
-      <div class="step">
-        <div class="step_title">Step 2</div>
-        <div class = "step_info">Heir Private Key (WIF):</div>
-      </div>
-
-      <div class="button">Generate New</div>
-      or
-      <div class="button">Use Known</div>
-
-      <div class="step">
-        <div class="step_title">Step 3</div>
-        <div class = "step_info">How long should the delay be before heir has access:</div>
-      </div>
-
-      <div class="button">1 Year</div>
-      or
-      <div class="button">1 Month</div>
-
-      <div class="step">
-        <div class="step_title">Step 4</div>
-        <div class = "step_info">Back up this data or file. Losing this will forever lock you out.</div>
-      </div>
-
-      <div class="step">
-        <div class="step_title">Step 5</div>
-        <div class = "step_info">Fund this contract</div>
-      </div>
-
-
     </div>
 
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="inheritance_nav">
 
-    <Inheritance_Button
+    <SelectionButton
       @selectionChoice="onButtonSelect"
       :color="'orange'"
       :meaning="'create'"
@@ -9,7 +9,7 @@
       :meaningSelected="lastSelection"
     />
 
-    <Inheritance_Button
+    <SelectionButton
       :color="'blue'"
       :meaning="'owner'"
       :buttonText="'Spend as Owner'"
@@ -17,7 +17,7 @@
       :meaningSelected="lastSelection"
     />
 
-    <Inheritance_Button
+    <SelectionButton
       :color="'green'"
       :meaning="'heir'"
       :buttonText="'Spend as Heir'"
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import Inheritance_Button from './Inheritance_Button';
+  import SelectionButton from './../general/SelectionButton';
 
   import Inheritance_Create from './Inheritance_Create';
   import Inheritance_Owner from './Inheritance_Owner';
@@ -42,7 +42,7 @@
   export default {
     name: 'Inheritance_Nav',
     components: {
-      Inheritance_Button,
+      SelectionButton,
       Inheritance_Create,
       Inheritance_Owner,
       Inheritance_Heir
@@ -53,11 +53,9 @@
     methods: {
       onButtonSelect (value) {
         this.lastSelection = value;
-      }
-    },
-    computed: {
-      isSelected (value) {
-        return this.lastSelection == value;
+      },
+      isSelected (val) {
+        return this.lastSelection == val;
       }
     }
   };
