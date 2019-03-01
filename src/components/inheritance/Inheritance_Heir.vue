@@ -1,6 +1,8 @@
 <template>
   <div class="inheritance_heir">
-    Heir stuff
+    <h2 class="inheritance__heir__title">
+      Heir Access
+    </h2>
   </div>
 </template>
 
@@ -11,5 +13,8 @@
 </script>
 
 <style>
-
+  .inheritance__heir__title {
+    color: white;
+    background-color: green;
+  }
 </style>

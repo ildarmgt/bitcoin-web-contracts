@@ -49,5 +49,8 @@
 </script>
 
 <style>
-
+  .inheritance {
+    width: 90%;
+    display: inline-block;
+  }
 </style>

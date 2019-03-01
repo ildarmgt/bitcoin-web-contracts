@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="inheritance__intro">
     <h1>Inheritance Contract dApp</h1>
     <div class="description">
-      A digital will based on inactivity time and enforced by the Bitcoin network:
+      <div class="contractTitle">
+        A digital will based on inactivity time and enforced by the Bitcoin network:
+      </div>
       <ul>
         <li>
           The key of party <span class="key_blue">"Owner"</span> can access the funds at any time.
@@ -12,8 +14,8 @@
           only if the funds don't move for a specified length of time.
         </li>
       </ul>
-      <span class="text_light">
-        (e.g. I will spend Bitcoin from this type of address, moving them at least once a year. But if something happens to me and I don't move them in 1 year, my sister can access the funds.)
+      <span class="text_light example">
+        Example: I will spend Bitcoin from this type of address, moving them at least once a year. But if something happens to me and I don't move them in 1 year, my sister can spend the funds.
       </span>
     </div>
   </div>
@@ -25,10 +27,10 @@
   };
 </script>
 
-<style scoped>
+<style>
   .description {
     display: block;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     text-align: justify;;
   }
@@ -55,5 +57,21 @@
     padding: 0.3vmin 2vmin;
     /* border-radius: 3vmin; */
     vertical-align: middle;
+  }
+
+  .example {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .contractTitle {
+    background-color: orange;
+    padding: 0.3vmin 2vmin;
+    display: inline-block;
+  }
+
+  .inheritance__intro {
+    display: inline-block;
   }
 </style>

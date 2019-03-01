@@ -18,15 +18,23 @@
 <script>
   export default {
     name: 'Inheritance_Nav',
+    data () {
+      return {
+        lastSelected: null
+      }
+    },
     methods: {
       onCreateSelect () {
-        this.$emit('selected', 'create')
+        this.lastSelected = 'create';
+        this.$emit('selected', this.lastSelected);
       },
       onOwnerSpendSelect () {
-        this.$emit('selected', 'owner')
+        this.lastSelected = 'owner';
+        this.$emit('selected', this.lastSelected)
       },
       onHeirSpendSelect () {
-        this.$emit('selected', 'heir')
+        this.lastSelected = 'heir';
+        this.$emit('selected', this.lastSelected)
       }
     }
   };
