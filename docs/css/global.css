@@ -20,15 +20,35 @@ body {
   font-size: 5vmin;
 }
 
-h1 {
-  display: inline-block;
+h2 {
+  display: block;
 
   padding: 1vmin 2vmin;
-  margin: 1vmin 1vmin;
+
   font-size: 3vmin;
-  background-color: rgb(17, 17, 51);
-  opacity: 0.8;
+
+  background-color: orange;
   color: white;
+
+  margin-bottom: 3vmin;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+h1 {
+  display: block;
+
+  padding: 1vmin 2vmin;
+
+  font-size: 3vmin;
+
+  background-color: rgb(17, 17, 51);
+  color: white;
+
+  /* background-color: none;
+  color: rgb(17, 17, 51); */
+
+  /* opacity: 0.8; */
   margin-bottom: 3vmin;
   text-decoration: none;
   font-weight: normal;
@@ -49,7 +69,7 @@ div {
 
   padding: 1vmin 2vmin;
   margin: 1vmin 1vmin;
-  font-size: 3vmin;
+  font-size: 2.5vmin;
   border-radius: 3vmin;
   opacity: 0.65;
   background-color: rgb(17, 17, 51);
@@ -60,6 +80,8 @@ div {
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   user-select: none;
+
+  transition: opacity 0.3s;
 }
 
 .button:hover {
@@ -82,12 +104,13 @@ li {
   margin-bottom: 2vmin;
   line-height: 3.5vmin;
   text-indent: -2.5vmin;
-  padding-left: 2.5vmin;
+  padding-left: 5vmin;
 }
 
 ul li::before {
-  color: rgb(17, 17, 51);
-  color: rgba(17, 17, 51, 0.7);
+  /* color: rgb(17, 17, 51); */
+  /* color: rgba(17, 17, 51, 0.7); */
+  color: orange;
   content: "\25CF";
   position: relative;
   font-size: 2vmin;
@@ -103,7 +126,7 @@ ul li::before {
 }
 
 .green {
-  background-color: red;
+  background-color: green;
 }
 
 .noselect {
