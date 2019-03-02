@@ -1,13 +1,13 @@
 <template>
   <div>
-
+    <slot>Steps go here</slot>
   </div>
 </template>
 
 <script>
-  export default {
+export default {
 
-  };
+};
 </script>
 
 <style scoped>

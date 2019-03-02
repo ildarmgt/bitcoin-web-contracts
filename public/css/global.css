@@ -75,8 +75,7 @@ div {
   margin: 1vmin 1vmin;
   font-size: 2.5vmin;
   border-radius: 3vmin;
-  opacity: 0.65;
-  background-color: rgb(17, 17, 51);
+  background-color: rgba(17, 17, 51, 0.65);
   color: white;
 
   text-decoration: none;
@@ -85,11 +84,11 @@ div {
   -ms-user-select: none;
   user-select: none;
 
-  transition: opacity 0.1s;
+  transition: background-color 0.15s;
 }
 
 .button:hover {
-  opacity: 1;
+  background-color: rgba(17, 17, 51, 0.9) !important;
   cursor: pointer;
 }
 
@@ -119,18 +118,6 @@ ul li::before {
   position: relative;
   font-size: 2vmin;
   left: -1vmin;
-}
-
-.orange {
-  background-color: orange;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.green {
-  background-color: green;
 }
 
 .noselect {

@@ -1,20 +1,21 @@
 <template>
   <div class="inheritance_owner">
-    <h2 class="inheritance__owner__title">
+    <h2 class="blue">
       Owner Access
     </h2>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Inheritance_Owner'
-  };
+export default {
+  name: 'InheritanceOwner'
+};
 </script>
 
-<style>
-  .inheritance__owner__title {
+<style scoped>
+  .blue {
     color: white;
     background-color: blue;
+    background-color: rgba(0, 0, 160, 0.60);
   }
 </style>

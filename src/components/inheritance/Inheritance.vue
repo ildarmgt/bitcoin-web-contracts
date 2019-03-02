@@ -1,24 +1,24 @@
 <template>
   <div class="inheritance">
-    <Inheritance_Intro />
-    <Inheritance_Nav />
+    <InheritanceIntro />
+    <InheritanceNav />
   </div>
 </template>
 
 <script>
-  import Inheritance_Nav from './Inheritance_Nav';
-  import Inheritance_Intro from './Inheritance_Intro';
+import InheritanceIntro from './InheritanceIntro';
+import InheritanceNav from './InheritanceNav';
 
-  export default {
-    name: 'Inheritance',
-    components: {
-      Inheritance_Nav,
-      Inheritance_Intro
-    }
-  };
+export default {
+  name: 'Inheritance',
+  components: {
+    InheritanceNav,
+    InheritanceIntro
+  }
+};
 </script>
 
-<style>
+<style scoped>
   .inheritance {
     width: 90%;
     display: inline-block;

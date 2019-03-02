@@ -1,29 +1,34 @@
 <template>
   <div class="inheritance_create">
-    <h2 class="inheritance__create__title">
+    <h2 class="orange">
       Generate Contract
     </h2>
 
     <div class="inheritance_create_content">
-
       <div class="step">
-        <div class="step_title">Step 1</div>
-        <div class = "step_info">Owner Private Key (WIF):</div>
+        <div class="step_title">
+          Step 1
+        </div>
+        <div class="step_info">
+          Owner Private Key (WIF):
+        </div>
       </div>
 
-      <div class="button">Generate New</div>
+      <div class="button">
+        Generate New
+      </div>
       or
-      <div class="button">Use Known</div>
-
+      <div class="button">
+        Use Known
+      </div>
     </div>
-
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Inheritance_Create'
-  };
+export default {
+  name: 'InheritanceCreate'
+};
 </script>
 
 <style scoped>
@@ -50,8 +55,9 @@
     vertical-align: middle;
   }
 
-  .inheritance__create__title {
+  .orange {
     color: white;
     background-color: orange;
   }
+
 </style>

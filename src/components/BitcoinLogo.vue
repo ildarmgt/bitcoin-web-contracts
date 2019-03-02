@@ -1,11 +1,14 @@
 <template>
-  <a href="https://bitcoin.org/" class="logo noselect">₿</a>
+  <a
+    href="https://bitcoin.org/"
+    class="logo noselect"
+  >₿</a>
 </template>
 
 <script>
-  export default {
-    name: 'BitcoinLogo'
-  };
+export default {
+  name: 'BitcoinLogo'
+};
 </script>
 
 <style scoped>

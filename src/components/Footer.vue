@@ -1,11 +1,13 @@
 <template>
   <div class="footer">
-
     <div class="footer__warning text_light">
       Warning: Demonstration only. Not reviewed for public use.
     </div>
 
-    <a class="footer__source text_light" href="https://github.com/ildarmgt/bitcoin-web-contracts">
+    <a
+      class="footer__source text_light"
+      href="https://github.com/ildarmgt/bitcoin-web-contracts"
+    >
       &lt; Source Code &gt;
     </a>
 
@@ -16,22 +18,21 @@
     <br>
 
     <BitcoinLogo />
-
   </div>
 </template>
 
 <script>
-  import BitcoinLogo from './BitcoinLogo';
+import BitcoinLogo from './BitcoinLogo';
 
-  export default {
-    name: 'Footer',
-    components: {
-      BitcoinLogo
-    }
-  };
+export default {
+  name: 'Footer',
+  components: {
+    BitcoinLogo
+  }
+};
 </script>
 
-<style>
+<style scoped>
   .footer {
     margin: 0 0 0 0;
     vertical-align: middle;
@@ -53,4 +54,3 @@
   }
 
 </style>
-

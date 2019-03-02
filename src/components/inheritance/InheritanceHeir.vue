@@ -1,20 +1,21 @@
 <template>
   <div class="inheritance_heir">
-    <h2 class="inheritance__heir__title">
+    <h2 class="green">
       Heir Access
     </h2>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Inheritance_Heir'
-  };
+export default {
+  name: 'InheritanceHeir'
+};
 </script>
 
-<style>
-  .inheritance__heir__title {
+<style scoped>
+  .green {
     color: white;
     background-color: green;
+    background-color: rgba(0, 100, 0, 0.65);
   }
 </style>

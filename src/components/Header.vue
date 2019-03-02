@@ -1,16 +1,19 @@
 <template>
-  <router-link to="/" class="title">
+  <router-link
+    to="/"
+    class="title"
+  >
     <span class="title__bitcoin">Bitcoin</span> Smart Contracts
   </router-link>
 </template>
 
 <script>
-  export default {
-    name: 'Header'
-  };
+export default {
+  name: 'Header'
+};
 </script>
 
-<style>
+<style scoped>
   .title {
     display: inline-block;
     /* color:rgb(17, 17, 51); */
@@ -27,4 +30,3 @@
     color:orange;
   }
 </style>
-

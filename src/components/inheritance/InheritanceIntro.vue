@@ -22,12 +22,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'Inheritance_Intro'
-  };
+export default {
+  name: 'InheritanceIntro'
+};
 </script>
 
-<style>
+<style scoped>
   .description {
     display: block;
     width: 90%;
@@ -63,6 +63,7 @@
     width: 90%;
     display: block;
     margin: 0 auto;
+    margin-bottom: 2vmin;
   }
 
   .contractTitle {

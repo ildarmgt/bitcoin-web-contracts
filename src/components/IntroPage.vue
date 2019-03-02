@@ -4,20 +4,20 @@
       My Decentralized Applications (dApps):
     </div>
     <div class="view">
-      <DappList></DappList>
+      <DappList />
     </div>
   </div>
 </template>
 
 <script>
-  import DappList from './DappList';
+import DappList from './DappList';
 
-  export default {
-    name: 'IntroPage',
-    components: {
-      DappList
-    }
-  };
+export default {
+  name: 'IntroPage',
+  components: {
+    DappList
+  }
+};
 </script>
 
 <style>
