@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'Expand',
+  name: 'Expander',
   data: () => ({
     lastTimer: null
   }),

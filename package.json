@@ -36,7 +36,6 @@
     "extends": [
       "semistandard",
       "plugin:vue/strongly-recommended"
-
     ],
     "rules": {
       "indent": "warn",

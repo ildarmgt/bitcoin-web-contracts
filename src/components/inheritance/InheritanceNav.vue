@@ -24,11 +24,11 @@
       :meaningSelected="lastSelection"
     />
 
-    <Expand>
+    <Expander>
       <InheritanceCreate v-if="isSelected('create')" />
       <InheritanceOwner v-if="isSelected('owner')" />
       <InheritanceHeir v-if="isSelected('heir')" />
-    </Expand>
+    </Expander>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ import SelectionButton from './../general/SelectionButton';
 import InheritanceCreate from './InheritanceCreate';
 import InheritanceOwner from './InheritanceOwner';
 import InheritanceHeir from './InheritanceHeir';
-import Expand from './../general/Expand';
+import Expander from './../general/Expander';
 
 export default {
   name: 'InheritanceNav',
@@ -46,7 +46,7 @@ export default {
     InheritanceCreate,
     InheritanceOwner,
     InheritanceHeir,
-    Expand
+    Expander
   },
   data: () => ({
     lastSelection: ''
@@ -55,9 +55,11 @@ export default {
     onButtonSelect (value) {
       this.lastSelection = value;
     },
+
     isSelected (val) {
       return this.lastSelection === val;
     },
+
     getHeight () {
       return this.$refs.inheritance_nav_view.clientHeight;
     }

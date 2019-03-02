@@ -1,8 +1,16 @@
 <template>
   <div class="inheritance_create">
-    <h2 class="orange">
-      Generate Contract
-    </h2>
+    <Stepper :name="'Generate Contract'">
+      <StepperStep :title="'Owner Key'">
+        Step 1 content
+      </StepperStep>
+      <StepperStep :title="'Heir Key'">
+        Step 2 content
+      </StepperStep>
+      <StepperStep :title="'Back up'">
+        Step 3 content
+      </StepperStep>
+    </Stepper>
 
     <div class="inheritance_create_content">
       <div class="step">
@@ -26,8 +34,15 @@
 </template>
 
 <script>
+import Stepper from './../general/Stepper';
+import StepperStep from './../general/StepperStep';
+
 export default {
-  name: 'InheritanceCreate'
+  name: 'InheritanceCreate',
+  components: {
+    Stepper,
+    StepperStep
+  }
 };
 </script>
 
