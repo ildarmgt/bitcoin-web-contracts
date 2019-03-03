@@ -1,43 +1,58 @@
 <template>
-  <div>
-    <div class="nav">
-      <div class="nav__name">
-        {{ name }}
-      </div>
+  <div class="nav">
+    <!-- overall name -->
+    <div class="nav__name">
+      {{ stepperName }}
+    </div>
+    <!-- embedded slot content  -->
+    <div class="nav__view">
       <slot />
-      <div class="nav__steps">
+    </div>
+    <!-- numbering & naming of the steps via title attributes -->
+    <div class="nav__steps">
+      <div
+        class="nav__steps__step"
+        v-for="(eaTitle, index) in titles()"
+        :key="eaTitle"
+      >
+        <!-- created for each step -->
         <div
-          class="nav__steps__step"
-          v-for="(title, index) in titles()"
-          :key="title"
+          class="nav__steps__step__number"
+          @click="stepClicked(eaTitle)"
         >
-          <div class="nav__steps__step__number">
-            {{ index + 1 }}
-          </div>
-          <div class="nav__steps__step__title">
-            {{ title }}
-          </div>
+          {{ index + 1 }}
+        </div>
+        <div class="nav__steps__step__title">
+          {{ eaTitle }}
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
   name: 'Stepper',
-  props: [
-    'name'
-  ],
+  data: () => ({
+    lastSelection: 'none'
+  }),
+  props: {
+    stepperName: { type: String, default: '' }
+  },
   methods: {
     titles () {
-      // console.log(this.$slots);
-      // convert internal divs/vnodes into array of titles
+      // convert internal vnodes's attributes into array of titles
+      console.log(this.$slots);
       const res = this.$slots.default.reduce((reducer, value) => {
         return [...reducer, value.data.attrs.title];
       }, []);
+      this.lastSelection = res[0];
+      // console.log(res);
       return res;
+    },
+    stepClicked (inTitle) {
+      this.lastSelection = inTitle;
+      console.log(inTitle + ' clicked');
     }
   }
 };
@@ -52,21 +67,24 @@ export default {
     background-color: orange;
     color: white;
     padding-top: 1vmin;
-    padding-bottom: 2vmin;
+    padding-bottom: 1vmin;
     margin-top: 3vmin;
     font-size: 3vmin;
+    font-weight: bold;
+  }
+  .nav__view {
+    padding: 2vmin 2vmin;
+    background-color: rgba(255, 255, 255, 0.8);
   }
   .nav__steps {
-    margin-top: 2vmin;
     margin-left: 1vmin;
     margin-right: 1vmin;
-    white-space: nowrap;
+    white-space: normal;
     display: flex;
     justify-content: space-between;
   }
   .nav__steps__step {
     display: inline-block;
-    white-space: nowrap;
     margin: 1vmin 2vmin;
 
   }

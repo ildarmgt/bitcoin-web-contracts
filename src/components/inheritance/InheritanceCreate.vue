@@ -1,35 +1,19 @@
 <template>
   <div class="inheritance_create">
-    <Stepper :name="'Generate Contract'">
-      <StepperStep :title="'Owner Key'">
-        Step 1 content
+    <Stepper stepperName="Generate Contract">
+      <StepperStep title="Will Timer">
+        How long to lock for?
       </StepperStep>
-      <StepperStep :title="'Heir Key'">
-        Step 2 content
+      <StepperStep title="Owner Key">
+        <InheritanceCreateStep1 />
       </StepperStep>
-      <StepperStep :title="'Back up'">
-        Step 3 content
+      <StepperStep title="Heir Key">
+        Create the Heir's key
+      </StepperStep>
+      <StepperStep title="Back up">
+        Back up the information
       </StepperStep>
     </Stepper>
-
-    <div class="inheritance_create_content">
-      <div class="step">
-        <div class="step_title">
-          Step 1
-        </div>
-        <div class="step_info">
-          Owner Private Key (WIF):
-        </div>
-      </div>
-
-      <div class="button">
-        Generate New
-      </div>
-      or
-      <div class="button">
-        Use Known
-      </div>
-    </div>
   </div>
 </template>
 
@@ -37,11 +21,17 @@
 import Stepper from './../general/Stepper';
 import StepperStep from './../general/StepperStep';
 
+import InheritanceCreateStep1 from './InheritanceCreateStep1';
+
 export default {
   name: 'InheritanceCreate',
   components: {
     Stepper,
-    StepperStep
+    StepperStep,
+    InheritanceCreateStep1
+  },
+  mounted () {
+    // console.log(this);
   }
 };
 </script>
@@ -58,11 +48,7 @@ export default {
     margin-top: 3vmin;
   }
   .step_title {
-    display: inline-block;
-    font-size: 4vmin;
-    color: orange;
-    margin-right: 3vmin;
-    vertical-align: middle;
+
   }
 
   .step_info {

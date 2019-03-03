@@ -15,16 +15,15 @@ export default {
   }),
   mounted () {
     // necessary to ensure window is auto resized
-    window.addEventListener('resize', this.windowResize);
+    window.addEventListener('resize', this.autoHeight);
 
     // animate
     this.animate();
   },
   beforeDestroy () {
     // clean up resizing listener
-    window.removeEventListener('resize', this.windowResize);
+    window.removeEventListener('resize', this.autoHeight);
   },
-
   updated () {
     this.animate();
   },
@@ -53,10 +52,14 @@ export default {
         // changing height to original (after small delay 1/10th of ANIMATION_SECONDS)
         this.lastTimer = setTimeout(() => {
           element.style.height = maxHeight + 'px';
-        }, ANIMATION_SECONDS * 100);
+        }, ANIMATION_SECONDS * 1000 * 0.1);
+
+        this.lastTimer = setTimeout(() => {
+          this.autoHeight();
+        }, ANIMATION_SECONDS * 1000 * 1.1);
       });
     },
-    windowResize () {
+    autoHeight () {
       const element = this.$refs.animate_this;
       element.style.height = 'auto';
     }
