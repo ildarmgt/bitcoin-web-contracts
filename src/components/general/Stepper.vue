@@ -16,14 +16,13 @@
         :key="eaTitle"
       >
         <!-- created for each step -->
-        <div
-          class="nav__steps__step__number"
-          @click="stepClicked(eaTitle)"
-        >
-          {{ index + 1 }}
-        </div>
-        <div class="nav__steps__step__title">
-          {{ eaTitle }}
+        <div @click="stepClicked(eaTitle)">
+          <div class="nav__steps__step__number">
+            {{ index + 1 }}
+          </div>
+          <div class="nav__steps__step__title">
+            {{ eaTitle }}
+          </div>
         </div>
       </div>
     </div>
@@ -62,16 +61,18 @@ export default {
   .nav__name {
     display: block;
     background-color: orange;
-    color: white;
+    /* color: white; */
+    /* color: black; */
+    color: rgba(255, 225, 225, 0.6);
     padding-top: 1vmin;
-    padding-bottom: 1vmin;
+    padding-bottom: 2vmin;
     margin-top: 3vmin;
     font-size: 3vmin;
     font-weight: bold;
   }
   .nav__view {
     padding: 2vmin 2vmin;
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
   }
   .nav__steps {
     margin-left: 1vmin;

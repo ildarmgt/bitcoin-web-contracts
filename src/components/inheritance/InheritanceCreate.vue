@@ -2,10 +2,10 @@
   <div class="inheritance_create">
     <Stepper stepperName="Generate Contract">
       <StepperStep title="Will Timer">
-        How long to lock for?
+        <InheritanceCreateStep1 />
       </StepperStep>
       <StepperStep title="Owner Key">
-        <InheritanceCreateStep1 />
+        <InheritanceCreateStep2 />
       </StepperStep>
       <StepperStep title="Heir Key">
         Create the Heir's key
@@ -22,13 +22,15 @@ import Stepper from './../general/Stepper';
 import StepperStep from './../general/StepperStep';
 
 import InheritanceCreateStep1 from './InheritanceCreateStep1';
+import InheritanceCreateStep2 from './InheritanceCreateStep2';
 
 export default {
   name: 'InheritanceCreate',
   components: {
     Stepper,
     StepperStep,
-    InheritanceCreateStep1
+    InheritanceCreateStep1,
+    InheritanceCreateStep2
   },
   mounted () {
     // console.log(this);

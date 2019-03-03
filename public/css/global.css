@@ -111,8 +111,6 @@ li {
 }
 
 ul li::before {
-  /* color: rgb(17, 17, 51); */
-  /* color: rgba(17, 17, 51, 0.7); */
   color: orange;
   content: "\25CF";
   position: relative;
