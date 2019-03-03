@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from './store'; // App state
 import App from './App.vue';
+import store from './store'; // App state
 
 // components
 import IntroPage from './components/IntroPage';

@@ -33,7 +33,8 @@
 export default {
   name: 'Stepper',
   data: () => ({
-    lastSelection: 'none'
+    lastSelection: 'none',
+    pagesReady: {}
   }),
   props: {
     stepperName: { type: String, default: '' }
@@ -44,7 +45,10 @@ export default {
       const res = this.$slots.default.reduce((reducer, value) => {
         return [...reducer, value.data.attrs.title];
       }, []);
+
+      // pick the first one first
       this.lastSelection = res[0];
+
       return res;
     },
     stepClicked (inTitle) {
@@ -61,14 +65,12 @@ export default {
   .nav__name {
     display: block;
     background-color: orange;
-    /* color: white; */
-    /* color: black; */
     color: rgba(255, 225, 225, 0.6);
     padding-top: 1vmin;
     padding-bottom: 2vmin;
     margin-top: 3vmin;
     font-size: 3vmin;
-    font-weight: bold;
+    text-align: center;
   }
   .nav__view {
     padding: 2vmin 2vmin;
@@ -86,7 +88,6 @@ export default {
   .nav__steps__step {
     display: inline-block;
     margin: 1vmin 2vmin;
-
   }
   .nav__steps__step__number {
     display: inline-block;

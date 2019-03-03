@@ -1,7 +1,7 @@
 <template>
   <div
     @click="onButtonClick"
-    class="button"
+    class="selectionButton"
     :style="determineStyle"
   >
     {{ buttonText }}
@@ -54,5 +54,28 @@ export default {
 </script>
 
 <style scoped>
+  .selectionButton {
+    display: inline-block;
 
+    padding: 1vmin 2vmin;
+    margin: 1vmin 1vmin;
+    font-size: 2.5vmin;
+    border-radius: 3vmin;
+    background-color: rgba(17, 17, 51, 0.65);
+    color: white;
+
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+
+    transition: background-color 0.15s;
+  }
+  .selectionButton:hover {
+    background-color: rgba(17, 17, 51, 0.9) !important;
+  }
+  .selectionButton:active {
+    transform: translateY(0.2vmin);
+  }
 </style>
