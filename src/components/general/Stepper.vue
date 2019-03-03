@@ -37,17 +37,19 @@ export default {
     pagesReady: {}
   }),
   props: {
-    stepperName: { type: String, default: '' }
+    stepperName: { type: String, default: '' },
+    pageWanted: { type: Number, default: 0 }
   },
   methods: {
     titles () {
       // convert internal vnodes's attributes into array of titles
       const res = this.$slots.default.reduce((reducer, value) => {
-        return [...reducer, value.data.attrs.title];
+        return [...reducer, value.data.attrs.pageTitle];
       }, []);
 
-      // pick the first one first
-      this.lastSelection = res[0];
+      // if pageWanted is 0, select first page by default
+      // otherwise select pageWanted
+      this.lastSelection = this.pageWanted ? res[this.pageWanted - 1] : res[0];
 
       return res;
     },
@@ -74,7 +76,7 @@ export default {
   }
   .nav__view {
     padding: 2vmin 2vmin;
-    margin-bottom: 5vmin;
+    margin-bottom: 2vmin;
     margin-top: 4vmin
     /* background-color: rgba(255, 255, 255, 0.8); */
   }
@@ -88,6 +90,7 @@ export default {
   .nav__steps__step {
     display: inline-block;
     margin: 1vmin 2vmin;
+    border-radius: 3vmin;
   }
   .nav__steps__step__number {
     display: inline-block;
@@ -99,13 +102,13 @@ export default {
     color: orange;
     border-radius: 3vmin;
     font-size: 2.5vmin;
-
+    cursor: pointer;
   }
   .nav__steps__step__title {
     display: inline-block;
     margin: 0 2vmin;
     color: rgba(255, 225, 225, 0.7);
     font-size: 2.5vmin;
-
+    cursor: pointer;
   }
 </style>

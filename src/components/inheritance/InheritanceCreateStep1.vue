@@ -19,11 +19,10 @@
         </div>
       </div>
       <div class="question__light">
-        Measured from moment funding is confirmed.
-        <br>
-        Value can be up to 388 days.
+        Measured from moment funding is confirmed.<br>
+        &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
-      <div class="nextStep">
+      <div class="arrowButton" @click="changePage(2)">
         Next
       </div>
     </div>
@@ -38,16 +37,12 @@ export default {
   data: () => ({
     defaultTime: '365',
     timeValue: '365',
-    lastTimer: null,
-    isSafe: true
+    lastTimer: null
   }),
   methods: {
     // vuex action to change page ready status to true/false
-    ...mapActions(['updatePageStatus']),
+    ...mapActions(['updatePageStatus', 'changePage']),
     numberChanged (event) {
-      // not safe to use number until steril
-      this.isSafe = false;
-
       // change text input to allowed characters
       const newText = event.target.value;
       const filter = '0123456789.';
@@ -76,8 +71,7 @@ export default {
       this.timeValue = parseFloat(this.timeValue).toString();
       // update view
       this.$refs.question__time__input.value = this.timeValue;
-      this.isSafe = true;
-      // this.letStepperKnowIfReady();
+      this.updatePageStatus({ pageIndex: 0, status: true });
     }
   }
 };
@@ -110,12 +104,17 @@ export default {
     width: 10vmin;
     text-align: center;
     border: none;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.75);
     /* background: none; */
     /* border-bottom: white solid 0.3vmin; */
     color: orange;
     display: inline-block;
+    transition: background-color 0.15s;
   }
+  .question__time__input:focus,.question__time__input:hover {
+    background: white;
+  }
+
   .question__time__label {
     font-size: 3vmin;
     color: white;
@@ -133,6 +132,49 @@ export default {
   }
   input:focus{
     outline: none;
+  }
+  .arrowButton {
+      font-size: 3vmin;
+      /* font-weight: bold; */
+      margin: 3vmin 0;
+      margin-left: 70%;
+      width: max-content;
+      height: 5vmin;
+      line-height: 5vmin;
+      text-align: center;
+      padding: 0 3vmin 0 2vmin;
+      color: orange;
+      /* background-color: rgb(255, 212, 131); */
+      background-color: rgb(255, 231, 188);
+      /* background-color: white; */
+      position: relative;
+      display: block;
+      border-radius: 1vmin 2vmin 2vmin 1vmin;
+      z-index: 0;
+      -webkit-user-select: none;
+      -moz-user-select: -moz-none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      transition: background-color 0.15s;
+  }
+  .arrowButton:after{
+      position: absolute;
+      right: -1.37vmin;
+      top: 0;
+      content: "";
+      width: 5vmin;
+      height: 5vmin;
+      background-color: inherit;
+      border-radius: 2vmin 1.3vmin 1vmin 1.3vmin;
+      transform: rotate(-45deg) scale(0.707);
+      z-index: -1;
+  }
+  .arrowButton:active {
+    transform: translateY(0.2vmin);
+  }
+  .arrowButton:hover {
+      background-color: white;
   }
 
 </style>

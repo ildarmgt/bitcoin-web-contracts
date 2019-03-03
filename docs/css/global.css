@@ -88,7 +88,7 @@ div {
 }
 
 .button:hover {
-  background-color: rgba(17, 17, 51, 0.9) !important;
+  background-color: rgba(17, 17, 51, 0.9);
   cursor: pointer;
 }
 
@@ -123,4 +123,11 @@ ul li::before {
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   user-select: none;
+}
+
+::selection {
+  background-color: rgba(0, 0, 233, 0.2); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background-color: rgba(0, 0, 233, 0.2); /* WebKit/Blink Browsers */
 }

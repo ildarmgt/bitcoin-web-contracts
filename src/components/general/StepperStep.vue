@@ -13,7 +13,7 @@ export default {
   methods: {
     isStepSelected () {
       // grab this step's title and current selection title
-      const thisStepTitle = this.$attrs.title;
+      const thisStepTitle = this.$attrs.pageTitle;
       const currentSelection = this.$parent.lastSelection;
       const isMatch = thisStepTitle === currentSelection;
       return isMatch;

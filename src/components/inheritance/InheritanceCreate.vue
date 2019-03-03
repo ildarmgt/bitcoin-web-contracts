@@ -1,16 +1,19 @@
 <template>
   <div class="inheritance_create">
-    <Stepper stepperName="Generate Contract">
-      <StepperStep title="Will Timer">
+    <Stepper
+      stepperName="Generate Contract"
+      :pageWanted="getPageSelected"
+    >
+      <StepperStep pageTitle="Will Timer">
         <InheritanceCreateStep1 />
       </StepperStep>
-      <StepperStep title="Owner Key">
+      <StepperStep pageTitle="Owner Key">
         <InheritanceCreateStep2 />
       </StepperStep>
-      <StepperStep title="Heir Key">
+      <StepperStep pageTitle="Heir Key">
         Create the Heir's key
       </StepperStep>
-      <StepperStep title="Back up">
+      <StepperStep pageTitle="Back up">
         Back up the information
       </StepperStep>
     </Stepper>
@@ -18,11 +21,14 @@
 </template>
 
 <script>
+// components
 import Stepper from './../general/Stepper';
 import StepperStep from './../general/StepperStep';
-
 import InheritanceCreateStep1 from './InheritanceCreateStep1';
 import InheritanceCreateStep2 from './InheritanceCreateStep2';
+
+// vuex state
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'InheritanceCreate',
@@ -32,8 +38,8 @@ export default {
     InheritanceCreateStep1,
     InheritanceCreateStep2
   },
-  mounted () {
-    // console.log(this);
+  computed: {
+    ...mapGetters(['getPageSelected'])
   }
 };
 </script>
