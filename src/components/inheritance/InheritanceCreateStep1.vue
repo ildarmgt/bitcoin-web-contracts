@@ -2,10 +2,11 @@
   <div>
     <div class="question">
       <div class="question__strong">
-        How long until inheritance can be claimed?
+        How long until inheritance can be spent by the Heir?
       </div>
       <div class="question__light">
-        from time the contract is funded
+        Measured from moment funding is confirmed.<br>
+        Value can be up to 388 days.
       </div>
       <div class="question__time">
         <input
@@ -31,7 +32,8 @@ export default {
   name: 'InheritanceCreateStep1',
   data: () => ({
     defaultTime: '365',
-    timeValue: '365'
+    timeValue: '365',
+    lastTimer: null
   }),
   methods: {
     numberChanged (event) {
@@ -48,7 +50,9 @@ export default {
       this.timeValue = fixedNumber;
       this.$refs.question__time__input.value = fixedNumber;
 
-      window.setTimeout(() => {
+      // let user type and do final checks after 3 sec delay of not typing
+      clearTimeout(this.lastTimer);
+      this.lastTimer = setTimeout(() => {
         this.refreshNumber();
       }, 3000);
     },
@@ -71,24 +75,25 @@ export default {
   .question__strong {
     display: block;
     font-size: 3vmin;
-    /* color: black; */
     color: white;
     margin-right: 3vmin;
+    margin-left: 5%;
     font-weight: bold;
   }
   .question__light {
     display: block;
     font-size: 2vmin;
     color: white;
-    margin-top: 1vmin;
-    margin-left: 5%;
+    margin-top: 1.5vmin;
+    line-height: 2.7vmin;
+    margin-left: 10%;
   }
   .question__time {
     display: block;
     margin-top: 3vmin;
     margin-bottom: 2vmin;
     text-align: left;
-    margin-left: 12%;
+    margin-left: 15%;
   }
   .question__time__input {
     font-size: 3vmin;
