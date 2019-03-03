@@ -42,17 +42,14 @@ export default {
   methods: {
     titles () {
       // convert internal vnodes's attributes into array of titles
-      console.log(this.$slots);
       const res = this.$slots.default.reduce((reducer, value) => {
         return [...reducer, value.data.attrs.title];
       }, []);
       this.lastSelection = res[0];
-      // console.log(res);
       return res;
     },
     stepClicked (inTitle) {
       this.lastSelection = inTitle;
-      console.log(inTitle + ' clicked');
     }
   }
 };

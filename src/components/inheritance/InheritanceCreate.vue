@@ -37,28 +37,5 @@ export default {
 </script>
 
 <style scoped>
-  .inheritance_create_content {
-    width: 90%;
-    display: inline-block;
-  }
-
-  .step {
-    display: block;
-    text-align: left;
-    margin-top: 3vmin;
-  }
-  .step_title {
-
-  }
-
-  .step_info {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .orange {
-    color: white;
-    background-color: orange;
-  }
 
 </style>
