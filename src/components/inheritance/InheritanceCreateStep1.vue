@@ -5,7 +5,8 @@
         How long until inheritance can be spent by the Heir?
       </div>
       <div class="question__light">
-        Measured from moment funding is confirmed.<br>
+        Measured from moment funding is confirmed.
+        <br>
         Value can be up to 388 days.
       </div>
       <div class="question__time">
@@ -57,10 +58,13 @@ export default {
       }, 3000);
     },
     refreshNumber () {
-      // make final check that value is non 0 and a real number or reset to default
+      // make scheck that value is non 0 and a real number or reset to default
       if (parseFloat(this.timeValue) === 0 || isNaN(this.timeValue) || !this.timeValue) {
         this.timeValue = this.defaultTime;
       }
+      // remove pointless zeros and decimal points w/o reason
+      this.timeValue = parseFloat(this.timeValue).toString();
+      // update view
       this.$refs.question__time__input.value = this.timeValue;
     }
   }
@@ -84,13 +88,13 @@ export default {
     display: block;
     font-size: 2vmin;
     color: white;
-    margin-top: 1.5vmin;
+    margin-top: 2vmin;
     line-height: 2.7vmin;
     margin-left: 10%;
   }
   .question__time {
     display: block;
-    margin-top: 3vmin;
+    margin-top: 2.5vmin;
     margin-bottom: 2vmin;
     text-align: left;
     margin-left: 15%;
@@ -113,16 +117,10 @@ export default {
     color: white;
     margin-left: 1vmin;
     display: inline-block;
+    font-weight: bold;
   }
   input:focus{
     outline: none;
-  }
-
-  ::selection {
-  background: rgba(17, 17, 51, 0.65);; /* WebKit/Blink Browsers */
-  }
-  ::-moz-selection {
-  background: rgba(17, 17, 51, 0.65);; /* Gecko Browsers */
   }
 
 </style>
