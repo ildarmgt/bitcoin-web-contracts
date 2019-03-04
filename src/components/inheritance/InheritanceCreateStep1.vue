@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="question__light">
-        Measured from moment funding is confirmed.<br>
+        To be measured from moment funding is confirmed.<br>
         &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
       <div
@@ -161,7 +161,7 @@ export default {
       font-size: 3vmin;
       /* font-weight: bold; */
       margin: 0 auto;
-      margin-top: 4vmin;
+      margin-top: 5vmin;
       width: max-content;
       height: 5vmin;
       line-height: 5vmin;
@@ -169,7 +169,8 @@ export default {
       padding: 0 3vmin 0 2vmin;
       color: orange;
       /* background-color: rgb(255, 212, 131); */
-      background-color: rgb(255, 231, 188);
+      /* background-color: rgb(255, 231, 188); */
+      background-color: rgb(255, 207, 118);
       /* background-color: white; */
       position: relative;
       display: block;

@@ -102,7 +102,7 @@ export default {
   }
   .nav__view {
     padding: 2vmin 2vmin;
-    margin-bottom: 2vmin;
+    margin-bottom: 4vmin;
     margin-top: 4vmin
     /* background-color: rgba(255, 255, 255, 0.8); */
   }
