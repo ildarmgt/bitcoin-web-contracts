@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="question">
+      <!-- main page question -->
       <div class="question__strong">
         How long until inheritance can be spent by the Heir?
       </div>
+      <!-- input value -->
       <div class="question__time">
         <input
           type="text"
@@ -18,10 +20,12 @@
           days
         </div>
       </div>
+      <!-- text to clarify questions and input  -->
       <div class="question__light">
         To be measured from moment funding is confirmed.<br>
         &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
+      <!-- button to go to next page -->
       <div
         class="arrowButton fa"
         @click="onNextButtonClick"
@@ -38,27 +42,30 @@ import { mapActions, mapGetters } from 'vuex'; // state
 export default {
   name: 'InheritanceCreateStep1',
   data: () => ({
-    timeValue: '365',
-    lastTimer: null
+    timeValue: '365', // stores number to display
+    lastTimer: null // stores timer id used for fixing numbers
   }),
-  computed: {
-    ...mapGetters(['getDelayIC'])
-  },
   mounted () {
-    // load time value from state
+    // load default time value from vuex
     this.timeValue = this.getDelayIC;
   },
+  computed: {
+    ...mapGetters([
+      'getDelayIC' // get delay from vuex of inheritance contract
+    ])
+  },
   methods: {
-    // vuex action to change page ready status to true/false
     ...mapActions([
-      'updatePageStatusIC',
-      'changePageIC',
-      'updateContractValuesIC'
+      'updatePageStatusIC', // set page ready status to true/false (vuex)
+      'changePageIC', // set selected page (vuex)
+      'updateContractValuesIC' // set stored contract values (vuex)
     ]),
+    // modifies input value to match only filtered values and
+    // initiates a timer to fix nonsense values after delay
     numberChanged (event) {
       // change text input to allowed characters
       const newText = event.target.value;
-      const filter = '0123456789.';
+      const filter = '0123456789.'; // only these characters allowed
       const filteredText = newText
         .split('')
         .filter(letter => filter.indexOf(letter) > -1)
@@ -66,31 +73,45 @@ export default {
 
       // check that value is below 1.06 years or 388 days (bip 68)
       const fixedNumber = parseFloat(filteredText) > 388 ? '388' : filteredText;
-      this.timeValue = fixedNumber;
-      this.$refs.question__time__input.value = fixedNumber;
+
+      // update values
+      this.$refs.question__time__input.value = this.timeValue = fixedNumber;
 
       // let user type and do final checks after 3 sec delay of not typing
+      // this way user's not interrupted if erasing all or mistyped
+      // start by clearing out last timer and setting new timer
       clearTimeout(this.lastTimer);
       this.lastTimer = setTimeout(() => {
         this.refreshNumber();
       }, 3000);
     },
+    // get rid of blank, non-numbers,
     refreshNumber () {
-      // make sceck that value is non 0 and a real number or reset to default
-      if (parseFloat(this.timeValue) === 0 || isNaN(this.timeValue) || !this.timeValue) {
-        this.timeValue = this.getDelayIC;
+      // make sceck that value is non-0, not blank, and a real number
+      // or reset to default number
+      let inputValue = this.timeValue;
+      if (
+        parseFloat(inputValue) === 0 ||
+        isNaN(inputValue) ||
+        !inputValue
+      ) {
+        inputValue = this.getDelayIC;
       }
+
       // remove pointless zeros and decimal points w/o reason
-      this.timeValue = parseFloat(this.timeValue).toString();
+      inputValue = parseFloat(inputValue).toString();
+
       // update view
+      // div might not exist so wrapped in try
       try {
-        this.$refs.question__time__input.value = this.timeValue;
+        this.$refs.question__time__input.value = inputValue;
       } catch (e) {}
-      // update readiness
+      // update page readiness
       this.updatePageStatusIC({ pageIndex: 0, status: true });
       // update contract value
-      this.updateContractValuesIC({ daysDelay: this.timeValue });
+      this.updateContractValuesIC({ daysDelay: inputValue });
     },
+    // next button event
     onNextButtonClick () {
       // convert to valid number
       this.refreshNumber();
@@ -123,14 +144,11 @@ export default {
   }
   .question__time__input {
     font-size: 3vmin;
-    /* line-height: 4vmin; */
     height: 4vmin;
     width: 10vmin;
     text-align: center;
     border: none;
     background-color: rgba(255, 255, 255, 0.75);
-    /* background: none; */
-    /* border-bottom: white solid 0.3vmin; */
     color: orange;
     display: inline-block;
     transition: background-color 0.15s;
@@ -138,7 +156,6 @@ export default {
   .question__time__input:focus,.question__time__input:hover {
     background: white;
   }
-
   .question__time__label {
     font-size: 3vmin;
     color: white;
@@ -159,7 +176,6 @@ export default {
   }
   .arrowButton {
       font-size: 3vmin;
-      /* font-weight: bold; */
       margin: 0 auto;
       margin-top: 5vmin;
       width: max-content;
@@ -168,10 +184,7 @@ export default {
       text-align: center;
       padding: 0 3vmin 0 2vmin;
       color: orange;
-      /* background-color: rgb(255, 212, 131); */
-      /* background-color: rgb(255, 231, 188); */
       background-color: rgb(255, 207, 118);
-      /* background-color: white; */
       position: relative;
       display: block;
       border-radius: 1vmin 2vmin 2vmin 1vmin;
@@ -201,13 +214,4 @@ export default {
   .arrowButton:hover {
       background-color: white;
   }
-  /* force animation of text if visual bug */
-  .fa {
-    animation: fa 1s 0.1s infinite alternate;
-  }
-  @keyframes fa {
-    from {color: #ffa503;}
-    to {color: #ffa500;}
-  }
-
 </style>

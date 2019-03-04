@@ -70,10 +70,10 @@ export default {
     -ms-user-select: none;
     user-select: none;
 
-    transition: background-color 0.15s;
+    transition: transform 0.1s;
   }
   .selectionButton:hover {
-    background-color: rgba(17, 17, 51, 0.9) !important;
+    transform: translateY(-0.2vmin);
   }
   .selectionButton:active {
     transform: translateY(0.2vmin);

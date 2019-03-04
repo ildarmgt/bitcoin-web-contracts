@@ -22,12 +22,14 @@
           class="nav__steps__step__number noselect"
           :class="setNavClasses(eaTitle).stepNumber"
         >
+          <!-- number of step -->
           {{ index + 1 }}
         </div>
         <div
           class="nav__steps__step__title noselect"
           :class="setNavClasses(eaTitle).stepTitle"
         >
+          <!-- title of step -->
           {{ eaTitle }}
         </div>
       </div>
@@ -121,6 +123,12 @@ export default {
     padding-top: 1vmin;
     cursor: pointer;
   }
+  .nav__steps__step:hover {
+    transform: translateY(-0.2vmin);
+  }
+  .nav__steps__step:active {
+    transform: translateY(0.2vmin);
+  }
   .nav__steps__step__number {
     display: inline-block;
     height: 3vmin;
@@ -140,19 +148,16 @@ export default {
     color: rgba(255, 225, 225, 0.7);
     font-size: 2.5vmin;
     cursor: pointer;
+    /* white-space: nowrap; */
   }
   .stepNumberSelected {
     border: 0.15vmin solid white;
     color: white;
     background-color: orange;
-    /* background-color: white; */
   }
   .stepTitleSelected {
     color: white;
   }
-  /* .stepSelected {
-    border-top: white solid 0.15vmin;
-  } */
   .noselect {
     -webkit-user-select: none;
     -moz-user-select: -moz-none;

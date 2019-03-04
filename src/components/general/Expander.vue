@@ -1,6 +1,6 @@
 <template>
   <div
-    class="expander"
+    class="expander fa"
     ref="animate_this"
   >
     <slot />
@@ -12,8 +12,8 @@
 // text is invisible until highlighted or updated in any
 // manner. appeares for elements with opacity < 1
 // when undergoing this type of animation & some other times.
-// currently using css animation to animate text color for
-// affected elements with very subtle invisible changes.
+// currently using css animation to animate z-index for
+// affected elements to idelaly force css refresh.
 
 export default {
   name: 'Expander',
@@ -78,5 +78,14 @@ export default {
   .expander {
     overflow: hidden;
     height: auto;
+  }
+
+  /* force animation of text if visual bug */
+  .fa {
+    animation: fa 1s 0.1s infinite alternate;
+  }
+  @keyframes fa {
+    from {z-index: -1;}
+    to {z-index: -2;}
   }
 </style>
