@@ -2,7 +2,7 @@
   <div class="inheritance_create">
     <Stepper
       stepperName="Create Contract"
-      :pageWanted="getPageSelected"
+      :pageWanted="getPageSelectedIC"
       @newPageClicked="stepperPageChangeRequested"
     >
       <StepperStep pageTitle="Will Timer">
@@ -40,12 +40,12 @@ export default {
     InheritanceCreateStep2
   },
   computed: {
-    ...mapGetters(['getPageSelected'])
+    ...mapGetters(['getPageSelectedIC'])
   },
   methods: {
-    ...mapActions(['changePage']),
+    ...mapActions(['changePageIC']),
     stepperPageChangeRequested (inNumber) {
-      this.changePage(inNumber);
+      this.changePageIC(inNumber);
     }
   }
 };

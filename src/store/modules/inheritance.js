@@ -1,3 +1,4 @@
+// Inheritance Contract State (IC)
 const state = {
   pages: [
     { pageTitle: 'Will Timer', ready: false },
@@ -6,21 +7,31 @@ const state = {
     { pageTitle: 'Back up', ready: false }
   ],
   // 0 none, 1+ are pages
-  pageSelected: 1
+  pageSelected: 1,
+  contractValues: {
+    daysDelay: '1'
+  }
 };
 
 const getters = {
-  getPageSelected: state => state.pageSelected
+  // returns pageSelected
+  getPageSelectedIC: state => state.pageSelected,
+
+  // returns daysDelay
+  getDelayIC: state => state.contractValues.daysDelay
 };
 
 const actions = {
   // change a page's readiness status
-  updatePageStatus ({ commit }, { pageIndex, status }) {
+  updatePageStatusIC ({ commit }, { pageIndex, status }) {
     commit('setPageStatus', { pageIndex, status });
   },
   // change pageSelected to given page
-  changePage ({ commit }, newPage) {
+  changePageIC ({ commit }, newPage) {
     commit('setPage', newPage);
+  },
+  updateContractValuesIC: ({ commit }, payload) => {
+    commit('setContractValues', payload);
   }
 };
 
@@ -37,6 +48,9 @@ const mutations = {
     // change first to 0 so change is detected by all the components
     state.pageSelected = 0;
     state.pageSelected = (newPage <= maxPage) ? newPage : oldPage;
+  },
+  setContractValues: (state, payload) => {
+    state.contractValues = { ...state.contractValues, ...payload };
   }
 };
 

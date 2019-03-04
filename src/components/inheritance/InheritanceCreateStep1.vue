@@ -23,7 +23,7 @@
         &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
       <div
-        class="arrowButton"
+        class="arrowButton fa"
         @click="onNextButtonClick"
       >
         Next
@@ -33,18 +33,28 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'; // state
+import { mapActions, mapGetters } from 'vuex'; // state
 
 export default {
   name: 'InheritanceCreateStep1',
   data: () => ({
-    defaultTime: '365',
     timeValue: '365',
     lastTimer: null
   }),
+  computed: {
+    ...mapGetters(['getDelayIC'])
+  },
+  mounted () {
+    // load time value from state
+    this.timeValue = this.getDelayIC;
+  },
   methods: {
     // vuex action to change page ready status to true/false
-    ...mapActions(['updatePageStatus', 'changePage']),
+    ...mapActions([
+      'updatePageStatusIC',
+      'changePageIC',
+      'updateContractValuesIC'
+    ]),
     numberChanged (event) {
       // change text input to allowed characters
       const newText = event.target.value;
@@ -66,21 +76,26 @@ export default {
       }, 3000);
     },
     refreshNumber () {
-      // make scheck that value is non 0 and a real number or reset to default
+      // make sceck that value is non 0 and a real number or reset to default
       if (parseFloat(this.timeValue) === 0 || isNaN(this.timeValue) || !this.timeValue) {
-        this.timeValue = this.defaultTime;
+        this.timeValue = this.getDelayIC;
       }
       // remove pointless zeros and decimal points w/o reason
       this.timeValue = parseFloat(this.timeValue).toString();
       // update view
-      this.$refs.question__time__input.value = this.timeValue;
-      this.updatePageStatus({ pageIndex: 0, status: true });
+      try {
+        this.$refs.question__time__input.value = this.timeValue;
+      } catch (e) {}
+      // update readiness
+      this.updatePageStatusIC({ pageIndex: 0, status: true });
+      // update contract value
+      this.updateContractValuesIC({ daysDelay: this.timeValue });
     },
     onNextButtonClick () {
       // convert to valid number
       this.refreshNumber();
       // now change page to step 2
-      this.changePage(2);
+      this.changePageIC(2);
     }
   }
 };
@@ -145,8 +160,8 @@ export default {
   .arrowButton {
       font-size: 3vmin;
       /* font-weight: bold; */
-      margin: 3vmin 0;
-      margin-left: 70%;
+      margin: 0 auto;
+      margin-top: 4vmin;
       width: max-content;
       height: 5vmin;
       line-height: 5vmin;
@@ -184,6 +199,14 @@ export default {
   }
   .arrowButton:hover {
       background-color: white;
+  }
+  /* force animation of text if visual bug */
+  .fa {
+    animation: fa 1s 0.1s infinite alternate;
+  }
+  @keyframes fa {
+    from {color: #ffa503;}
+    to {color: #ffa500;}
   }
 
 </style>
