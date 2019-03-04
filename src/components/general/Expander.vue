@@ -60,6 +60,8 @@ export default {
           // text is invisible until highlighted or updated in any
           // manner. attempting to force refresh on slot components
           // at the end of the animation to show the text automatically.
+          // has also appeared before for elements with opacity < 1
+          // when undergoing this type of animation
           try {
             this.$slots.default.forEach(item => {
               item.componentInstance.$forceUpdate();

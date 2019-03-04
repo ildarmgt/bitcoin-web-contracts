@@ -150,9 +150,9 @@ export default {
   .stepTitleSelected {
     color: white;
   }
-  .stepSelected {
+  /* .stepSelected {
     border-top: white solid 0.15vmin;
-  }
+  } */
   .noselect {
     -webkit-user-select: none;
     -moz-user-select: -moz-none;
