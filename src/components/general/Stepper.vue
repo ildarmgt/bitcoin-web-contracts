@@ -14,15 +14,21 @@
         class="nav__steps__step"
         v-for="(eaTitle, index) in titles()"
         :key="eaTitle"
+        @click="stepClicked(eaTitle, index + 1)"
+        :class="setNavClasses(eaTitle).step"
       >
         <!-- created for each step -->
-        <div @click="stepClicked(eaTitle)">
-          <div class="nav__steps__step__number">
-            {{ index + 1 }}
-          </div>
-          <div class="nav__steps__step__title">
-            {{ eaTitle }}
-          </div>
+        <div
+          class="nav__steps__step__number noselect"
+          :class="setNavClasses(eaTitle).stepNumber"
+        >
+          {{ index + 1 }}
+        </div>
+        <div
+          class="nav__steps__step__title noselect"
+          :class="setNavClasses(eaTitle).stepTitle"
+        >
+          {{ eaTitle }}
         </div>
       </div>
     </div>
@@ -34,27 +40,47 @@ export default {
   name: 'Stepper',
   data: () => ({
     lastSelection: 'none',
-    pagesReady: {}
+    pageList: []
   }),
   props: {
     stepperName: { type: String, default: '' },
     pageWanted: { type: Number, default: 0 }
   },
   methods: {
+    // return array of step titles
     titles () {
       // convert internal vnodes's attributes into array of titles
       const res = this.$slots.default.reduce((reducer, value) => {
         return [...reducer, value.data.attrs.pageTitle];
       }, []);
 
-      // if pageWanted is 0, select first page by default
+      // if pageWanted prop is 0 or not defined, select first page by default
       // otherwise select pageWanted
       this.lastSelection = this.pageWanted ? res[this.pageWanted - 1] : res[0];
 
+      // store it in data for book keeping
+      this.pageList = res;
+
       return res;
     },
-    stepClicked (inTitle) {
+    stepClicked (inTitle, inPageNum) {
+      // emit page change in case parent listening
+      this.$emit('newPageClicked', inPageNum);
       this.lastSelection = inTitle;
+    },
+    // returns an array of classes for the bottom steps nav bar
+    setNavClasses (inTitle) {
+      if (this.lastSelection === inTitle) {
+        // if this is the selected step
+        return {
+          step: ['stepSelected'],
+          stepNumber: ['stepNumberSelected'],
+          stepTitle: ['stepTitleSelected']
+        };
+      } else {
+        // if this is a non selected step
+        return [];
+      }
     }
   }
 };
@@ -89,8 +115,11 @@ export default {
   }
   .nav__steps__step {
     display: inline-block;
-    margin: 1vmin 2vmin;
-    border-radius: 3vmin;
+    margin: 0 2vmin;
+    margin-bottom: 1vmin;
+    /* border-radius: 3vmin; */
+    padding-top: 1vmin;
+    cursor: pointer;
   }
   .nav__steps__step__number {
     display: inline-block;
@@ -103,6 +132,7 @@ export default {
     border-radius: 3vmin;
     font-size: 2.5vmin;
     cursor: pointer;
+    margin-bottom: 1vmin;
   }
   .nav__steps__step__title {
     display: inline-block;
@@ -110,5 +140,23 @@ export default {
     color: rgba(255, 225, 225, 0.7);
     font-size: 2.5vmin;
     cursor: pointer;
+  }
+  .stepNumberSelected {
+    border: 0.15vmin solid white;
+    color: white;
+    background-color: orange;
+    /* background-color: white; */
+  }
+  .stepTitleSelected {
+    color: white;
+  }
+  .stepSelected {
+    border-top: white solid 0.15vmin;
+  }
+  .noselect {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
   }
 </style>

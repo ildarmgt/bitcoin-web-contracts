@@ -22,7 +22,10 @@
         Measured from moment funding is confirmed.<br>
         &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
-      <div class="arrowButton" @click="changePage(2)">
+      <div
+        class="arrowButton"
+        @click="onNextButtonClick"
+      >
         Next
       </div>
     </div>
@@ -72,6 +75,12 @@ export default {
       // update view
       this.$refs.question__time__input.value = this.timeValue;
       this.updatePageStatus({ pageIndex: 0, status: true });
+    },
+    onNextButtonClick () {
+      // convert to valid number
+      this.refreshNumber();
+      // now change page to step 2
+      this.changePage(2);
     }
   }
 };
@@ -150,7 +159,7 @@ export default {
       position: relative;
       display: block;
       border-radius: 1vmin 2vmin 2vmin 1vmin;
-      z-index: 0;
+      z-index: 1;
       -webkit-user-select: none;
       -moz-user-select: -moz-none;
       -ms-user-select: none;
@@ -168,7 +177,7 @@ export default {
       background-color: inherit;
       border-radius: 2vmin 1.3vmin 1vmin 1.3vmin;
       transform: rotate(-45deg) scale(0.707);
-      z-index: -1;
+      z-index: 0;
   }
   .arrowButton:active {
     transform: translateY(0.2vmin);

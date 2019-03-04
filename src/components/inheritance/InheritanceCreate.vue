@@ -1,8 +1,9 @@
 <template>
   <div class="inheritance_create">
     <Stepper
-      stepperName="Generate Contract"
+      stepperName="Create Contract"
       :pageWanted="getPageSelected"
+      @newPageClicked="stepperPageChangeRequested"
     >
       <StepperStep pageTitle="Will Timer">
         <InheritanceCreateStep1 />
@@ -28,7 +29,7 @@ import InheritanceCreateStep1 from './InheritanceCreateStep1';
 import InheritanceCreateStep2 from './InheritanceCreateStep2';
 
 // vuex state
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'InheritanceCreate',
@@ -40,6 +41,12 @@ export default {
   },
   computed: {
     ...mapGetters(['getPageSelected'])
+  },
+  methods: {
+    ...mapActions(['changePage']),
+    stepperPageChangeRequested (inNumber) {
+      this.changePage(inNumber);
+    }
   }
 };
 </script>
