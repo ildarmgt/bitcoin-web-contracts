@@ -56,6 +56,15 @@ export default {
 
         this.lastTimer = setTimeout(() => {
           this.autoHeight();
+          // visual bug on chrome (not ff) in rare instances where
+          // text is invisible until highlighted or updated in any
+          // manner. attempting to force refresh on slot components
+          // at the end of the animation to show the text automatically.
+          try {
+            this.$slots.default.forEach(item => {
+              item.componentInstance.$forceUpdate();
+            });
+          } catch (e) {}
         }, ANIMATION_SECONDS * 1000 * 1.1);
       });
     },
