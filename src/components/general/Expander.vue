@@ -74,7 +74,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
   .expander {
     overflow: hidden;
     height: auto;
@@ -85,7 +85,7 @@ export default {
     animation: fa 1s 0.1s infinite alternate;
   }
   @keyframes fa {
-    from {z-index: -1;}
-    to {z-index: -2;}
+    from {z-index: 10;}
+    to {z-index: 20;}
   }
 </style>

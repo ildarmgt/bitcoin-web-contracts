@@ -3,27 +3,27 @@
     <div class="question">
       <!-- main page question -->
       <div class="question__strong">
-        How long until inheritance can be spent by the Heir?
+        What private key to use for the Owner?
       </div>
       <!-- input value -->
-      <div class="question__time">
-        <input
-          type="text"
-          class="question__time__input"
-          ref="question__time__input"
-          maxlength="5"
-          :value="timeValue"
-          @input="numberChanged"
-          @change="refreshNumber"
+      <div class="question__key">
+        <div
+          contenteditable="true"
+          class="question__key__input"
+          ref="question__key__input"
         >
-        <div class="question__time__label">
-          days
+          {{ key }}
         </div>
+        <!-- for later @input="" @change="" js .textContent -->
       </div>
+
       <!-- text to clarify questions and input  -->
       <div class="question__light">
-        To be measured from moment funding is confirmed.<br>
-        &nbsp;&nbsp;&nbsp;Value of up to 388 days.
+        Private key is in
+        <a href="https://en.bitcoin.it/wiki/Wallet_import_format">
+          WIF format
+        </a>
+        &nbsp;&nbsp;&nbsp;
       </div>
       <!-- button to go to next page -->
       <div
@@ -37,86 +37,29 @@
 </template>
 
 <script>
+import bitcoin from 'bitcoinjs-lib'; // bitcoin lib
 import { mapActions, mapGetters } from 'vuex'; // state
 
 export default {
-  name: 'InheritanceCreateStep1',
+  name: 'InheritanceCreateStep2',
   data: () => ({
-    timeValue: '365', // stores number to display
-    lastTimer: null // stores timer id used for fixing numbers
+    key: ''
   }),
+  components: {},
   mounted () {
-    // load default time value from vuex
-    this.timeValue = this.getDelayIC;
+    // generate initial private key
+    this.key = bitcoin.ECPair.makeRandom().toWIF();
   },
   computed: {
-    ...mapGetters([
-      'getDelayIC' // get delay from vuex of inheritance contract
-    ])
+    ...mapGetters([])
   },
   methods: {
     ...mapActions([
-      'updatePageStatusIC', // set page ready status to true/false (vuex)
-      'changePageIC', // set selected page (vuex)
-      'updateContractValuesIC' // set stored contract values (vuex)
+      'changePageIC' // change page (vuex)
     ]),
-    // modifies input value to match only filtered values and
-    // initiates a timer to fix nonsense values after delay
-    numberChanged (event) {
-      // change text input to allowed characters
-      const newText = event.target.value;
-      const filter = '0123456789.'; // only these characters allowed
-      const filteredText = newText
-        .split('')
-        .filter(letter => filter.indexOf(letter) > -1)
-        .join('');
-
-      // check that value is below 1.06 years or 388 days (bip 68)
-      const fixedNumber = parseFloat(filteredText) > 388 ? '388' : filteredText;
-
-      // update values
-      this.$refs.question__time__input.value = this.timeValue = fixedNumber;
-
-      // let user type and do final checks after 3 sec delay of not typing
-      // this way user's not interrupted if erasing all or mistyped
-      // start by clearing out last timer and setting new timer
-      clearTimeout(this.lastTimer);
-      this.lastTimer = setTimeout(() => {
-        this.refreshNumber();
-      }, 3000);
-    },
-    // get rid of blank, non-numbers,
-    refreshNumber () {
-      // make sceck that value is non-0, not blank, and a real number
-      // or reset to default number
-      let inputValue = this.timeValue;
-      if (
-        parseFloat(inputValue) === 0 ||
-        isNaN(inputValue) ||
-        !inputValue
-      ) {
-        inputValue = this.getDelayIC;
-      }
-
-      // remove pointless zeros and decimal points w/o reason
-      inputValue = parseFloat(inputValue).toString();
-
-      // update view
-      // div might not exist so wrapped in try
-      try {
-        this.$refs.question__time__input.value = inputValue;
-      } catch (e) {}
-      // update page readiness
-      this.updatePageStatusIC({ pageIndex: 0, status: true });
-      // update contract value
-      this.updateContractValuesIC({ daysDelay: inputValue });
-    },
-    // next button event
     onNextButtonClick () {
-      // convert to valid number
-      this.refreshNumber();
-      // now change page to step 2
-      this.changePageIC(2);
+      // now change page to step 3
+      this.changePageIC(3);
     }
   }
 };
@@ -125,38 +68,63 @@ export default {
 <style scoped>
   .question {
     text-align: left;
-    margin: 0vmin 2vmin;
+    /* margin: 0vmin 2vmin; */
   }
   .question__strong {
     display: block;
     font-size: 3vmin;
     color: white;
-    margin-right: 3vmin;
+    /* margin-right: 3vmin; */
     margin-left: 5%;
     font-weight: bold;
   }
-  .question__time {
+  .question__key {
     display: block;
+    margin-left: 10%;
+    margin-right: 10%;
     margin-top: 4vmin;
     margin-bottom: 3vmin;
     text-align: left;
-    margin-left: 10%;
   }
-  .question__time__input {
+  .question__key__input {
     font-size: 3vmin;
-    height: 4vmin;
-    width: 10vmin;
+    /* height: 2vmin; */
+    width: 100%;
     text-align: center;
     border: none;
     background-color: rgba(255, 255, 255, 0.75);
     color: orange;
+    border: 1vmin orange solid;
     display: inline-block;
     transition: background-color 0.15s;
+    overflow-x: auto;
+    white-space: nowrap;
+    /* firefox */
+    scrollbar-color: rgba(255, 166, 0, 0.5) rgba(255, 166, 0, 0);
+    scrollbar-width: thin;
   }
-  .question__time__input:focus,.question__time__input:hover {
+  /* scroll bar */
+  .question__key__input::-webkit-scrollbar {
+    background: orange;
+    /* width: 5px; */
+  }
+  /* scroll bar background */
+  .question__key__input::-webkit-scrollbar-track {
+    background: orange;
+  }
+  /* scroll bar itself */
+  .question__key__input::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 1vh;
+    border: 0.4vh solid orange;
+  }
+  .question__key__input:focus {
+    outline: none;
+  }
+  .question__key__input:focus,.question__key__input:hover {
     background: white;
   }
-  .question__time__label {
+  .question__key__label {
     font-size: 3vmin;
     color: white;
     margin-left: 1vmin;
@@ -170,9 +138,6 @@ export default {
     margin-top: 2vmin;
     line-height: 2.7vmin;
     margin-left: 15%;
-  }
-  input:focus{
-    outline: none;
   }
   .arrowButton {
       font-size: 3vmin;
