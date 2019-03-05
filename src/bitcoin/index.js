@@ -18,7 +18,7 @@ export const inhertianceContract = ({ days, ownerWIF, heirWIF, networkChoice }) 
 
   // get key pair object from WIF private keys
   const ownerKey = bitcoin.ECPair.fromWIF(ownerWIF, network);
-  const heirKey = bitcoin.ECPair.fromWIF(ownerWIF, network);
+  const heirKey = bitcoin.ECPair.fromWIF(heirWIF, network);
 
   const relLockTime = bip68.encode({
     // must be multiple of 512 seconds (see BIP68)

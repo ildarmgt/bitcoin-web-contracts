@@ -148,7 +148,6 @@ export default {
     width: 10vmin;
     text-align: center;
     border: none;
-    /* background-color: rgba(255, 255, 255, 0.75); */
     background-color: white;
     color: orange;
     display: inline-block;
@@ -169,7 +168,7 @@ export default {
     font-size: 2vmin;
     color: white;
     margin-top: 2vmin;
-    line-height: 2.7vmin;
+    line-height: 3vmin;
     margin-left: 15%;
   }
   input:focus{

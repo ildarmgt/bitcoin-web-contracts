@@ -3,7 +3,7 @@
     <div class="q">
       <!-- main page q -->
       <div class="q__lbl1">
-        Contract address calculated:
+        Contract information calculated:
       </div>
       <div class="q__backup">
         <a
@@ -40,7 +40,7 @@ import { inhertianceContract } from './../../bitcoin';
 export default {
   name: 'InheritanceCreateStep4',
   data: () => ({
-    address: 'Test'
+    address: ''
   }),
   mounted () {
     this.redoPageContent();
@@ -123,8 +123,6 @@ export default {
   }
   .q__backup__link {
     display: inline-block;
-    /* margin: 0 auto; */
-    /* width: auto; */
     text-decoration: none;
     font-size: 3vmin;
     line-height: 3vmin;
@@ -151,7 +149,6 @@ export default {
     color: white;
   }
   .q__contract__addy {
-    /* background-color: white; */
     display: block;
     margin: 0 auto;
     color: white;

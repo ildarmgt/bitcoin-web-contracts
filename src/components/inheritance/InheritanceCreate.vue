@@ -14,7 +14,7 @@
       <StepperStep pageTitle="Heir Key">
         <InheritanceCreateStep3 />
       </StepperStep>
-      <StepperStep pageTitle="Done">
+      <StepperStep pageTitle="Contract">
         <InheritanceCreateStep4 />
       </StepperStep>
     </Stepper>

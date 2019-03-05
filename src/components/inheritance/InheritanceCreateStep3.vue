@@ -24,7 +24,6 @@
             new
           </div>
         </div>
-        <!-- for later   js .textContent -->
       </div>
       <!-- text to clarify qs and input  -->
       <div class="q__light">
