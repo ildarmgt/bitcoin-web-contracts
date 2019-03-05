@@ -3,7 +3,7 @@
     <div class="q">
       <!-- main page q -->
       <div class="q__strong">
-        And what is the Heir's private key?
+        And what is the <span class="heir">Heir</span>'s private key?
       </div>
       <!-- input value  -->
       <div class="q__key">
@@ -81,8 +81,8 @@ export default {
       'updateContractValuesIC' // update contract values
     ]),
     newKey () {
-      const network = bitcoin.networks.testnet;
-      // const network = bitcoin.networks.bitcoin;
+      // const network = bitcoin.networks.testnet;
+      const network = bitcoin.networks.bitcoin;
 
       return bitcoin.ECPair.makeRandom({ network }).toWIF();
     },
@@ -108,8 +108,8 @@ export default {
       // https://en.wikipedia.org/wiki/Base58#cite_note-3
 
       let fixedKey = newKey
-        .replace(/(\r\n|\n|\r)/gm, '') // line breaks
-        .replace(/\s/g, '') // white space
+        // .replace(/(\r\n|\n|\r)/gm, '') // line breaks
+        // .replace(/\s/g, '') // white space
         .split('')
         .filter(letter => base58filter.indexOf(letter) > -1)
         .join(''); // specific chars only
@@ -295,5 +295,9 @@ export default {
   }
   .arrowButton:hover {
       background-color: white;
+  }
+  .heir {
+    color: rgb(0, 134, 0);
+    white-space:nowrap;
   }
 </style>

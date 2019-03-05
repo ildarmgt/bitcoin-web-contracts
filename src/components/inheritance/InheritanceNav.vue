@@ -4,7 +4,7 @@
       @selectionChoice="onButtonSelect"
       :color="'rgba(255, 165, 0, 0.8)'"
       :meaning="'create'"
-      :buttonText="'Create this contract'"
+      :buttonText="'Create contract'"
       :meaningSelected="lastSelection"
     />
 
