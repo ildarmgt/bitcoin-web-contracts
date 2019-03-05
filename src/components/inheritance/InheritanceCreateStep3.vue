@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { newWIF } from './../../bitcoin';
+import { newWIF, isWifValid } from './../../bitcoin';
 import { mapActions, mapGetters } from 'vuex'; // state
 
 export default {
@@ -74,6 +74,12 @@ export default {
       'getContractValuesIC'
     ])
   },
+  // watch: {
+  //   key: () => {
+  //     const stored = this.getContractValuesIC;
+  //     // console.log(isWifValid({ wif: this.key, networkChoice: stored.networkChoice }) ? 'key valid' : 'key invalid');
+  //   }
+  // },
   methods: {
     ...mapActions([
       'changePageIC', // change page (vuex)
@@ -96,10 +102,8 @@ export default {
     updateKey (event) {
       // grab content and trim it
       let newKey = event.target.value;
-      // innerHTML, innerText, textContent, innerText.trim()
 
       // remove unwanted chars
-
       const base58filter = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
       // https://en.wikipedia.org/wiki/Base58#cite_note-3
 
@@ -122,6 +126,11 @@ export default {
 
       // update view
       this.key = fixedKey;
+
+      // validity check
+      const stored = this.getContractValuesIC;
+      const isValid = isWifValid({ wif: this.key, networkChoice: stored.networkChoice });
+      if (!isValid) { console.log('key invalid'); }
     }
   }
 };

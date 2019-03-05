@@ -8,8 +8,20 @@ export const newWIF = (network_choice) => {
   return bitcoin.ECPair.makeRandom({ network }).toWIF();
 };
 
+// check if private key is valid
+export const isWifValid = ({ wif, networkChoice }) => {
+  try {
+    const network = bitcoin.networks[networkChoice];
+    const keyPair = bitcoin.ECPair.fromWIF(wif, network);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 // returns all the info necessary to fund inheritance contract
 // address should be unique for the 4 provided parameters
+// pay to witness script hash (p2wsh) version
 export const inhertianceContract = ({ days, ownerWIF, heirWIF, networkChoice }) => {
   // shortcuts
   const network = bitcoin.networks[networkChoice];
