@@ -131,6 +131,13 @@ export default {
     border: 0.3vmin solid white;
     border-radius: 3vmin;
     padding: 0.5vmin 2vmin;
+    cursor: pointer;
+  }
+  .q__backup__link:hover {
+    transform: translateY(-0.1vmin);
+  }
+  .q__backup__link:active {
+    transform: translateY(0.1vmin);
   }
   .q__backup__note1 {
     display: block;

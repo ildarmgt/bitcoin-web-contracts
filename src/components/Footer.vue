@@ -35,6 +35,7 @@ export default {
 <style scoped>
   .footer {
     margin: 0 0 0 0;
+    margin-bottom: 5vmin;
     vertical-align: middle;
   }
 

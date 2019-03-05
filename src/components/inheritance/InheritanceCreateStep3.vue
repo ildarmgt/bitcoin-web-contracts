@@ -14,6 +14,7 @@
           spellcheck="false"
           @input="updateKey"
           @change="checkValidity"
+          @keyup.enter="checkValidity"
           :value="key"
         />
         <div class="q__key__btns">
@@ -194,29 +195,21 @@ export default {
   }
   /* chrome scroll bar */
   .q__key__input::-webkit-scrollbar {
-    /* background: orange; */
     background: rgba(255, 255, 255, 0);
-    /* width: 0.5vh; */
     height: 1vmin;
   }
   /* chrome scroll bar background */
   .q__key__input::-webkit-scrollbar-track {
-    /* background: orange; */
     background: rgba(255, 255, 255, 0);
   }
   /* scroll bar itself */
   .q__key__input::-webkit-scrollbar-thumb {
-    /* background-color: rgba(255, 255, 255, 0.5); */
     background-color: rgba(255, 166, 0, 0.466);
     border-radius: 1vmin;
-    /* border: 0.1vmin solid white; */
     box-shadow: inset 0 0 0 0.1vmin white;
   }
   .q__key__input:focus {
     outline: none;
-  }
-  .q__key__input:focus,.q__key__input:hover {
-    background: white;
   }
   .q__key__btns {
     margin-top: 0.5vmin;

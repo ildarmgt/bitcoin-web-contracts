@@ -14,6 +14,7 @@
           spellcheck="false"
           @input="updateKey"
           @change="checkValidity"
+          @keyup.enter="checkValidity"
           :value="key"
         />
         <div class="q__key__btns">
@@ -203,9 +204,6 @@ export default {
   }
   .q__key__input:focus {
     outline: none;
-  }
-  .q__key__input:focus,.q__key__input:hover {
-    background: white;
   }
   .q__key__btns {
     margin-top: 0.5vmin;

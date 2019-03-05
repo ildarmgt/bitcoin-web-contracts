@@ -31,15 +31,15 @@ export default {
 <style scoped>
   .flashMessage {
     position: fixed;
-    bottom: 2vmin;
-    left: 2vmin;
-    padding-left: 2vmin;
+    top: 2vmin;
+    left: 25%;
+    width: 50%;
+    z-index: 100;
   }
   .app {
     display: inline-block;
     width: 85%;
   }
-
   .view {
     margin-top: 2vmin;
     margin-bottom: 2vmin;
