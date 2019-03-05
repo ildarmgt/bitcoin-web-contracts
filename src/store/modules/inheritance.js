@@ -9,13 +9,18 @@ const state = {
   // 0 none, 1+ are pages
   pageSelected: 1,
   contractValues: {
-    daysDelay: '1'
+    daysDelay: '1',
+    ownerKey: '',
+    heirKey: ''
   }
 };
 
 const getters = {
   // returns pageSelected
   getPageSelectedIC: state => state.pageSelected,
+
+  // return all contractValues
+  getContractValuesIC: state => state.contractValues,
 
   // returns daysDelay
   getDelayIC: state => state.contractValues.daysDelay

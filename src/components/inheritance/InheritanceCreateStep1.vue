@@ -148,7 +148,8 @@ export default {
     width: 10vmin;
     text-align: center;
     border: none;
-    background-color: rgba(255, 255, 255, 0.75);
+    /* background-color: rgba(255, 255, 255, 0.75); */
+    background-color: white;
     color: orange;
     display: inline-block;
     transition: background-color 0.15s;

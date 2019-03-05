@@ -124,10 +124,10 @@ export default {
     cursor: pointer;
   }
   .nav__steps__step:hover {
-    transform: translateY(-0.2vmin);
+    transform: translateY(-0.1vmin);
   }
   .nav__steps__step:active {
-    transform: translateY(0.2vmin);
+    transform: translateY(0.1vmin);
   }
   .nav__steps__step__number {
     display: inline-block;

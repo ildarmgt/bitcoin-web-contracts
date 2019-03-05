@@ -12,7 +12,7 @@
         <InheritanceCreateStep2 />
       </StepperStep>
       <StepperStep pageTitle="Heir Key">
-        Create the Heir's key
+        <InheritanceCreateStep3 />
       </StepperStep>
       <StepperStep pageTitle="Back up">
         Back up the information
@@ -27,6 +27,7 @@ import Stepper from './../general/Stepper';
 import StepperStep from './../general/StepperStep';
 import InheritanceCreateStep1 from './InheritanceCreateStep1';
 import InheritanceCreateStep2 from './InheritanceCreateStep2';
+import InheritanceCreateStep3 from './InheritanceCreateStep3';
 
 // vuex state
 import { mapGetters, mapActions } from 'vuex';
@@ -37,7 +38,8 @@ export default {
     Stepper,
     StepperStep,
     InheritanceCreateStep1,
-    InheritanceCreateStep2
+    InheritanceCreateStep2,
+    InheritanceCreateStep3
   },
   computed: {
     ...mapGetters(['getPageSelectedIC'])

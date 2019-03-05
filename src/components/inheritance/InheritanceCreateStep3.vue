@@ -56,21 +56,21 @@ import bitcoin from 'bitcoinjs-lib'; // bitcoin lib
 import { mapActions, mapGetters } from 'vuex'; // state
 
 export default {
-  name: 'InheritanceCreateStep2',
+  name: 'InheritanceCreateStep3',
   data: () => ({
     key: ''
   }),
   components: {},
   mounted () {
     // show initial private key
-    const ownerKey = this.getContractValuesIC.ownerKey;
-    if (ownerKey) {
-      this.key = ownerKey;
+    const heirKey = this.getContractValuesIC.heirKey;
+    if (heirKey) {
+      this.key = heirKey;
     } else {
       this.key = this.newKey();
     }
     // update vuex
-    this.updateContractValuesIC({ ownerKey: this.key });
+    this.updateContractValuesIC({ heirKey: this.key });
   },
   computed: {
     ...mapGetters([
@@ -88,13 +88,13 @@ export default {
     newKeyRequested () {
       const newKey = this.newKey();
       // update vuex
-      this.updateContractValuesIC({ ownerKey: newKey });
+      this.updateContractValuesIC({ heirKey: newKey });
       // update view
       this.key = newKey;
     },
     onNextButtonClick () {
-      // now change page to step 3
-      this.changePageIC(3);
+      // now change page to step 4
+      this.changePageIC(4);
     },
     updateKey (event) {
       // grab content and trim it
@@ -118,7 +118,7 @@ export default {
       }
 
       // update vuex
-      this.updateContractValuesIC({ ownerKey: fixedKey });
+      this.updateContractValuesIC({ heirKey: fixedKey });
 
       // this seems to be necessary
       event.target.value = fixedKey;
