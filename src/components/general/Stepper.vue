@@ -127,7 +127,7 @@ export default {
     transform: translateY(-0.1vmin);
   }
   .nav__steps__step:active {
-    transform: translateY(0.1vmin);
+    transform: translateY(0.2vmin);
   }
   .nav__steps__step__number {
     display: inline-block;

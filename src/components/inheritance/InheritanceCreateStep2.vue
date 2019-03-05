@@ -3,7 +3,7 @@
     <div class="q">
       <!-- main page q -->
       <div class="q__strong">
-        What private key to use for the Owner?
+        What is the Owner's private key?
       </div>
       <!-- input value  -->
       <div class="q__key">
@@ -30,9 +30,7 @@
       <div class="q__light">
         Generated a random one.
         <br>&nbsp;&nbsp;&nbsp;
-        You can provide your own.
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        Must be in WIF format.
+        You can provide your own in WIF format.
         <a
           target="_blank"
           href="https://en.bitcoin.it/wiki/Wallet_import_format"
@@ -83,7 +81,10 @@ export default {
       'updateContractValuesIC' // update contract values
     ]),
     newKey () {
-      return bitcoin.ECPair.makeRandom().toWIF();
+      const network = bitcoin.networks.testnet;
+      // const network = bitcoin.networks.bitcoin;
+
+      return bitcoin.ECPair.makeRandom({ network }).toWIF();
     },
     newKeyRequested () {
       const newKey = this.newKey();
@@ -155,7 +156,7 @@ export default {
     font-family: 'Montserrat';
     display: inline-block;
     resize: none;
-    font-size: 2.1vmin;
+    font-size: 2.3vmin;
     padding: 0.2vmin 1vmin;
     height: 3.6vmin;
     width: 95%;
