@@ -11,7 +11,8 @@ const state = {
   contractValues: {
     daysDelay: '1',
     ownerKey: '',
-    heirKey: ''
+    heirKey: '',
+    networkChoice: 'bitcoin'
   }
 };
 

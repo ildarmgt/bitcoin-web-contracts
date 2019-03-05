@@ -18,7 +18,7 @@
       </div>
       <div class="q__contract">
         <div class="q__contract__lbl2">
-          Fund this address to initialize it
+          Fund this address to initialize contract
         </div>
         <img
           class="q__contract__qr"
@@ -35,40 +35,63 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
 import qrimage from 'qr-image';
+import { inhertianceContract } from './../../bitcoin';
 
 export default {
   name: 'InheritanceCreateStep4',
   data: () => ({
-    address: '3Gbtesttestsd8f79sd7f9sd87f9s8d7f9s8d7f9sd87f9s8d7f9sd8fest'
+    address: 'Test'
   }),
   mounted () {
-    // create backup link
-    this.updateBackup();
-    this.updateQR(this.address);
+    this.redoPageContent();
   },
   updated () {
-    this.updateBackup();
-    this.updateQR(this.address);
+    this.redoPageContent();
   },
   computed: {
-    ...mapGetters([])
+    ...mapGetters([
+      'getContractValuesIC' // get all contract values
+    ])
   },
   methods: {
     ...mapActions([]),
-    // create backup element
-    updateBackup () {
+    redoPageContent () {
+      try {
+        // calculate contract
+        const contract = this.calculateContract();
+        // create backup link
+        this.updateBackup(contract);
+        // update local state
+        this.address = contract.contractAddress;
+        // updateQR
+        this.updateQR(this.address);
+      } catch (e) {
+        console.log('Error trying to calculate contract info:');
+        console.error(e);
+        this.address = 'Keys provided are invalid';
+      }
+    },
+    calculateContract () {
+      const stored = this.getContractValuesIC;
+      const contractParams = {
+        days: stored.daysDelay,
+        ownerWIF: stored.ownerKey,
+        heirWIF: stored.heirKey,
+        networkChoice: stored.networkChoice
+      };
+      const res = inhertianceContract(contractParams);
+      return res;
+    },
+    updateBackup (contract) {
       // assemble all the data to back up
+      const backupObject = contract;
 
-      const testJson = { banana: 'is good', vegetable: 'is bad' };
+      // back it up
       const data = 'text/json;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(testJson, null, 2));
-      // const a = document.createElement('a');
+        encodeURIComponent(JSON.stringify(backupObject, null, 2));
       const a = this.$refs.backup;
       a.href = 'data:' + data;
       a.download = 'backup_inheritance.json';
-      // let container = this.$refs.backup;
-      // container.appendChild(a);
-      // this.$forceUpdate();
     },
     updateQR (text) {
       // generate qr png image buffer

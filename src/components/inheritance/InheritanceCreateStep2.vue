@@ -28,9 +28,9 @@
       </div>
       <!-- text to clarify qs and input  -->
       <div class="q__light">
-        Generated a random one.
+        Generated a random key.
         <br>&nbsp;&nbsp;&nbsp;
-        You can provide your own in WIF format.
+        Press next or provide your own in WIF format.
         <a
           target="_blank"
           href="https://en.bitcoin.it/wiki/Wallet_import_format"
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import bitcoin from 'bitcoinjs-lib'; // bitcoin lib
+import { newWIF } from './../../bitcoin';
 import { mapActions, mapGetters } from 'vuex'; // state
 
 export default {
@@ -81,10 +81,7 @@ export default {
       'updateContractValuesIC' // update contract values
     ]),
     newKey () {
-      // const network = bitcoin.networks.testnet;
-      const network = bitcoin.networks.bitcoin;
-
-      return bitcoin.ECPair.makeRandom({ network }).toWIF();
+      return newWIF('bitcoin');
     },
     newKeyRequested () {
       const newKey = this.newKey();
