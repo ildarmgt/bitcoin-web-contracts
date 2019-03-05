@@ -5,7 +5,7 @@
       <div class="q__strong">
         What is the <span class="owner">Owner</span>'s private key?
       </div>
-      <!-- input value  -->
+      <!-- input value -->
       <div class="q__key">
         <textarea
           rows="1"
@@ -13,7 +13,7 @@
           ref="q__key__input"
           spellcheck="false"
           @input="updateKey"
-          @change="updateKey"
+          @change="checkValidity"
           :value="key"
         />
         <div class="q__key__btns">
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { newWIF } from './../../bitcoin';
+import { newWIF, isWifValid } from './../../bitcoin';
 import { mapActions, mapGetters } from 'vuex'; // state
 
 export default {
@@ -80,6 +80,20 @@ export default {
       'changePageIC', // change page (vuex)
       'updateContractValuesIC' // update contract values
     ]),
+    checkValidity () {
+      // key validity check
+      const stored = this.getContractValuesIC;
+      const isValid = isWifValid({
+        wif: this.key,
+        networkChoice: stored.networkChoice
+      });
+      if (!isValid) {
+        this.flash('Owner key is invalid', 'error', {
+          timeout: 2000,
+          important: false
+        });
+      }
+    },
     newKey () {
       return newWIF('bitcoin');
     },
@@ -131,13 +145,11 @@ export default {
 <style scoped>
   .q {
     text-align: left;
-    /* margin: 0vmin 2vmin; */
   }
   .q__strong {
     display: block;
     font-size: 3vmin;
     color: white;
-    /* margin-right: 3vmin; */
     margin-left: 5%;
     font-weight: bold;
   }
@@ -158,11 +170,8 @@ export default {
     height: 3.6vmin;
     width: 95%;
     text-align: center;
-    /* background-color: rgba(255, 255, 255, 0.75); */
     background-color: white;
     color: orange;
-    /* box-shadow: inset 0 0 0 2px orange; */
-    /* box-shadow: inset 0 0 0 2px orange; */
     border: 0.1vmin solid white;
     border-right: 0.3vmin solid white;
     border-left: 0.3vmin solid white;
@@ -173,28 +182,22 @@ export default {
     cursor: default;
     /* hide visual bug on scroll bar */
     /* firefox */
-    /* scrollbar-color: rgba(255, 166, 0, 0.5) rgba(255, 166, 0, 0); */
     scrollbar-color: rgba(255, 166, 0, 0.5) rgba(255, 255, 255, 0);
     scrollbar-width: thin;
   }
   /* chrome scroll bar */
   .q__key__input::-webkit-scrollbar {
-    /* background: orange; */
     background: rgba(255, 255, 255, 0);
-    /* width: 0.5vh; */
     height: 1vmin;
   }
   /* chrome scroll bar background */
   .q__key__input::-webkit-scrollbar-track {
-    /* background: orange; */
     background: rgba(255, 255, 255, 0);
   }
   /* scroll bar itself */
   .q__key__input::-webkit-scrollbar-thumb {
-    /* background-color: rgba(255, 255, 255, 0.5); */
     background-color: rgba(255, 166, 0, 0.466);
     border-radius: 1vmin;
-    /* border: 0.1vmin solid white; */
     box-shadow: inset 0 0 0 0.1vmin white;
   }
   .q__key__input:focus {
@@ -250,7 +253,6 @@ export default {
     height: 2vmin;
     padding: 0.1vmin;
     text-decoration: none;
-    /* border: 1px solid white; */
     border-radius: 2vmin;
     background-color: rgba(255, 255, 255, 0.527);
     color: orange;

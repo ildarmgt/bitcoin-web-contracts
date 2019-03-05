@@ -5,7 +5,7 @@
       <div class="q__strong">
         And what is the <span class="heir">Heir</span>'s private key?
       </div>
-      <!-- input value  -->
+      <!-- input value -->
       <div class="q__key">
         <textarea
           rows="1"
@@ -13,7 +13,7 @@
           ref="q__key__input"
           spellcheck="false"
           @input="updateKey"
-          @change="updateKey"
+          @change="checkValidity"
           :value="key"
         />
         <div class="q__key__btns">
@@ -85,6 +85,20 @@ export default {
       'changePageIC', // change page (vuex)
       'updateContractValuesIC' // update contract values
     ]),
+    checkValidity () {
+      // key validity check
+      const stored = this.getContractValuesIC;
+      const isValid = isWifValid({
+        wif: this.key,
+        networkChoice: stored.networkChoice
+      });
+      if (!isValid) {
+        this.flash('Heir key is invalid', 'error', {
+          timeout: 2000,
+          important: false
+        });
+      }
+    },
     newKey () {
       return newWIF('bitcoin');
     },
@@ -126,11 +140,6 @@ export default {
 
       // update view
       this.key = fixedKey;
-
-      // validity check
-      const stored = this.getContractValuesIC;
-      const isValid = isWifValid({ wif: this.key, networkChoice: stored.networkChoice });
-      if (!isValid) { console.log('key invalid'); }
     }
   }
 };

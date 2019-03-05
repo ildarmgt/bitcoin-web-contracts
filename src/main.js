@@ -3,10 +3,15 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import store from './store'; // App state
 
+import VueFlashMessage from 'vue-flash-message';
+
 // components
 import IntroPage from './components/IntroPage';
 import Inheritance from './components/inheritance/Inheritance';
 import PuzzleDelay from './components/puzzledelay/PuzzleDelay';
+
+require('vue-flash-message/dist/vue-flash-message.min.css');
+Vue.use(VueFlashMessage);
 
 Vue.use(VueRouter);
 

@@ -6,6 +6,10 @@
     </div>
     <Footer />
     <DevPanel />
+    <flash-message
+      transitionIn="animated swing"
+      class="flashMessage"
+    />
   </div>
 </template>
 
@@ -24,7 +28,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  .flashMessage {
+    position: fixed;
+    bottom: 2vmin;
+    left: 2vmin;
+    padding-left: 2vmin;
+  }
   .app {
     display: inline-block;
     width: 85%;

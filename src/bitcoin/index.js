@@ -12,7 +12,7 @@ export const newWIF = (network_choice) => {
 export const isWifValid = ({ wif, networkChoice }) => {
   try {
     const network = bitcoin.networks[networkChoice];
-    const keyPair = bitcoin.ECPair.fromWIF(wif, network);
+    void bitcoin.ECPair.fromWIF(wif, network);
     return true;
   } catch (e) {
     return false;
