@@ -89,7 +89,7 @@ export default {
       });
       if (!isValid) {
         this.flash('Owner key is invalid', 'error', {
-          timeout: 2000,
+          timeout: 5000,
           important: false
         });
       }
@@ -175,6 +175,7 @@ export default {
     border: 0.1vmin solid white;
     border-right: 0.3vmin solid white;
     border-left: 0.3vmin solid white;
+    border-top: 1vmin solid white;
     transition: background-color 0.15s;
     overflow-y: hidden;
     overflow-x: scroll;
