@@ -7,7 +7,7 @@
       <div class="q__backup">
         <a
           ref="backup"
-          class="q__backup__link"
+          class="q__backup__link noselect"
         >
           click for backup
         </a>
@@ -16,14 +16,24 @@
           Do not use without saving this text file!
         </div>
       </div>
-      <div class="q__contract">
+      <div
+        class="q__btnShow noselect"
+        v-if="!showRest"
+        @click="showClicked"
+      >
+        Show address
+      </div>
+      <div
+        class="q__contract"
+        v-if="showRest"
+      >
         <img
           class="q__contract__qr"
           ref="q__contract__qr"
         >
         <div class="q__contract__text">
           <div class="q__contract__lbl2">
-            This contract's address:
+            Contract's address to fund:
           </div>
           <a
             :href="`bitcoin:${this.address}`"
@@ -32,6 +42,22 @@
           >
             {{ address }}
           </a>
+          <!-- svg from https://iconmonstr.com -->
+          <div
+            class="btnCopy"
+            @click="btnCopyClicked"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                class=""
+                d="M22 6v16h-16v-16h16zm2-2h-20v20h20v-20zm-24 17v-21h21v2h-19v19h-2z"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +72,8 @@ import { inhertianceContract } from './../../bitcoin';
 export default {
   name: 'InheritanceCreateStep4',
   data: () => ({
-    address: ''
+    address: '',
+    showRest: false
   }),
   mounted () {
     this.redoPageContent();
@@ -72,9 +99,7 @@ export default {
         // updateQR
         this.updateQR(this.address);
       } catch (e) {
-        console.log('Error trying to calculate contract info:');
         console.error(e);
-        this.address = 'Keys provided are invalid';
       }
     },
     calculateContract () {
@@ -105,6 +130,23 @@ export default {
       const qr = qrimage.imageSync(text).toString('base64');
       // add the qr image at source for img element
       this.$refs.q__contract__qr.src = 'data:image/png;base64,' + qr;
+    },
+    showClicked () {
+      this.showRest = true;
+    },
+    btnCopyClicked () {
+      // copy to clipboard
+      (function (text) {
+        var input = document.createElement('input');
+        input.setAttribute('value', text);
+        document.body.appendChild(input);
+        input.select();
+        var result = document.execCommand('copy');
+        document.body.removeChild(input);
+        return result;
+      })(this.address);
+      // notify user
+      this.flash('Copied!', 'success', { timeout: 3000, important: true });
     }
   }
 };
@@ -112,7 +154,7 @@ export default {
 
 <style scoped>
   .q {
-    text-align: left;
+    /* text-align: left; */
     margin: 0vmin 2vmin;
   }
   .q__lbl1 {
@@ -122,6 +164,7 @@ export default {
     margin-right: 3vmin;
     margin-left: 5%;
     font-weight: bold;
+    text-align: left;
   }
   .q__backup {
     margin-top: 6vmin;
@@ -158,7 +201,7 @@ export default {
   }
   .q__contract__text {
     display: inline-block;
-    text-align: center;
+    text-align: left;
     vertical-align: top;
     margin-top: 1vmin;
     margin-left: 2vmin;
@@ -187,4 +230,56 @@ export default {
     display: inline-block;
     margin: 0 auto;
   }
+  .q__btnShow {
+    display: inline-block;
+    position: relative;
+    padding: 0.2vmin 2vmin;
+    padding-left: 5vmin;
+    margin-bottom: 1vmin;
+    color: white;
+    background-color: orange;
+    border: 0.3vmin solid white;
+    border-radius: 3vmin;
+    cursor: pointer;
+  }
+  .q__btnShow:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 1.5vmin;
+    top: 0.8vmin;
+    border-top: 2vmin solid white;
+    border-left: 1.2vmin solid transparent;
+    border-right: 1.2vmin solid transparent;
+  }
+  .q__btnShow:hover {
+    transform: translateY(-0.1vmin);
+  }
+  .q__btnShow:active {
+    transform: translateY(0.1vmin);
+  }
+  .btnCopy {
+    display: block;
+    border-radius: 3vmin;
+    border: white 0.15vmin solid;
+    height: 3vmin;
+    width: 3vmin;
+    padding: 1vmin;
+    margin-left: 6vmin;
+    text-align: center;
+  }
+  .btnCopy svg {
+    fill: white;
+    height: 3vmin;
+    width: 3vmin;
+    vertical-align: top;
+  }
+  .btnCopy:hover {
+    transform: translateY(-0.1vmin);
+  }
+  .btnCopy:active {
+    transform: translateY(0.2vmin);
+  }
+
 </style>

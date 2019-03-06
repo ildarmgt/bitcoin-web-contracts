@@ -84,7 +84,7 @@ export default {
 
   /* force animation of text if visual bug */
   .fa {
-    animation: fa 1s 0.1s infinite alternate;
+    animation: fa 5s 0.1s infinite alternate;
   }
   @keyframes fa {
     from {opacity: 1;}
