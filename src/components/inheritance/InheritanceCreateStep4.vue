@@ -12,25 +12,27 @@
           click for backup
         </a>
         <div class="q__backup__note1">
-          Includes keys & script necessary for use.<br>
-          Keep private. Lose it, lose access.
+          Keep content private. Lose it, lose access.<br>
+          Do not use without saving this text file!
         </div>
       </div>
       <div class="q__contract">
-        <div class="q__contract__lbl2">
-          Fund this address to initialize contract
-        </div>
         <img
           class="q__contract__qr"
           ref="q__contract__qr"
         >
-        <a
-          :href="`bitcoin:${this.address}`"
-          target="_blank"
-          class="q__contract__addy"
-        >
-          {{ address }}
-        </a>
+        <div class="q__contract__text">
+          <div class="q__contract__lbl2">
+            This contract's address:
+          </div>
+          <a
+            :href="`bitcoin:${this.address}`"
+            target="_blank"
+            class="q__contract__addy"
+          >
+            {{ address }}
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -96,7 +98,7 @@ export default {
         encodeURIComponent(JSON.stringify(backupObject, null, 2));
       const a = this.$refs.backup;
       a.href = 'data:' + data;
-      a.download = 'backup_inheritance.json';
+      a.download = 'backup_inheritance.txt';
     },
     updateQR (text) {
       // generate qr png image buffer
@@ -154,30 +156,35 @@ export default {
   .q__contract {
     text-align: center;
   }
+  .q__contract__text {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    margin-top: 1vmin;
+    margin-left: 2vmin;
+  }
   .q__contract__lbl2 {
     margin: 0 auto;
     display: block;
     font-size: 3vmin;
     color: white;
-    margin-top: 10vmin;
-
+    text-align: left;
   }
   .q__contract__addy {
-    display: block;
+    display: inline-block;
     margin: 0 auto;
     color: white;
-    display: block;
-    width: 70%;
-    /* word-wrap: break-word; */
+    display: inline-block;
     word-break: break-all;
     margin-top: 1vmin;
     margin-bottom: 2vmin;
-    text-align: center;
     text-decoration: none;
+    text-align: left;
+    margin-left: 3vmin;
+    margin-right: 3vmin;
   }
   .q__contract__qr {
-    display: block;
+    display: inline-block;
     margin: 0 auto;
-    margin-top: 1vmin;
   }
 </style>
