@@ -4,7 +4,7 @@ Client side Vue based front end showing the power of Bitcoin smart contracts as 
 
 [Current github pages demo.](https://ildarmgt.github.io/bitcoin-web-contracts/)
 
-The latest compiled release used be found in `./docs/` folder
+The latest compiled release used can be found in `./docs/` folder
 
 Compiled .html build can be used offline & on air-gapped computers
 
