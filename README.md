@@ -1,33 +1,30 @@
-# webcontracts
+# Bitcoin Smart Contracts in Browser
 
-Client side w/ front end smart contracts demo
+Client side Vue based front end showing the power of Bitcoin smart contracts as various decentralized applications (dApps)
 
-Build (in `./docs/`) can be used offline & on air grapped computers
+[Current github pages demo.](https://ildarmgt.github.io/bitcoin-web-contracts/)
 
-## Project setup
+The latest compiled release used be found in `./docs/` folder
+
+Compiled .html build can be used offline & on air-gapped computers
+
+### To run precompiled client
 ```
+./docs/index.html # open in browser
+```
+
+### To build project from scratch
+```
+git clone https://github.com/ildarmgt/bitcoin-web-contracts.git btcdapps
+cd btcdapps
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
 npm run build
+./docs/index.html # open in browser
 ```
 
-### Run your tests
-```
-npm run test
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
+
