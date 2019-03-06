@@ -60,7 +60,8 @@ export default {
   methods: {
     ...mapActions([
       'updateContractValuesIC', // update contract values in vuex
-      'changePageIC'
+      'changePageIC',
+      'updateKeysIfInvalid'
     ]),
     menuClicked () {
       const contract = this.getContractValuesIC;
@@ -92,6 +93,8 @@ export default {
       };
       // update vuex
       this.updateContractValuesIC(payload);
+      // (ideally here update addresses to right network)
+      this.updateKeysIfInvalid();
       // reset page
       this.changePageIC(1);
     }

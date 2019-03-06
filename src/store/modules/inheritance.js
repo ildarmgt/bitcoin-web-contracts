@@ -47,6 +47,26 @@ const actions = {
       dispatch('updatePageStatusIC');
     }
   },
+  // if keys are invalid for this network, it will update them
+  updateKeysIfInvalid ({ commit, state, dispatch }) {
+    const isOwnerKeyValid = isWifValid({
+      wif: state.contractValues.ownerKey,
+      networkChoice: state.contractValues.networkChoice
+    });
+    const isHeirKeyValid = isWifValid({
+      wif: state.contractValues.heirKey,
+      networkChoice: state.contractValues.networkChoice
+    });
+    if (!isOwnerKeyValid) {
+      const ownerKey = newWIF(state.contractValues.networkChoice);
+      commit('setContractValues', { ownerKey });
+    }
+    if (!isHeirKeyValid) {
+      const heirKey = newWIF(state.contractValues.networkChoice);
+      commit('setContractValues', { heirKey });
+    }
+    dispatch('updatePageStatusIC');
+  },
   // look at contract values and update valid & usable for each page
   // change a page's readiness status
   updatePageStatusIC ({ commit, state }) {

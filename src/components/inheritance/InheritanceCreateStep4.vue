@@ -9,10 +9,11 @@
           ref="backup"
           class="q__backup__link"
         >
-          click to backup
+          click for backup
         </a>
         <div class="q__backup__note1">
-          Important! Keep private. Lose it, lose access.
+          Includes keys & script necessary for use.
+          Keep&nbsp;private.&nbsp;Lose&nbsp;it,&nbsp;lose&nbsp;access.
         </div>
       </div>
       <div class="q__contract">
@@ -23,9 +24,13 @@
           class="q__contract__qr"
           ref="q__contract__qr"
         >
-        <div class="q__contract__addy">
+        <a
+          :href="`bitcoin:${this.address}`"
+          target="_blank"
+          class="q__contract__addy"
+        >
           {{ address }}
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -144,7 +149,7 @@ export default {
     font-size: 2vmin;
     color: white;
     margin-top: 1vmin;
-    line-height: 2vmin;
+    line-height: 3vmin;
   }
   .q__contract {
     text-align: center;
@@ -167,7 +172,8 @@ export default {
     word-break: break-all;
     margin-top: 1vmin;
     margin-bottom: 2vmin;
-    text-align: left;
+    text-align: center;
+    text-decoration: none;
   }
   .q__contract__qr {
     display: block;
