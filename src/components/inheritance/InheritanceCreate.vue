@@ -58,8 +58,14 @@ export default {
       'getPagesInfoIC'
     ])
   },
+  mounted () {
+    this.initializeIC();
+  },
   methods: {
-    ...mapActions(['changePageIC']),
+    ...mapActions([
+      'changePageIC',
+      'initializeIC'
+    ]),
     // on stepper emits change page request
     stepperPageChangeRequested (inNumber) {
       this.changePageIC(inNumber);

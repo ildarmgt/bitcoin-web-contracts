@@ -1,4 +1,4 @@
-import { isWifValid } from './../../bitcoin'; // bitcoin helper
+import { isWifValid, newWIF } from './../../bitcoin'; // bitcoin helper
 
 // Inheritance Contract State (IC)
 const state = {
@@ -36,6 +36,14 @@ const getters = {
 };
 
 const actions = {
+  initializeIC ({ commit, state, dispatch }) {
+    const ownerKey = newWIF(state.contractValues.networkChoice);
+    const heirKey = newWIF(state.contractValues.networkChoice);
+    commit('setContractValues', { ownerKey, heirKey });
+    // redo the ready/valid checks
+    dispatch('updatePageStatusIC');
+  },
+
   // look at contract values and update valid & usable for each page
   // change a page's readiness status
   updatePageStatusIC ({ commit, state }) {

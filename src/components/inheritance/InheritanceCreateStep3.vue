@@ -66,13 +66,7 @@ export default {
   mounted () {
     // show initial private key
     const heirKey = this.getContractValuesIC.heirKey;
-    if (heirKey) {
-      this.key = heirKey;
-    } else {
-      this.key = this.newKey();
-    }
-    // update vuex
-    this.updateContractValuesIC({ heirKey: this.key });
+    this.key = heirKey;
   },
   computed: {
     ...mapGetters([
@@ -86,7 +80,7 @@ export default {
       'updateContractValuesIC' // update contract values
     ]),
     newKey () {
-      return newWIF('bitcoin');
+      return newWIF(this.getContractValuesIC.networkChoice);
     },
     newKeyRequested () {
       const newKey = this.newKey();
