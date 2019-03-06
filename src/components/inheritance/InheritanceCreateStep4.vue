@@ -9,7 +9,7 @@
           ref="backup"
           class="q__backup__link"
         >
-          backup file
+          click to backup
         </a>
         <div class="q__backup__note1">
           Important! Keep private. Lose it, lose access.
@@ -76,7 +76,8 @@ export default {
         days: stored.daysDelay,
         ownerWIF: stored.ownerKey,
         heirWIF: stored.heirKey,
-        networkChoice: stored.networkChoice
+        networkChoice: stored.networkChoice,
+        addressType: stored.addressType
       };
       const res = inhertianceContract(contractParams);
       return res;
@@ -153,6 +154,8 @@ export default {
     display: block;
     font-size: 3vmin;
     color: white;
+    margin-top: 10vmin;
+
   }
   .q__contract__addy {
     display: block;
@@ -160,9 +163,11 @@ export default {
     color: white;
     display: block;
     width: 70%;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
+    word-break: break-all;
     margin-top: 1vmin;
-
+    margin-bottom: 2vmin;
+    text-align: left;
   }
   .q__contract__qr {
     display: block;

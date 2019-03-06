@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Footer from './components/Footer';
-import Header from './components/Header';
+import Footer from './components/_main/Footer';
+import Header from './components/_main/Header';
 import DevPanel from './components/general/DevPanel';
 
 export default {

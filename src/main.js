@@ -6,7 +6,7 @@ import store from './store'; // App state
 import VueFlashMessage from 'vue-flash-message';
 
 // components
-import IntroPage from './components/IntroPage';
+import IntroPage from './components/_main/IntroPage';
 import Inheritance from './components/inheritance/Inheritance';
 import PuzzleDelay from './components/puzzledelay/PuzzleDelay';
 

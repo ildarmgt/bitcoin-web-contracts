@@ -21,10 +21,3 @@ npm install
 npm run build
 ./docs/index.html # open in browser
 ```
-
-
-
-
-
-
-

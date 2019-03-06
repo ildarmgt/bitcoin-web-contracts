@@ -1,5 +1,6 @@
 <template>
   <div class="inheritance_create">
+    <InheritanceCreateMenu />
     <Stepper
       stepperName="Create Contract"
       :pageWanted="getPageSelectedIC"
@@ -32,6 +33,7 @@
 
 <script>
 // components
+import InheritanceCreateMenu from './InheritanceCreateMenu';
 import Stepper from './../general/Stepper';
 import StepperStep from './../general/StepperStep';
 import InheritanceCreateStep1 from './InheritanceCreateStep1';
@@ -50,7 +52,8 @@ export default {
     InheritanceCreateStep1,
     InheritanceCreateStep2,
     InheritanceCreateStep3,
-    InheritanceCreateStep4
+    InheritanceCreateStep4,
+    InheritanceCreateMenu
   },
   computed: {
     ...mapGetters([
@@ -75,5 +78,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .inheritance_create {
+    position: relative;
+  }
 </style>

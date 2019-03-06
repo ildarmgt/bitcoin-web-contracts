@@ -35,7 +35,8 @@ export default {
       const id = 'outliner';
       const sheet = document.getElementById(id);
       if (!sheet) {
-        const outlineCss = '* {border: 1px solid red !important;}';
+        // const outlineCss = '* {border: 1px solid red !important;}';
+        const outlineCss = '* {box-shadow: 0 0 0 0.15vmin red;}';
         const style = document.createElement('style');
         style.type = 'text/css';
         style.id = 'outliner';

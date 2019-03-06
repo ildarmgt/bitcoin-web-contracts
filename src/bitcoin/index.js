@@ -22,7 +22,8 @@ export const isWifValid = ({ wif, networkChoice }) => {
 // returns all the info necessary to fund inheritance contract
 // address should be unique for the 4 provided parameters
 // pay to witness script hash (p2wsh) version
-export const inhertianceContract = ({ days, ownerWIF, heirWIF, networkChoice }) => {
+export const inhertianceContract = (payload) => {
+  const { days, ownerWIF, heirWIF, networkChoice, addressType } = payload;
   // shortcuts
   const network = bitcoin.networks[networkChoice];
   const op = bitcoin.opcodes;
@@ -38,8 +39,9 @@ export const inhertianceContract = ({ days, ownerWIF, heirWIF, networkChoice }) 
   });
 
   // create contract logic
+  // witness script and redeem script same declaration
   /* eslint-disable */
-  const witnessScript = bitcoin.script.compile([
+  const script = bitcoin.script.compile([
 
     op.OP_IF, // spender submits TRUE (owner branch)
 
@@ -63,26 +65,54 @@ export const inhertianceContract = ({ days, ownerWIF, heirWIF, networkChoice }) 
   ]);
   /* eslint-enable */
 
-  // calculate the p2wsh address from this time version of script
+  // calculate the p2wsh & p2sh address from this time version of script
   const p2wsh = bitcoin.payments.p2wsh({
     redeem: {
-      output: witnessScript,
+      output: script,
       network: network
     }
   });
 
-  const backup = {
+  const p2sh = bitcoin.payments.p2sh({
+    redeem: {
+      output: script,
+      network: network
+    }
+  });
+
+  const backupP2WSH = {
     contract: 'inheritance timer',
+    addressType: addressType,
     contractSummary: 'IF <ownerPublicKey> CHECKSIG ELSE <relativeLockTime> CHECKSEQUENCEVERIFY DROP <heirPublicKey> CHECKSIG ENDIF',
     ownerPrivateKeyWIF: ownerWIF,
     heirPrivateKeyWIF: heirWIF,
-    witnessScriptHex: witnessScript.toString('hex'),
-    witnessScriptHash: bitcoin.crypto.sha256(witnessScript).toString('hex'),
+    witnessScriptHex: script.toString('hex'),
+    witnessScriptHash: bitcoin.crypto.sha256(script).toString('hex'),
     relativeLockTime: relLockTime.toString(),
     currentDate: new Date().toString(),
     daysAfterConfirmForUnlock: days,
     contractAddress: p2wsh.address
   };
 
-  return backup;
+  const backupP2SH = {
+    contract: 'inheritance timer',
+    addressType: addressType,
+    contractSummary: 'IF <ownerPublicKey> CHECKSIG ELSE <relativeLockTime> CHECKSEQUENCEVERIFY DROP <heirPublicKey> CHECKSIG ENDIF',
+    ownerPrivateKeyWIF: ownerWIF,
+    heirPrivateKeyWIF: heirWIF,
+    redeemScriptHex: script.toString('hex'),
+    redeemScriptHash: bitcoin.crypto.sha256(script).toString('hex'),
+    relativeLockTime: relLockTime.toString(),
+    currentDate: new Date().toString(),
+    daysAfterConfirmForUnlock: days,
+    contractAddress: p2sh.address
+  };
+
+  if (addressType === 'p2wsh') {
+    return backupP2WSH;
+  } else if (addressType === 'p2sh') {
+    return backupP2SH;
+  } else {
+    return undefined;
+  }
 };

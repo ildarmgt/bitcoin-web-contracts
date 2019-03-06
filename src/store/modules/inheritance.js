@@ -17,7 +17,8 @@ const state = {
     daysDelay: '1',
     ownerKey: '',
     heirKey: '',
-    networkChoice: 'bitcoin'
+    networkChoice: 'bitcoin',
+    addressType: 'p2wsh'
   }
 };
 
@@ -46,7 +47,6 @@ const actions = {
       dispatch('updatePageStatusIC');
     }
   },
-
   // look at contract values and update valid & usable for each page
   // change a page's readiness status
   updatePageStatusIC ({ commit, state }) {
