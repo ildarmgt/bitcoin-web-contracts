@@ -47,13 +47,9 @@ h1 {
   font-size: 3vmin;
   font-weight: 700;
 
-  /* background-color: rgb(17, 17, 51);
-  color: white; */
-
   background-color: none;
   color: rgb(17, 17, 51);
 
-  /* opacity: 0.8; */
   margin-bottom: 3vmin;
   text-decoration: none;
 }
