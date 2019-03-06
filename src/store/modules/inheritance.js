@@ -36,12 +36,15 @@ const getters = {
 };
 
 const actions = {
+  // if contract not initialized, generate first keys
   initializeIC ({ commit, state, dispatch }) {
-    const ownerKey = newWIF(state.contractValues.networkChoice);
-    const heirKey = newWIF(state.contractValues.networkChoice);
-    commit('setContractValues', { ownerKey, heirKey });
-    // redo the ready/valid checks
-    dispatch('updatePageStatusIC');
+    if (!state.contractValues.ownerKey || !state.contractValues.heirKey) {
+      const ownerKey = newWIF(state.contractValues.networkChoice);
+      const heirKey = newWIF(state.contractValues.networkChoice);
+      commit('setContractValues', { ownerKey, heirKey });
+      // redo the ready/valid checks
+      dispatch('updatePageStatusIC');
+    }
   },
 
   // look at contract values and update valid & usable for each page

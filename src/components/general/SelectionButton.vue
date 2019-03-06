@@ -70,6 +70,8 @@ export default {
     -ms-user-select: none;
     user-select: none;
 
+    cursor: pointer;
+
     /* transition: transform 0.1s; */
   }
   .selectionButton:hover {
