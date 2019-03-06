@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="q">
-      <!-- main page q -->
       <div class="q__lbl1">
         Contract information calculated:
       </div>
@@ -34,7 +33,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
-import qrimage from 'qr-image';
+import qrimage from 'qr-image'; // creates qr png
 import { inhertianceContract } from './../../bitcoin';
 
 export default {

@@ -15,19 +15,19 @@
         v-for="(eaTitle, index) in titles()"
         :key="eaTitle"
         @click="stepClicked(eaTitle, index + 1)"
-        :class="setNavClasses(eaTitle).step"
+        :class="setNavClasses(eaTitle, index).step"
       >
         <!-- created for each step -->
         <div
           class="nav__steps__step__number noselect"
-          :class="setNavClasses(eaTitle).stepNumber"
+          :class="setNavClasses(eaTitle, index).stepNumber"
         >
           <!-- number of step -->
           {{ index + 1 }}
         </div>
         <div
           class="nav__steps__step__title noselect"
-          :class="setNavClasses(eaTitle).stepTitle"
+          :class="setNavClasses(eaTitle, index).stepTitle"
         >
           <!-- title of step -->
           {{ eaTitle }}
@@ -46,7 +46,8 @@ export default {
   }),
   props: {
     stepperName: { type: String, default: '' },
-    pageWanted: { type: Number, default: 0 }
+    pageWanted: { type: Number, default: 0 },
+    pageInfo: { type: Array, default: () => [] }
   },
   methods: {
     // return array of step titles
@@ -71,18 +72,39 @@ export default {
       this.lastSelection = inTitle;
     },
     // returns an array of classes for the bottom steps nav bar
-    setNavClasses (inTitle) {
+    setNavClasses (inTitle, inIndex) {
+      // { what-this-is-for: [array-of-classes-for-styling-that] }
+      let style = {
+        step: [],
+        stepNumber: [],
+        stepTitle: []
+      };
+      // if valid
+      if (!this.pageInfo[inIndex].valid) {
+        style = {
+          ...style,
+          stepNumber: ['stepNumberInvalid'],
+          stepTitle: ['stepTitleInvalid']
+        };
+      }
+      // if usable
+      if (!this.pageInfo[inIndex].usable) {
+        style = {
+          ...style,
+          step: ['stepLocked'],
+          stepNumber: ['stepNumberLocked'],
+          stepTitle: ['stepTitleLocked']
+        };
+      }
+      // if selected or not
       if (this.lastSelection === inTitle) {
-        // if this is the selected step
-        return {
-          step: ['stepSelected'],
+        style = {
+          ...style,
           stepNumber: ['stepNumberSelected'],
           stepTitle: ['stepTitleSelected']
         };
-      } else {
-        // if this is a non selected step
-        return [];
       }
+      return style;
     }
   }
 };
@@ -106,7 +128,6 @@ export default {
     padding: 2vmin 2vmin;
     margin-bottom: 4vmin;
     margin-top: 4vmin
-    /* background-color: rgba(255, 255, 255, 0.8); */
   }
   .nav__steps {
     margin-left: 1vmin;
@@ -119,16 +140,15 @@ export default {
     display: inline-block;
     margin: 0 2vmin;
     margin-bottom: 1vmin;
-    /* border-radius: 3vmin; */
     padding-top: 1vmin;
     cursor: pointer;
   }
-  .nav__steps__step:hover {
-    transform: translateY(-0.1vmin);
-  }
-  .nav__steps__step:active {
-    transform: translateY(0.2vmin);
-  }
+  /* .nav__steps__step:hover { */
+    /* transform: translateY(-0.2vmin); */
+  /* } */
+  /* .nav__steps__step:active { */
+    /* transform: translateY(0.2vmin); */
+  /* } */
   .nav__steps__step__number {
     display: inline-block;
     height: 3vmin;
@@ -148,10 +168,10 @@ export default {
     color: rgba(255, 225, 225, 0.7);
     font-size: 2.5vmin;
     cursor: pointer;
-    /* white-space: nowrap; */
   }
   .stepNumberSelected {
-    border: 0.15vmin solid white;
+    /* border: 0.15vmin solid white; */
+    box-shadow: 0 0 0 0.15vmin white;
     color: white;
     background-color: orange;
   }
@@ -163,5 +183,26 @@ export default {
     -moz-user-select: -moz-none;
     -ms-user-select: none;
     user-select: none;
+  }
+  .stepNumberInvalid {
+    /* color: white; */
+    background-color: rgba(141, 70, 70, 0.314);
+    /* border: rgba(133, 0, 0, 0.514) solid 0.15vmin; */
+    /* color: rgb(255, 0, 0); */
+    /* box-shadow: 0 0 0 0.15vmin rgba(255, 225, 225, 0.7); */
+    /* background-color: orange; */
+  }
+  .stepNumberLocked {
+    background-color: orange;
+    color: rgba(255, 225, 225, 0.7);
+  }
+  .stepLocked {
+    cursor: default;
+  }
+  .stepNumberLocked {
+    cursor: default;
+  }
+  .stepTitleLocked {
+    cursor: default;
   }
 </style>

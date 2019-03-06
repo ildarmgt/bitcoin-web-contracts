@@ -3,18 +3,27 @@
     <Stepper
       stepperName="Create Contract"
       :pageWanted="getPageSelectedIC"
+      :pageInfo="getPagesInfoIC"
       @newPageClicked="stepperPageChangeRequested"
     >
-      <StepperStep pageTitle="Will Timer">
+      <StepperStep
+        :pageTitle="getPagesInfoIC[0].pageTitle"
+      >
         <InheritanceCreateStep1 />
       </StepperStep>
-      <StepperStep pageTitle="Owner Key">
+      <StepperStep
+        :pageTitle="getPagesInfoIC[1].pageTitle"
+      >
         <InheritanceCreateStep2 />
       </StepperStep>
-      <StepperStep pageTitle="Heir Key">
+      <StepperStep
+        :pageTitle="getPagesInfoIC[2].pageTitle"
+      >
         <InheritanceCreateStep3 />
       </StepperStep>
-      <StepperStep pageTitle="Contract">
+      <StepperStep
+        :pageTitle="getPagesInfoIC[3].pageTitle"
+      >
         <InheritanceCreateStep4 />
       </StepperStep>
     </Stepper>
@@ -44,10 +53,14 @@ export default {
     InheritanceCreateStep4
   },
   computed: {
-    ...mapGetters(['getPageSelectedIC'])
+    ...mapGetters([
+      'getPageSelectedIC',
+      'getPagesInfoIC'
+    ])
   },
   methods: {
     ...mapActions(['changePageIC']),
+    // on stepper emits change page request
     stepperPageChangeRequested (inNumber) {
       this.changePageIC(inNumber);
     }

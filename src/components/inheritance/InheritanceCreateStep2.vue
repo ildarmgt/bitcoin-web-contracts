@@ -13,8 +13,6 @@
           ref="q__key__input"
           spellcheck="false"
           @input="updateKey"
-          @change="checkValidity"
-          @keyup.enter="checkValidity"
           :value="key"
         />
         <div class="q__key__btns">
@@ -23,6 +21,12 @@
             @click="newKeyRequested"
           >
             new
+          </div>
+          <div
+            class="q__key__btns__warn"
+            v-if="!getPagesInfoIC[1].valid"
+          >
+            invalid key
           </div>
         </div>
         <!-- for later   js .textContent -->
@@ -51,7 +55,7 @@
 </template>
 
 <script>
-import { newWIF, isWifValid } from './../../bitcoin';
+import { newWIF } from './../../bitcoin';
 import { mapActions, mapGetters } from 'vuex'; // state
 
 export default {
@@ -73,7 +77,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getContractValuesIC'
+      'getContractValuesIC',
+      'getPagesInfoIC'
     ])
   },
   methods: {
@@ -81,20 +86,6 @@ export default {
       'changePageIC', // change page (vuex)
       'updateContractValuesIC' // update contract values
     ]),
-    checkValidity () {
-      // key validity check
-      const stored = this.getContractValuesIC;
-      const isValid = isWifValid({
-        wif: this.key,
-        networkChoice: stored.networkChoice
-      });
-      if (!isValid) {
-        this.flash('Owner key is invalid', 'error', {
-          timeout: 5000,
-          important: false
-        });
-      }
-    },
     newKey () {
       return newWIF('bitcoin');
     },
@@ -176,13 +167,12 @@ export default {
     border: 0.1vmin solid white;
     border-right: 0.3vmin solid white;
     border-left: 0.3vmin solid white;
-    border-top: 1vmin solid white;
+    border-top: 0.5vmin solid white;
     transition: background-color 0.15s;
     overflow-y: hidden;
     overflow-x: scroll;
     white-space: nowrap;
     cursor: default;
-    /* hide visual bug on scroll bar */
     /* firefox */
     scrollbar-color: rgba(255, 166, 0, 0.5) rgba(255, 255, 255, 0);
     scrollbar-width: thin;
@@ -300,5 +290,26 @@ export default {
   .owner {
     color: rgb(44, 44, 218);
     white-space:nowrap;
+  }
+  .q__key__btns__warn {
+    display: inline-block;
+    margin-left: 40%;
+    color: white;
+    background-color: rgb(255, 42, 42);
+    padding: 0.1vmin 2vmin 0.2vmin 2vmin;
+    font-size: 2.3vmin;
+    position: relative;
+    border-radius: 1vmin;
+  }
+  .q__key__btns__warn:after {
+    position: absolute;
+    right: 10vmin;
+    top: -2vmin;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 1vmin solid transparent;
+    border-right: 1vmin solid transparent;
+    border-bottom: 2.1vmin solid rgb(255, 42, 42);
   }
 </style>

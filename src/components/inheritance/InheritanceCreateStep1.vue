@@ -106,14 +106,12 @@ export default {
       try {
         this.$refs.question__time__input.value = inputValue;
       } catch (e) {}
-      // update page readiness
-      this.updatePageStatusIC({ pageIndex: 0, status: true });
       // update contract value
       this.updateContractValuesIC({ daysDelay: inputValue });
     },
     // next button event
     onNextButtonClick () {
-      // convert to valid number
+      // convert to valid number & update vuex
       this.refreshNumber();
       // now change page to step 2
       this.changePageIC(2);
@@ -208,10 +206,10 @@ export default {
       transform: rotate(-45deg) scale(0.707);
       z-index: 0;
   }
+  .arrowButton:hover {
+    background-color: white;
+  }
   .arrowButton:active {
     transform: translateY(0.2vmin);
-  }
-  .arrowButton:hover {
-      background-color: white;
   }
 </style>
