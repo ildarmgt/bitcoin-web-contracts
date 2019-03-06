@@ -63,7 +63,7 @@ export default {
 
         this.lastTimer = setTimeout(() => {
           this.autoHeight();
-        }, ANIMATION_SECONDS * 1000 * 1.1);
+        }, ANIMATION_SECONDS * 1000 * 1.2);
       });
     },
     autoHeight () {
@@ -78,6 +78,8 @@ export default {
   .expander {
     overflow: hidden;
     height: auto;
+    transform: translateZ(0);
+    -webkit-transform: translate3d(0,0,0);
   }
 
   /* force animation of text if visual bug */
@@ -85,7 +87,7 @@ export default {
     animation: fa 1s 0.1s infinite alternate;
   }
   @keyframes fa {
-    from {z-index: 10;}
-    to {z-index: 20;}
+    from {opacity: 1;}
+    to {opacity: 0.999;}
   }
 </style>

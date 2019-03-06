@@ -20,6 +20,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+  .view {
+    margin-top: 3vmin;
+    margin-bottom: 3vmin;
+  }
 </style>

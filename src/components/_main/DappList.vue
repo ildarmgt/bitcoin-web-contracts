@@ -6,12 +6,12 @@
     >
       Inheritance dApp
     </router-link>
-    <router-link
+    <!-- <router-link
       to="/puzzledelay"
       class="button"
     >
       Puzzle Delay dApp
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 

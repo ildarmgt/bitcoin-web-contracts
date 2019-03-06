@@ -12,8 +12,8 @@
           click for backup
         </a>
         <div class="q__backup__note1">
-          Includes keys & script necessary for use.
-          Keep&nbsp;private.&nbsp;Lose&nbsp;it,&nbsp;lose&nbsp;access.
+          Includes keys & script necessary for use.<br>
+          Keep private. Lose it, lose access.
         </div>
       </div>
       <div class="q__contract">
