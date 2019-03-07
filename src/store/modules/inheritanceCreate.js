@@ -1,6 +1,7 @@
 import { isWifValid, newWIF } from './../../bitcoin'; // bitcoin helper
 
 // Inheritance Contract [Create] (IC)
+const namespaced = true;
 const state = {
   // page title - used for navigation
   // valid - whether content passes the validity checks
@@ -133,4 +134,4 @@ const mutations = {
   }
 };
 
-export default { state, getters, actions, mutations };
+export default { namespaced, state, getters, actions, mutations };

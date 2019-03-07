@@ -2,7 +2,7 @@
   <div>
     <div class="q">
       <div class="q__lbl1">
-        Contract information calculated:
+        Contract address computed:
       </div>
       <div class="q__backup">
         <a
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'; // state
+import { mapGetters } from 'vuex'; // state
 import qrimage from 'qr-image'; // creates qr png
 import { inhertianceContract } from './../../bitcoin';
 
@@ -82,12 +82,11 @@ export default {
     this.redoPageContent();
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('inheritanceCreate', [
       'getContractValuesIC' // get all contract values
     ])
   },
   methods: {
-    ...mapActions([]),
     redoPageContent () {
       try {
         // calculate contract

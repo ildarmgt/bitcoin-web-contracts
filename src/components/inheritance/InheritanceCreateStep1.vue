@@ -1,27 +1,27 @@
 <template>
   <div>
-    <div class="question">
-      <!-- main page question -->
-      <div class="question__strong">
+    <div class="q">
+      <!-- main page q -->
+      <div class="q__strong">
         How long until inheritance can be spent by the Heir?
       </div>
       <!-- input value -->
-      <div class="question__time">
+      <div class="q__time">
         <input
           type="text"
-          class="question__time__input"
-          ref="question__time__input"
+          class="q__time__input"
+          ref="q__time__input"
           maxlength="5"
           :value="timeValue"
           @input="numberChanged"
           @change="refreshNumber"
         >
-        <div class="question__time__label">
+        <div class="q__time__label">
           days
         </div>
       </div>
-      <!-- text to clarify questions and input  -->
-      <div class="question__light">
+      <!-- text to clarify qs and input  -->
+      <div class="q__light">
         To be measured from moment funding is confirmed.<br>
         &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
@@ -50,12 +50,12 @@ export default {
     this.timeValue = this.getDelayIC;
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('inheritanceCreate', [
       'getDelayIC' // get delay from vuex of inheritance contract
     ])
   },
   methods: {
-    ...mapActions([
+    ...mapActions('inheritanceCreate', [
       'updatePageStatusIC', // set page ready status to true/false (vuex)
       'changePageIC', // set selected page (vuex)
       'updateContractValuesIC' // set stored contract values (vuex)
@@ -75,7 +75,7 @@ export default {
       const fixedNumber = parseFloat(filteredText) > 388 ? '388' : filteredText;
 
       // update values
-      this.$refs.question__time__input.value = this.timeValue = fixedNumber;
+      this.$refs.q__time__input.value = this.timeValue = fixedNumber;
 
       // let user type and do final checks after 3 sec delay of not typing
       // this way user's not interrupted if erasing all or mistyped
@@ -104,7 +104,7 @@ export default {
       // update view
       // div might not exist so wrapped in try
       try {
-        this.$refs.question__time__input.value = inputValue;
+        this.$refs.q__time__input.value = inputValue;
       } catch (e) {}
       // update contract value
       this.updateContractValuesIC({ daysDelay: inputValue });
@@ -121,11 +121,11 @@ export default {
 </script>
 
 <style scoped>
-  .question {
+  .q {
     text-align: left;
     margin: 0vmin 2vmin;
   }
-  .question__strong {
+  .q__strong {
     display: block;
     font-size: 3vmin;
     color: white;
@@ -133,14 +133,14 @@ export default {
     margin-left: 5%;
     font-weight: bold;
   }
-  .question__time {
+  .q__time {
     display: block;
     margin-top: 4vmin;
     margin-bottom: 3vmin;
     text-align: left;
     margin-left: 10%;
   }
-  .question__time__input {
+  .q__time__input {
     font-size: 3vmin;
     height: 4vmin;
     width: 10vmin;
@@ -151,17 +151,17 @@ export default {
     display: inline-block;
     transition: background-color 0.15s;
   }
-  .question__time__input:focus,.question__time__input:hover {
+  .q__time__input:focus,.q__time__input:hover {
     background: white;
   }
-  .question__time__label {
+  .q__time__label {
     font-size: 3vmin;
     color: white;
     margin-left: 1vmin;
     display: inline-block;
     font-weight: bold;
   }
-  .question__light {
+  .q__light {
     display: block;
     font-size: 2vmin;
     color: white;

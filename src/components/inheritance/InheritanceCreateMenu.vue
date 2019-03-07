@@ -53,12 +53,12 @@ export default {
     networkChoice: ''
   }),
   computed: {
-    ...mapGetters([
+    ...mapGetters('inheritanceCreate', [
       'getContractValuesIC' // get contract value from vuex
     ])
   },
   methods: {
-    ...mapActions([
+    ...mapActions('inheritanceCreate', [
       'updateContractValuesIC', // update contract values in vuex
       'changePageIC',
       'updateKeysIfInvalid'

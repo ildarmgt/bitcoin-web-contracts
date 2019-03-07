@@ -69,13 +69,13 @@ export default {
     this.key = heirKey;
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('inheritanceCreate', [
       'getContractValuesIC',
       'getPagesInfoIC'
     ])
   },
   methods: {
-    ...mapActions([
+    ...mapActions('inheritanceCreate', [
       'changePageIC', // change page (vuex)
       'updateContractValuesIC' // update contract values
     ]),

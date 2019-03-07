@@ -41,13 +41,13 @@ export default {
     StepperStep
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('inheritanceOwner', [
       'getPagesInfoICO',
       'getPageSelectedICO'
     ])
   },
   methods: {
-    ...mapActions([
+    ...mapActions('inheritanceOwner', [
       'changePageICO'
     ]),
     stepperPageChangeRequested (inNumber) {
@@ -58,8 +58,7 @@ export default {
 </script>
 
 <style scoped>
-  .blue {
-    color: white;
-    background-color: rgba(0, 0, 160, 0.60);
+  .inheritance_owner {
+    position: relative;
   }
 </style>

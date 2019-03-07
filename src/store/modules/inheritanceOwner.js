@@ -1,6 +1,7 @@
 // import { isWifValid, newWIF } from './../../bitcoin'; // bitcoin helper
 
 // Inheritance Contract Owner (ICO)
+const namespaced = true;
 const state = {
   // page title - used for navigation
   // valid - whether content passes the validity checks
@@ -11,14 +12,14 @@ const state = {
     { pageTitle: 'Transact', valid: true, usable: false }
   ],
   // 0 none, 1+ are pages
-  pageSelected: 1,
-  contractValues: {
-    daysDelay: '1',
-    ownerKey: '',
-    heirKey: '',
-    networkChoice: 'bitcoin',
-    addressType: 'p2wsh'
-  }
+  pageSelected: 1
+  // contractValues: {
+  //   daysDelay: '1',
+  //   ownerKey: '',
+  //   heirKey: '',
+  //   networkChoice: 'bitcoin',
+  //   addressType: 'p2wsh'
+  // }
 };
 
 const getters = {
@@ -118,18 +119,18 @@ const mutations = {
   //   state.pages[pageNumber - 1].usable = usable;
   // },
   // // set value for pageSelected
-  // setPage: (state, newPage) => {
-  //   // change first to 0 so change is detected by all the components
-  //   state.pageSelected = 0;
-  //   state.pageSelected = newPage;
-  //   // const oldPage = state.pageSelected;
-  //   // const maxPage = state.pages.length + 1;
-  //   // state.pageSelected = 0;
-  //   // state.pageSelected = (newPage <= maxPage) ? newPage : oldPage;
-  // },
+  setPage: (state, newPage) => {
+    // change first to 0 so change is detected by all the components
+    state.pageSelected = 0;
+    state.pageSelected = newPage;
+    // const oldPage = state.pageSelected;
+    // const maxPage = state.pages.length + 1;
+    // state.pageSelected = 0;
+    // state.pageSelected = (newPage <= maxPage) ? newPage : oldPage;
+  }
   // setContractValues: (state, payload) => {
   //   state.contractValues = { ...state.contractValues, ...payload };
   // }
 };
 
-export default { state, getters, actions, mutations };
+export default { namespaced, state, getters, actions, mutations };

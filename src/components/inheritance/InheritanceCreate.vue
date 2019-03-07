@@ -57,7 +57,7 @@ export default {
     InheritanceCreateMenu
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('inheritanceCreate', [
       'getPageSelectedIC',
       'getPagesInfoIC'
     ])
@@ -66,7 +66,7 @@ export default {
     this.initializeIC();
   },
   methods: {
-    ...mapActions([
+    ...mapActions('inheritanceCreate', [
       'changePageIC',
       'initializeIC'
     ]),
