@@ -2,18 +2,26 @@
   <div>
     <div class="q">
       <div class="q__lbl1">
-        Contract address computed:
+        Your contract address calculated:
       </div>
       <div class="q__backup">
+        First,
         <a
           ref="backup"
           class="q__backup__link noselect"
         >
-          click for backup
+          save
         </a>
+        or
+        <div
+          @click="copyBackupClicked"
+          class="q__backup__link noselect"
+        >
+          copy
+        </div>
+        <br>your backup for later spending
         <div class="q__backup__note1">
-          Keep content private. Lose it, lose access.<br>
-          Do not use without saving this text file!
+          Keep private! Lose it, lose access!<br>
         </div>
       </div>
       <div
@@ -33,7 +41,7 @@
         >
         <div class="q__contract__text">
           <div class="q__contract__lbl2">
-            Contract's address to fund:
+            Sending to this address starts timer:
           </div>
           <a
             :href="`bitcoin:${this.address}`"
@@ -45,7 +53,7 @@
           <!-- svg from https://iconmonstr.com -->
           <div
             class="btnCopy"
-            @click="btnCopyClicked"
+            @click="btnCopyAddressClicked"
           >
             <svg
               width="24"
@@ -68,12 +76,14 @@
 import { mapGetters } from 'vuex'; // state
 import qrimage from 'qr-image'; // creates qr png
 import { inhertianceContract } from './../../bitcoin';
+import copyToClipboard from './../../helpers/copyToClipboard';
 
 export default {
   name: 'InheritanceCreateStep4',
   data: () => ({
     address: '',
-    showRest: false
+    showRest: false,
+    contract: {}
   }),
   mounted () {
     this.redoPageContent();
@@ -95,6 +105,7 @@ export default {
         this.updateBackup(contract);
         // update local state
         this.address = contract.contractAddress;
+        this.contract = contract;
         // updateQR
         this.updateQR(this.address);
       } catch (e) {
@@ -113,11 +124,12 @@ export default {
       const res = inhertianceContract(contractParams);
       return res;
     },
+    // downloads contract info as json in .txt
     updateBackup (contract) {
       // assemble all the data to back up
       const backupObject = contract;
 
-      // back it up
+      // creates the right link for downloading the data
       const data = 'text/json;charset=utf-8,' +
         encodeURIComponent(JSON.stringify(backupObject, null, 2));
       const a = this.$refs.backup;
@@ -135,19 +147,25 @@ export default {
     showClicked () {
       this.showRest = true;
     },
-    btnCopyClicked () {
-      // copy to clipboard
-      (function (text) {
-        var input = document.createElement('input');
-        input.setAttribute('value', text);
-        document.body.appendChild(input);
-        input.select();
-        var result = document.execCommand('copy');
-        document.body.removeChild(input);
-        return result;
-      })(this.address);
+    // copies contract address to clipboard
+    btnCopyAddressClicked () {
+      if (copyToClipboard(this.address)) {
       // notify user
-      this.flash('Copied!', 'success', { timeout: 3000, important: true });
+        this.flash('Address copied to clipboard!', 'success', {
+          timeout: 3000,
+          important: true
+        });
+      }
+    },
+    copyBackupClicked () {
+      const contractText = JSON.stringify(this.contract, null, 2);
+      if (copyToClipboard(contractText)) {
+      // notify user
+        this.flash('Contract info copied to clipboard!', 'success', {
+          timeout: 3000,
+          important: true
+        });
+      }
     }
   }
 };
@@ -171,6 +189,9 @@ export default {
     margin-top: 6vmin;
     margin-bottom: 6vmin;
     text-align: center;
+    color: white;
+    font-size: 3vmin;
+    line-height: 5vmin;
   }
   .q__backup__link {
     display: inline-block;

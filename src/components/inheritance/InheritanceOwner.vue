@@ -2,25 +2,25 @@
   <div class="inheritance_owner">
     <Stepper
       stepperName="Spend as Owner"
-      :pageWanted="getPageSelectedICO"
-      :pageInfo="getPagesInfoICO"
+      :pageWanted="getPageSelected"
+      :pageInfo="getPagesInfo"
       @newPageClicked="stepperPageChangeRequested"
       :primaryColor="{'--primaryColor': 'rgb(102, 102, 255)'}"
     >
       <StepperStep
-        :pageTitle="getPagesInfoICO[0].pageTitle"
+        :pageTitle="getPagesInfo[0].pageTitle"
       >
-        load your backup
+        <InheritanceOwnerStep1 />
       </StepperStep>
       <StepperStep
-        :pageTitle="getPagesInfoICO[1].pageTitle"
+        :pageTitle="getPagesInfo[1].pageTitle"
       >
-        where to send
+        <InheritanceOwnerStep2 />
       </StepperStep>
       <StepperStep
-        :pageTitle="getPagesInfoICO[2].pageTitle"
+        :pageTitle="getPagesInfo[2].pageTitle"
       >
-        transaction hex
+        <InheritanceOwnerStep3 />
       </StepperStep>
     </Stepper>
   </div>
@@ -30,6 +30,9 @@
 // components
 import Stepper from './../general/Stepper';
 import StepperStep from './../general/StepperStep';
+import InheritanceOwnerStep1 from './InheritanceOwnerStep1';
+import InheritanceOwnerStep2 from './InheritanceOwnerStep2';
+import InheritanceOwnerStep3 from './InheritanceOwnerStep3';
 
 // vuex state
 import { mapGetters, mapActions } from 'vuex';
@@ -38,20 +41,23 @@ export default {
   name: 'InheritanceOwner',
   components: {
     Stepper,
-    StepperStep
+    StepperStep,
+    InheritanceOwnerStep1,
+    InheritanceOwnerStep2,
+    InheritanceOwnerStep3
   },
   computed: {
     ...mapGetters('inheritanceOwner', [
-      'getPagesInfoICO',
-      'getPageSelectedICO'
+      'getPagesInfo',
+      'getPageSelected'
     ])
   },
   methods: {
     ...mapActions('inheritanceOwner', [
-      'changePageICO'
+      'changePage'
     ]),
     stepperPageChangeRequested (inNumber) {
-      this.changePageICO(inNumber);
+      this.changePage(inNumber);
     }
   }
 };

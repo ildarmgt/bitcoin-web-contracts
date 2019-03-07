@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="q">
+    <div class="q fa">
       <!-- main page q -->
       <div class="q__strong">
         And what is the <span class="heir">Heir</span>'s private key?
@@ -44,7 +44,7 @@
       </div>
       <!-- button to go to next page -->
       <div
-        class="arrowButton fa"
+        class="arrowButton"
         @click="onNextButtonClick"
       >
         Next
@@ -252,7 +252,8 @@ export default {
       text-align: center;
       padding: 0 3vmin 0 2vmin;
       color: orange;
-      background-color: rgb(255, 207, 118);
+      background-color: rgb(255, 255, 255);
+      opacity: 0.75;
       position: relative;
       display: block;
       border-radius: 1vmin 2vmin 2vmin 1vmin;
@@ -262,7 +263,7 @@ export default {
       -ms-user-select: none;
       user-select: none;
       cursor: pointer;
-      transition: background-color 0.15s;
+      transition: opacity 0.15s;
   }
   .arrowButton:after{
       position: absolute;
@@ -276,11 +277,11 @@ export default {
       transform: rotate(-45deg) scale(0.707);
       z-index: 0;
   }
+  .arrowButton:hover {
+    opacity: 1;
+  }
   .arrowButton:active {
     transform: translateY(0.2vmin);
-  }
-  .arrowButton:hover {
-      background-color: white;
   }
   .heir {
     color: rgb(0, 134, 0);

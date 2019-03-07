@@ -1,6 +1,5 @@
 // import { isWifValid, newWIF } from './../../bitcoin'; // bitcoin helper
 
-// Inheritance Contract Owner (ICO)
 const namespaced = true;
 const state = {
   // page title - used for navigation
@@ -24,13 +23,13 @@ const state = {
 
 const getters = {
   // returns pageSelected
-  getPageSelectedICO: state => state.pageSelected,
+  getPageSelected: state => state.pageSelected,
 
   // return all contractValues
   // getContractValuesIC: state => state.contractValues,
 
   // return all pages info
-  getPagesInfoICO: state => state.pages
+  getPagesInfo: state => state.pages
 
   // returns daysDelay
   // getDelayIC: state => state.contractValues.daysDelay
@@ -95,7 +94,7 @@ const actions = {
   //   }
   // },
   // change pageSelected to given page if next page is usable
-  changePageICO ({ commit, state }, newPage) {
+  changePage ({ commit, state }, newPage) {
     const pageObject = state.pages[newPage - 1];
     if (pageObject) {
       if (pageObject.usable) {

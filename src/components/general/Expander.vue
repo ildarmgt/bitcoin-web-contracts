@@ -75,6 +75,7 @@ export default {
 </script>
 
 <style>
+  /* not scoped on purpose so fa can be used to fix graphic glitches */
   .expander {
     overflow: hidden;
     height: auto;
