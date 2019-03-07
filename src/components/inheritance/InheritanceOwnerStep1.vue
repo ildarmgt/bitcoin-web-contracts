@@ -3,14 +3,30 @@
     <div class="q fa">
       <!-- main question -->
       <div class="q__strong">
-        Load the backup file or fill the access info manually?
+        First, load the backup contract access information:
       </div>
-      <div
-        class="arrowButton"
+      <div class="dropper">
+        <input
+          type="file"
+          title="submit file"
+          id="file"
+          enctype="multipart/form-data"
+          @change="fileSubmitted($event.target.files[0])"
+        >
+        submit backup file
+      </div>
+      <div>
+        or
+        <RoundButton
+          textContent="manually fill out"
+          textColor="white"
+        />
+      </div>
+      <ArrowButton
+        textContent="Next"
+        textColor="rgb(102, 102, 255)"
         @click="onNextButtonClick"
-      >
-        Next
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -18,8 +34,15 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
 
+import ArrowButton from './../general/ArrowButton';
+import RoundButton from './../general/RoundButton';
+
 export default {
   name: 'InheritanceOwnerStep1',
+  components: {
+    ArrowButton,
+    RoundButton
+  },
   data: () => ({}),
   mounted () {},
   computed: {
@@ -33,6 +56,17 @@ export default {
     onNextButtonClick () {
       // now change page to step 2
       this.changePage(2);
+    },
+    // handles submitted file
+    async fileSubmitted (file) {
+      // waits until read
+      const result = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsText(file);
+      });
+      console.log(result);
+
     }
   }
 };
@@ -40,16 +74,20 @@ export default {
 
 <style scoped>
   .q {
-    text-align: left;
+    text-align: center;
     margin: 0vmin 2vmin;
+    color: white;
+    font-size: 2.5vmin;
   }
   .q__strong {
     display: block;
+    text-align: left;
     font-size: 3vmin;
     color: white;
     margin-right: 3vmin;
     margin-left: 5%;
     font-weight: bold;
+    margin-bottom: 3vmin;
   }
   .q__time {
     display: block;
@@ -87,48 +125,27 @@ export default {
     line-height: 3vmin;
     margin-left: 15%;
   }
-  input:focus{
-    outline: none;
+  .dropper {
+    display: inline-block;
+    width: 50%;
+    height: 15vmin;
+    border: 0.5vmin dotted rgba(255, 255, 255, 0.534);
+    border-radius: 5vmin;
+
+    line-height: 15vmin;
+    position: relative;
+    color: white;
+    margin: 1vmin;
   }
-  .arrowButton {
-      font-size: 3vmin;
-      margin: 0 auto;
-      margin-top: 5vmin;
-      width: max-content;
-      height: 5vmin;
-      line-height: 5vmin;
-      text-align: center;
-      padding: 0 3vmin 0 2vmin;
-      color: rgb(102, 102, 255);
-      background-color: rgb(255, 255, 255);
-      opacity: 0.75;
-      position: relative;
-      display: block;
-      border-radius: 1vmin 2vmin 2vmin 1vmin;
-      z-index: 1;
-      -webkit-user-select: none;
-      -moz-user-select: -moz-none;
-      -ms-user-select: none;
-      user-select: none;
-      cursor: pointer;
-      transition: opacity 0.15s;
+  .dropper:hover {
+    background-color: rgba(238, 238, 238, 0.13);
   }
-  .arrowButton:after{
-      position: absolute;
-      right: -1.37vmin;
-      top: 0;
-      content: "";
-      width: 5vmin;
-      height: 5vmin;
-      background-color: inherit;
-      border-radius: 2vmin 1.3vmin 1vmin 1.3vmin;
-      transform: rotate(-45deg) scale(0.707);
-      z-index: 0;
-  }
-  .arrowButton:hover {
-    opacity: 1;
-  }
-  .arrowButton:active {
-    transform: translateY(0.2vmin);
+  #file {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
   }
 </style>

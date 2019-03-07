@@ -9,11 +9,8 @@
 
 <script>
 // visual bug on chrome (not ff) in rare instances where
-// text is invisible until highlighted or updated in any
-// manner. appeares for elements with opacity < 1
-// when undergoing this type of animation & some other times.
-// currently using css animation to animate z-index for
-// affected elements to idelaly force css refresh.
+// text is invisible until updated in any manner or lines
+// form from animation. to fix put fa as class to children.
 
 export default {
   name: 'Expander',
