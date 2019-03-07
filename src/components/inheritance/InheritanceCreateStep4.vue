@@ -134,7 +134,7 @@ export default {
         encodeURIComponent(JSON.stringify(backupObject, null, 2));
       const a = this.$refs.backup;
       a.href = 'data:' + data;
-      a.download = 'backup_inheritance.txt';
+      a.download = 'Inhertiance Owner backup.txt';
     },
     updateQR (text) {
       if (this.$refs.q__contract__qr) {

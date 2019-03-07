@@ -5,22 +5,32 @@
       <div class="q__strong">
         First, load the backup contract access information:
       </div>
-      <div class="dropper">
-        <input
-          type="file"
-          title="submit file"
-          id="file"
-          enctype="multipart/form-data"
-          @change="fileSubmitted($event.target.files[0])"
-        >
-        submit backup file
+      <div v-if="showUpload">
+        <div class="dropper">
+          <input
+            type="file"
+            title="submit file"
+            id="file"
+            enctype="multipart/form-data"
+            @change="fileSubmitted($event.target.files[0])"
+          >
+          submit backup file
+        </div>
+        <div>
+          or
+          <RoundButton
+            textContent="manually fill out"
+            textColor="white"
+          />
+        </div>
       </div>
-      <div>
-        or
-        <RoundButton
-          textContent="manually fill out"
-          textColor="white"
-        />
+      <div v-else>
+        <div
+          class="fileInfo"
+          @click="{ showUpload = true }"
+        >
+          {{ fileName }}
+        </div>
       </div>
       <ArrowButton
         textContent="Next"
@@ -43,7 +53,10 @@ export default {
     ArrowButton,
     RoundButton
   },
-  data: () => ({}),
+  data: () => ({
+    showUpload: true,
+    fileName: ''
+  }),
   mounted () {},
   computed: {
     ...mapGetters('inheritanceOwner', [])
@@ -66,7 +79,9 @@ export default {
         reader.readAsText(file);
       });
       console.log(result);
-
+      console.log(file.name);
+      this.fileName = file.name;
+      this.showUpload = false;
     }
   }
 };
@@ -147,5 +162,37 @@ export default {
     left: 0;
     top: 0;
     opacity: 0;
+    cursor: pointer;
+  }
+  .fileInfo {
+    border: 0.5vmin dotted rgba(255, 255, 255, 0.534);
+    border-radius: 3vmin;
+    line-height: 3vmin;
+    display: inline-block;
+    padding: 0.3vmin;
+    padding-right: 5vmin;
+    padding-left: 1.3vmin;
+    position: relative;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 50%;
+    cursor: pointer;
+    opacity: 0.65;
+  }
+  .fileInfo:hover {
+    background-color: rgba(238, 238, 238, 0.13);
+  }
+  .fileInfo:after {
+    line-height: 0;
+    font-size: 5vmin;
+    content: "×";
+    color: rgba(255, 255, 255, 0.534);
+    height: 0.1vmin;
+    width: 0.1vmin;
+    border-radius: 3vmin;
+    right: 3.5vmin;
+    top: 1.8vmin;
+    position: absolute;
   }
 </style>
