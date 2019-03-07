@@ -61,7 +61,7 @@ export default {
     InheritanceOwnerForm
   },
   data: () => ({
-    showUpload: false,
+    showUpload: true,
     fileName: ''
   }),
   mounted () {},

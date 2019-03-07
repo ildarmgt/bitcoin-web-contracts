@@ -30,7 +30,12 @@ import { mapActions, mapGetters } from 'vuex'; // state
 export default {
   name: 'InheritanceOwnerForm',
   components: {},
-  data: () => ({}),
+  data: () => ({
+    contractAddress: '',
+    scriptHex: '',
+    witnessScriptHex: '',
+    ownerPrivateKeyWIF: ''
+  }),
   props: {},
   computed: {
     ...mapGetters('inheritanceOwner', [
@@ -44,8 +49,22 @@ export default {
     ...mapActions([]),
     updateFromFile () {
       const file = this.getFile;
-      const json = JSON.parse(file);
-      console.log(json);
+      if (file) {
+        const contract = JSON.parse(file);
+        let errors = {};
+        try {
+          this.contractAddress = contract.contractAddress;
+        } catch (e) { errors.contractAddress = true; }
+        try {
+          this.scriptHex = contract.redeemScriptHex;
+        } catch (e) { errors.redeemScriptHex = true; }
+        try {
+          this.scriptHex = contract.witnessScriptHex;
+        } catch (e) { errors.witnessScriptHex = true; }
+        try {
+          this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
+        } catch (e) { errors.ownerPrivateKeyWIF = true; }
+      }
     }
   }
 };

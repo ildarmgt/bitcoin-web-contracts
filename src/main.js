@@ -10,13 +10,13 @@ import Inheritance from './components/inheritance/Inheritance';
 import PuzzleDelay from './components/puzzledelay/PuzzleDelay';
 
 // global css
-require('./assets/css/global.css');
+import './assets/css/global.css';
+import './assets/css/vue-flash-message.css';
 
 // add router
 Vue.use(VueRouter);
 
-// flash msg
-require('./assets/css/vue-flash-message.css');
+// flash message
 Vue.use(VueFlashMessage);
 
 export const router = new VueRouter({
