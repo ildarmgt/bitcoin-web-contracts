@@ -20,8 +20,7 @@ export const isWifValid = ({ wif, networkChoice }) => {
 };
 
 // returns all the info necessary to fund inheritance contract
-// address should be unique for the 4 provided parameters
-// pay to witness script hash (p2wsh) version
+// address should be unique for the 5 provided parameters
 export const inhertianceContract = (payload) => {
   const { days, ownerWIF, heirWIF, networkChoice, addressType } = payload;
   // shortcuts
