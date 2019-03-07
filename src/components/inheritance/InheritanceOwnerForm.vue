@@ -1,25 +1,34 @@
 <template>
   <div>
+    <div class="label">
+      Owner Private Key (WIF)
+    </div>
     <textarea
       rows="1"
-      class="q__input"
+      class="textBox"
       ref="q__input1"
       spellcheck="false"
-      :value="'1'"
+      :value="ownerPrivateKeyWIF"
     />
+    <div class="label">
+      Script (hex)
+    </div>
     <textarea
       rows="1"
-      class="q__input"
+      class="textBox"
       ref="q__input2"
       spellcheck="false"
-      :value="'2'"
+      :value="scriptHex"
     />
+    <div class="label">
+      Contract address
+    </div>
     <textarea
       rows="1"
-      class="q__input"
+      class="textBox"
       ref="q__input3"
       spellcheck="false"
-      :value="'3'"
+      :value="contractAddress"
     />
   </div>
 </template>
@@ -33,7 +42,6 @@ export default {
   data: () => ({
     contractAddress: '',
     scriptHex: '',
-    witnessScriptHex: '',
     ownerPrivateKeyWIF: ''
   }),
   props: {},
@@ -56,10 +64,10 @@ export default {
           this.contractAddress = contract.contractAddress;
         } catch (e) { errors.contractAddress = true; }
         try {
-          this.scriptHex = contract.redeemScriptHex;
+          this.scriptHex = contract.redeemScriptHex || this.scriptHex;
         } catch (e) { errors.redeemScriptHex = true; }
         try {
-          this.scriptHex = contract.witnessScriptHex;
+          this.scriptHex = contract.witnessScriptHex || this.scriptHex;
         } catch (e) { errors.witnessScriptHex = true; }
         try {
           this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
@@ -72,7 +80,7 @@ export default {
 </script>
 
 <style scoped>
-  .q__input {
+  .textBox {
     font-family: 'Montserrat';
     display: inline-block;
     resize: none;
@@ -92,5 +100,11 @@ export default {
     overflow-x: scroll;
     white-space: nowrap;
     cursor: default;
+  }
+  .label {
+    font-size: 2vmin;
+    text-align: left;
+    margin-bottom: 0.5vmin;
+    margin-top: 2vmin;
   }
 </style>

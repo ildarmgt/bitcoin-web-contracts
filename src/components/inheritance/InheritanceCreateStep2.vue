@@ -112,7 +112,7 @@ export default {
         .join(''); // specific chars only
 
       if (fixedKey !== newKey) {
-        console.log('String had illegal chars. Old string:', newKey);
+        // maybe alert later about wrong chars
       }
 
       // update vuex
@@ -167,27 +167,6 @@ export default {
     overflow-x: scroll;
     white-space: nowrap;
     cursor: default;
-    /* firefox */
-    scrollbar-color: rgba(255, 166, 0, 0.5) rgba(255, 255, 255, 0);
-    scrollbar-width: thin;
-  }
-  /* chrome scroll bar */
-  .q__key__input::-webkit-scrollbar {
-    background: rgba(255, 255, 255, 0);
-    height: 1vmin;
-  }
-  /* chrome scroll bar background */
-  .q__key__input::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0);
-  }
-  /* scroll bar itself */
-  .q__key__input::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 166, 0, 0.466);
-    border-radius: 1vmin;
-    box-shadow: inset 0 0 0 0.1vmin white;
-  }
-  .q__key__input:focus {
-    outline: none;
   }
   .q__key__btns {
     margin-top: 0.5vmin;
