@@ -114,6 +114,7 @@ export default {
     right: 1vmin;
     top: 1vmin;
     cursor: pointer;
+    z-index: 1000;
   }
   /* this just makes sure it overlaps w/ the button */
   .m__wrap {
@@ -125,7 +126,7 @@ export default {
   }
   /* offset menu with options */
   .m__wrap__list {
-    background-color: rgba(17, 17, 51, 0.932);
+    background-color: rgba(17, 17, 51, 0.904);
     position: relative;
     color: black;
     margin: 1vmin 1vmin;
