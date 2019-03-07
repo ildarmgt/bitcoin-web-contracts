@@ -1,12 +1,14 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 
-import inheritance from './modules/inheritance';
+import inheritanceCreate from './modules/inheritanceCreate';
+import inheritanceOwner from './modules/inheritanceOwner';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    inheritance
+    inheritanceCreate,
+    inheritanceOwner
   }
 });

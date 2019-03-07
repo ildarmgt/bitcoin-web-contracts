@@ -6,6 +6,7 @@
       :pageWanted="getPageSelectedIC"
       :pageInfo="getPagesInfoIC"
       @newPageClicked="stepperPageChangeRequested"
+      :primaryColor="{'--primaryColor': 'orange'}"
     >
       <StepperStep
         :pageTitle="getPagesInfoIC[0].pageTitle"

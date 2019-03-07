@@ -126,10 +126,12 @@ export default {
       a.download = 'backup_inheritance.txt';
     },
     updateQR (text) {
-      // generate qr png image buffer
-      const qr = qrimage.imageSync(text).toString('base64');
-      // add the qr image at source for img element
-      this.$refs.q__contract__qr.src = 'data:image/png;base64,' + qr;
+      if (this.$refs.q__contract__qr) {
+        // generate qr png image buffer
+        const qr = qrimage.imageSync(text).toString('base64');
+        // add the qr image at source for img element
+        this.$refs.q__contract__qr.src = 'data:image/png;base64,' + qr;
+      }
     },
     showClicked () {
       this.showRest = true;
@@ -268,6 +270,7 @@ export default {
     padding: 1vmin;
     margin-left: 6vmin;
     text-align: center;
+    cursor: pointer;
   }
   .btnCopy svg {
     fill: white;

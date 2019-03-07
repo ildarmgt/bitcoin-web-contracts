@@ -1,5 +1,8 @@
 <template>
-  <div class="nav">
+  <div
+    class="nav"
+    :style="primaryColor"
+  >
     <!-- overall name -->
     <div class="nav__name">
       {{ stepperName }}
@@ -42,12 +45,14 @@ export default {
   name: 'Stepper',
   data: () => ({
     lastSelection: 'none',
-    pageList: []
+    pageList: [],
+    color: ''
   }),
   props: {
     stepperName: { type: String, default: '' },
     pageWanted: { type: Number, default: 0 },
-    pageInfo: { type: Array, default: () => [] }
+    pageInfo: { type: Array, default: () => [] },
+    primaryColor: Object
   },
   methods: {
     // return array of step titles
@@ -112,11 +117,12 @@ export default {
 
 <style scoped>
   .nav {
-    background-color: orange;
+    /* background-color: orange; */
+    background-color: var(--primaryColor, grey);
   }
   .nav__name {
     display: block;
-    background-color: orange;
+    background-color: var(--primaryColor, grey);
     color: rgba(255, 225, 225, 0.6);
     padding-top: 1vmin;
     padding-bottom: 2vmin;
@@ -156,7 +162,7 @@ export default {
     padding: 0.5vmin;
     line-height: 3vmin;
     background-color: rgba(255, 225, 225, 0.6);
-    color: orange;
+    color: var(--primaryColor, grey);
     border-radius: 3vmin;
     font-size: 2.5vmin;
     cursor: pointer;
@@ -173,7 +179,7 @@ export default {
     /* border: 0.15vmin solid white; */
     box-shadow: 0 0 0 0.15vmin white;
     color: white;
-    background-color: orange;
+    background-color: var(--primaryColor, grey);
   }
   .stepTitleSelected {
     color: white;
@@ -193,7 +199,7 @@ export default {
     /* background-color: orange; */
   }
   .stepNumberLocked {
-    background-color: orange;
+    background-color: var(--primaryColor, grey);
     color: rgba(255, 225, 225, 0.7);
   }
   .stepLocked {

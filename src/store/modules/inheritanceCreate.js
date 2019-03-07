@@ -1,6 +1,6 @@
 import { isWifValid, newWIF } from './../../bitcoin'; // bitcoin helper
 
-// Inheritance Contract State (IC)
+// Inheritance Contract [Create] (IC)
 const state = {
   // page title - used for navigation
   // valid - whether content passes the validity checks
