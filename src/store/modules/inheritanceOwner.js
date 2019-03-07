@@ -1,5 +1,6 @@
 // import { isWifValid, newWIF } from './../../bitcoin'; // bitcoin helper
 
+// inheritanceOwner
 const namespaced = true;
 const state = {
   // page title - used for navigation
@@ -10,6 +11,7 @@ const state = {
     { pageTitle: 'Destination', valid: false, usable: true },
     { pageTitle: 'Transact', valid: true, usable: false }
   ],
+  file: '',
   // 0 none, 1+ are pages
   pageSelected: 1
   // contractValues: {
@@ -25,6 +27,8 @@ const getters = {
   // returns pageSelected
   getPageSelected: state => state.pageSelected,
 
+  // returns latest file
+  getFile: state => state.file,
   // return all contractValues
   // getContractValuesIC: state => state.contractValues,
 
@@ -36,6 +40,10 @@ const getters = {
 };
 
 const actions = {
+  // change file
+  changeFile ({ commit }, payload) {
+    commit('setFile', payload);
+  },
   // if contract not initialized, generate first keys
   // initializeIC ({ commit, state, dispatch }) {
   //   if (!state.contractValues.ownerKey || !state.contractValues.heirKey) {
@@ -112,6 +120,10 @@ const actions = {
 
 // setters
 const mutations = {
+  // set file contents as a string
+  setFile: (state, payload) => {
+    state.file = payload;
+  },
   // // set each page title & valid/usable status
   // setPageStatus: (state, { pageNumber, valid, usable }) => {
   //   state.pages[pageNumber - 1].valid = valid;

@@ -1,7 +1,7 @@
 <template>
   <div
     class="RoundButton noselect"
-    :style="{ color: textColor, border: '0.3vmin solid ' + textColor }"
+    :style="{ color: textColor, 'border-color': textColor }"
     @click="$emit('click')"
   >
     {{ textContent }}

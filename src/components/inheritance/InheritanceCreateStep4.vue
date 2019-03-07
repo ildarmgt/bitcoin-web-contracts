@@ -260,7 +260,7 @@ export default {
     margin-bottom: 1vmin;
     color: white;
     background-color: orange;
-    border: 0.3vmin solid white;
+    border: 0.15vmin solid white;
     border-radius: 3vmin;
     cursor: pointer;
   }

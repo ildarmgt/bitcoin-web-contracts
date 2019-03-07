@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('../fonts/Montserrat/Montserrat-Light.ttf');
+  src: url('./../../assets/fonts/Montserrat-Light.ttf');
 }
 
 html {
@@ -126,4 +126,33 @@ ul li::before {
 }
 ::-moz-selection {
   background-color: rgba(0, 0, 233, 0.2); /* WebKit/Blink Browsers */
+}
+
+input {
+  border-radius: 0.5vmin;
+}
+
+textarea {
+  border-radius: 0.5vmin;
+  /* firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0);
+  scrollbar-width: thin;
+}
+/* chrome scroll bar */
+textarea::-webkit-scrollbar {
+  background: rgba(255, 255, 255, 0);
+  height: 1vmin;
+}
+/* chrome scroll bar background */
+textarea::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0);
+}
+/* scroll bar itself */
+textarea::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 1vmin;
+  box-shadow: inset 0 0 0 0.1vmin white;
+}
+textarea:focus {
+  outline: none;
 }

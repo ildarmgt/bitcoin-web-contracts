@@ -9,11 +9,14 @@ import IntroPage from './components/_main/IntroPage';
 import Inheritance from './components/inheritance/Inheritance';
 import PuzzleDelay from './components/puzzledelay/PuzzleDelay';
 
+// global css
+require('./assets/css/global.css');
+
 // add router
 Vue.use(VueRouter);
 
 // flash msg
-require('vue-flash-message/dist/vue-flash-message.min.css');
+require('./assets/css/vue-flash-message.css');
 Vue.use(VueFlashMessage);
 
 export const router = new VueRouter({

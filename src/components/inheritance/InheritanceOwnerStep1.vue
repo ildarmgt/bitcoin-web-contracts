@@ -3,8 +3,9 @@
     <div class="q fa">
       <!-- main question -->
       <div class="q__strong">
-        First, load the backup contract access information:
+        First, load the backup access info:
       </div>
+      <!-- if uploading -->
       <div v-if="showUpload">
         <div class="dropper">
           <input
@@ -21,17 +22,21 @@
           <RoundButton
             textContent="manually fill out"
             textColor="white"
+            @click="manuallyClicked"
           />
         </div>
       </div>
+      <!-- if manually filling in or not uploading -->
       <div v-else>
         <div
           class="fileInfo"
           @click="{ showUpload = true }"
         >
-          {{ fileName }}
+          {{ fileName ? fileName : 'not a file submission' }}
         </div>
+        <InheritanceOwnerForm />
       </div>
+      <!-- next button  -->
       <ArrowButton
         textContent="Next"
         textColor="rgb(102, 102, 255)"
@@ -46,15 +51,17 @@ import { mapActions, mapGetters } from 'vuex'; // state
 
 import ArrowButton from './../general/ArrowButton';
 import RoundButton from './../general/RoundButton';
+import InheritanceOwnerForm from './InheritanceOwnerForm';
 
 export default {
   name: 'InheritanceOwnerStep1',
   components: {
     ArrowButton,
-    RoundButton
+    RoundButton,
+    InheritanceOwnerForm
   },
   data: () => ({
-    showUpload: true,
+    showUpload: false,
     fileName: ''
   }),
   mounted () {},
@@ -63,14 +70,15 @@ export default {
   },
   methods: {
     ...mapActions('inheritanceOwner', [
-      'changePage'
+      'changePage',
+      'changeFile'
     ]),
     // next button event
     onNextButtonClick () {
       // now change page to step 2
       this.changePage(2);
     },
-    // handles submitted file
+    // writes submitted file to vuex
     async fileSubmitted (file) {
       // waits until read
       const result = await new Promise(resolve => {
@@ -78,9 +86,11 @@ export default {
         reader.onload = () => resolve(reader.result);
         reader.readAsText(file);
       });
-      console.log(result);
-      console.log(file.name);
       this.fileName = file.name;
+      this.showUpload = false;
+      this.changeFile(result);
+    },
+    manuallyClicked () {
       this.showUpload = false;
     }
   }
