@@ -19,7 +19,8 @@
         >
           copy
         </div>
-        <br>your backup for later spending
+        your
+        <br>backup for later spending
         <div class="q__backup__note1">
           Keep private! Lose it, lose access!<br>
         </div>

@@ -22,7 +22,7 @@
             class="m__wrap__list__choice"
             @click="clicked('p2sh')"
             :class="{ selected: this.addressType == 'p2sh' }"
-          >p2sh</span>
+          >p2sh (legacy)</span>
         </div>
         <div>
           <span

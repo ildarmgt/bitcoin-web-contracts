@@ -4,37 +4,44 @@
       Owner Private Key (WIF)
     </div>
     <textarea
+      id="ownerPrivateKeyWIF"
       rows="1"
       class="textBox"
       ref="q__input1"
       spellcheck="false"
       :value="ownerPrivateKeyWIF"
+      @input="textChanged"
     />
     <div class="label">
       Script (hex)
     </div>
     <textarea
+      id="scriptHex"
       rows="1"
       class="textBox"
       ref="q__input2"
       spellcheck="false"
       :value="scriptHex"
+      @input="textChanged"
     />
     <div class="label">
       Contract address
     </div>
     <textarea
+      id="contractAddress"
       rows="1"
       class="textBox"
       ref="q__input3"
       spellcheck="false"
       :value="contractAddress"
+      @input="textChanged"
     />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
+import sanitize from './../../helpers/sanitize'; // string cleaner
 
 export default {
   name: 'InheritanceOwnerForm',
@@ -54,7 +61,9 @@ export default {
     this.updateFromFile();
   },
   methods: {
-    ...mapActions([]),
+    ...mapActions('inheritanceOwner', [
+      'changeContractValues'
+    ]),
     updateFromFile () {
       const file = this.getFile;
       if (file) {
@@ -73,6 +82,39 @@ export default {
           this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
         } catch (e) { errors.ownerPrivateKeyWIF = true; }
       }
+      // update vuex
+      this.changeContractValues({
+        ownerKey: this.ownerPrivateKeyWIF,
+        contractAddress: this.contractAddress,
+        scriptHex: this.scriptHex
+      });
+    },
+    // textbox contents changed
+    textChanged (event) {
+      // remove unwanted chars (depends on box)
+      let fixedString;
+      if (event.target.id === 'contractAddress') {
+        fixedString = sanitize(event.target.value, 'basic');
+      }
+      if (event.target.id === 'ownerPrivateKeyWIF') {
+        fixedString = sanitize(event.target.value, 'base58');
+      }
+      if (event.target.id === 'scriptHex') {
+        fixedString = sanitize(event.target.value, 'hex');
+      }
+      event.target.value = fixedString;
+      this[event.target.id] = fixedString;
+
+      // signal to parent change was done
+      // so parent knows it's no longer the file settings
+      this.$emit('input');
+
+      // update vuex
+      this.changeContractValues({
+        ownerKey: this.ownerPrivateKeyWIF,
+        contractAddress: this.contractAddress,
+        scriptHex: this.scriptHex
+      });
     }
   }
 };

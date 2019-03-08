@@ -1,4 +1,4 @@
-// import { isWifValid, newWIF } from './../../bitcoin'; // bitcoin helper
+import { whatWIF, whatAddress } from './../../bitcoin'; // bitcoin helper
 
 // inheritanceOwner
 const namespaced = true;
@@ -7,20 +7,21 @@ const state = {
   // valid - whether content passes the validity checks
   // usable - whether can navigate to it
   pages: [
-    { pageTitle: 'Input backup', valid: false, usable: true },
-    { pageTitle: 'Destination', valid: false, usable: true },
+    { pageTitle: 'Input backup', valid: true, usable: true },
+    { pageTitle: 'Destination', valid: true, usable: false },
     { pageTitle: 'Transact', valid: true, usable: false }
   ],
   file: '',
   // 0 none, 1+ are pages
-  pageSelected: 1
-  // contractValues: {
-  //   daysDelay: '1',
-  //   ownerKey: '',
-  //   heirKey: '',
-  //   networkChoice: 'bitcoin',
-  //   addressType: 'p2wsh'
-  // }
+  pageSelected: 1,
+  contractValues: {
+    ownerKey: '',
+    networkChoice: '',
+    addressType: '',
+    contractAddress: '',
+    scriptHex: ''
+  },
+  issues: []
 };
 
 const getters = {
@@ -74,33 +75,45 @@ const actions = {
   //   }
   //   dispatch('updatePageStatusIC');
   // },
-  // look at contract values and update valid & usable for each page
-  // change a page's readiness status
-  // updatePageStatusIC ({ commit, state }) {
-  //   const { networkChoice } = state.contractValues;
-  //   // check daysDelay
-  //   const isDaysValid = state.contractValues.daysDelay <= 388;
-  //   // check ownerKey
-  //   const isOwnerKeyValid = isWifValid({
-  //     wif: state.contractValues.ownerKey,
-  //     networkChoice: networkChoice
-  //   });
-  //   // check heirKey
-  //   const isHeirKeyValid = isWifValid({
-  //     wif: state.contractValues.heirKey,
-  //     networkChoice: networkChoice
-  //   });
 
-  //   update pages
-  //   commit('setPageStatus', { pageNumber: 1, valid: isDaysValid, usable: true });
-  //   commit('setPageStatus', { pageNumber: 2, valid: isOwnerKeyValid, usable: true });
-  //   commit('setPageStatus', { pageNumber: 3, valid: isHeirKeyValid, usable: true });
-  //   if (isDaysValid && isOwnerKeyValid && isHeirKeyValid) {
-  //     commit('setPageStatus', { pageNumber: 4, valid: true, usable: true });
-  //   } else {
-  //     commit('setPageStatus', { pageNumber: 4, valid: false, usable: false });
-  //   }
-  // },
+  // look at contract values and update their type & if pages are valid & usable
+  updateStatus ({ commit, state }) {
+    // reset issues
+    let issues = {};
+    // check network & validity of the private key WIF
+    const keyNetwork = whatWIF(state.contractValues.ownerKey);
+    if (!keyNetwork) { issues.ownerKey = true; }
+    // check network & validity of the address
+    const addressNetwork = whatAddress(state.contractValues.contractAddress);
+    if (!addressNetwork) { issues.address = true; }
+    // check if networks are a match & defined
+    const areNetworksValid = (keyNetwork === addressNetwork);
+    if (!areNetworksValid) { issues.networkMatch = true; }
+    // update state
+    commit('setContractValues', {
+      networkChoice: (areNetworksValid && keyNetwork) ? keyNetwork : ''
+    });
+
+    // should check if p2sh or p2wsh address
+    // and then update state
+    const address = state.contractValues.contractAddress;
+    let addressType;
+    if (address.substring(0, 1) === '3') { addressType = 'p2sh'; }
+    if (address.substring(0, 1) === '2') { addressType = 'p2sh'; }
+    if (address.substring(0, 2) === 'bc') { addressType = 'p2wsh'; }
+    if (address.substring(0, 2) === 'tb') { addressType = 'p2wsh'; }
+    commit('setContractValues', { addressType });
+
+    // check page 1
+    const isPage1Valid = areNetworksValid && keyNetwork && addressNetwork;
+
+    // update pages
+    commit('setPageStatus', { pageNumber: 1, valid: isPage1Valid, usable: true });
+    commit('setPageStatus', { pageNumber: 2, valid: true, usable: isPage1Valid });
+
+    // update issues
+    commit('setIssues', issues);
+  },
   // change pageSelected to given page if next page is usable
   changePage ({ commit, state }, newPage) {
     const pageObject = state.pages[newPage - 1];
@@ -109,13 +122,13 @@ const actions = {
         commit('setPage', newPage);
       }
     }
+  },
+  changeContractValues: ({ commit, dispatch }, payload) => {
+    // update contract values
+    commit('setContractValues', payload);
+    // redo the ready/valid checks
+    dispatch('updateStatus');
   }
-  // updateContractValuesIC: ({ commit, dispatch }, payload) => {
-  //   // update contract values
-  //   commit('setContractValues', payload);
-  //   // redo the ready/valid checks
-  //   dispatch('updatePageStatusIC');
-  // }
 };
 
 // setters
@@ -124,12 +137,12 @@ const mutations = {
   setFile: (state, payload) => {
     state.file = payload;
   },
-  // // set each page title & valid/usable status
-  // setPageStatus: (state, { pageNumber, valid, usable }) => {
-  //   state.pages[pageNumber - 1].valid = valid;
-  //   state.pages[pageNumber - 1].usable = usable;
-  // },
-  // // set value for pageSelected
+  // set each page title & valid/usable status
+  setPageStatus: (state, { pageNumber, valid, usable }) => {
+    state.pages[pageNumber - 1].valid = valid;
+    state.pages[pageNumber - 1].usable = usable;
+  },
+  // set value for pageSelected
   setPage: (state, newPage) => {
     // change first to 0 so change is detected by all the components
     state.pageSelected = 0;
@@ -138,10 +151,13 @@ const mutations = {
     // const maxPage = state.pages.length + 1;
     // state.pageSelected = 0;
     // state.pageSelected = (newPage <= maxPage) ? newPage : oldPage;
+  },
+  setContractValues: (state, payload) => {
+    state.contractValues = { ...state.contractValues, ...payload };
+  },
+  setIssues: (state, payload) => {
+    state.issues = payload;
   }
-  // setContractValues: (state, payload) => {
-  //   state.contractValues = { ...state.contractValues, ...payload };
-  // }
 };
 
 export default { namespaced, state, getters, actions, mutations };

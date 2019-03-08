@@ -10,7 +10,6 @@
         <div class="dropper">
           <input
             type="file"
-            title="submit file"
             id="file"
             enctype="multipart/form-data"
             @change="fileSubmitted($event.target.files[0])"
@@ -34,7 +33,10 @@
         >
           {{ fileName ? fileName : 'not a file submission' }}
         </div>
-        <InheritanceOwnerForm />
+        <InheritanceOwnerForm
+          class="form"
+          @input="{ fileName = '' }"
+        />
       </div>
       <!-- next button  -->
       <ArrowButton
@@ -204,5 +206,9 @@ export default {
     right: 3.5vmin;
     top: 1.8vmin;
     position: absolute;
+  }
+  .form {
+    width: 85%;
+    display: inline-block;
   }
 </style>

@@ -8,7 +8,7 @@ export const newWIF = (network_choice) => {
   return bitcoin.ECPair.makeRandom({ network }).toWIF();
 };
 
-// check if private key is valid
+// check if private key is valid for a specific network
 export const isWifValid = ({ wif, networkChoice }) => {
   try {
     const network = bitcoin.networks[networkChoice];
@@ -17,6 +17,34 @@ export const isWifValid = ({ wif, networkChoice }) => {
   } catch (e) {
     return false;
   }
+};
+
+// returns which network the key/WIF is for or returns undefined
+export const whatWIF = (wif) => {
+  let network;
+  try {
+    void bitcoin.ECPair.fromWIF(wif, bitcoin.networks.bitcoin);
+    network = 'bitcoin';
+  } catch (e) {}
+  try {
+    void bitcoin.ECPair.fromWIF(wif, bitcoin.networks.testnet);
+    network = 'testnet';
+  } catch (e) {}
+  return network;
+};
+
+// returns which network the key/WIF is for or returns undefined
+export const whatAddress = (address) => {
+  let network;
+  try {
+    void bitcoin.address.toOutputScript(address, bitcoin.networks.bitcoin);
+    network = 'bitcoin';
+  } catch (e) {}
+  try {
+    void bitcoin.address.toOutputScript(address, bitcoin.networks.testnet);
+    network = 'testnet';
+  } catch (e) {}
+  return network;
 };
 
 // returns all the info necessary to fund inheritance contract
