@@ -9,6 +9,7 @@
 }
 
 .flash__message.success {
+  font-size: 3vmin;
   color: white;
   background-color: #48a025;
   border: white;

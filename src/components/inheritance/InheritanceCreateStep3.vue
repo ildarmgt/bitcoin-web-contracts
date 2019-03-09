@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="q fa">
+    <div class="q">
       <!-- main page q -->
       <div class="q__strong">
         And what is the <span class="heir">Heir</span>'s private key?

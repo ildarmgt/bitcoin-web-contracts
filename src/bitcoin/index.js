@@ -110,6 +110,7 @@ export const inhertianceContract = (payload) => {
   const backupP2WSH = {
     contract: 'inheritance timer',
     addressType: addressType,
+    networkChoice: networkChoice,
     contractSummary: 'IF <ownerPublicKey> CHECKSIG ELSE <relativeLockTime> CHECKSEQUENCEVERIFY DROP <heirPublicKey> CHECKSIG ENDIF',
     ownerPrivateKeyWIF: ownerWIF,
     heirPrivateKeyWIF: heirWIF,

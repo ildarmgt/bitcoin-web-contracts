@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="q fa">
+    <div class="q">
       <!-- main page q -->
       <div class="q__strong">
         How long until inheritance can be spent by the Heir?
@@ -25,22 +25,36 @@
         To be measured from moment funding is confirmed.<br>
         &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
-      <!-- button to go to next page -->
-      <div
+      <!-- buttons to go to next pages -->
+      <!-- <div
         class="arrowButton"
         @click="onNextButtonClick"
       >
         Next
-      </div>
+      </div> -->
+      <ArrowButton
+        textContent="Complete with random keys"
+        textColor="orange"
+        @click="onDoneButtonClick"
+      />
+      <ArrowButton
+        textContent="Customize keys..."
+        textColor="orange"
+        @click="onNextButtonClick"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
+import ArrowButton from './../general/ArrowButton';
 
 export default {
   name: 'InheritanceCreateStep1',
+  components: {
+    ArrowButton
+  },
   data: () => ({
     timeValue: '365', // stores number to display
     lastTimer: null // stores timer id used for fixing numbers
@@ -115,6 +129,12 @@ export default {
       this.refreshNumber();
       // now change page to step 2
       this.changePageIC(2);
+    },
+    onDoneButtonClick () {
+      // convert to valid number & update vuex
+      this.refreshNumber();
+      // now change page to step 2
+      this.changePageIC(4);
     }
   }
 };
@@ -171,46 +191,5 @@ export default {
   }
   input:focus{
     outline: none;
-  }
-  .arrowButton {
-    font-size: 3vmin;
-    margin: 0 auto;
-    margin-top: 5vmin;
-    width: max-content;
-    height: 5vmin;
-    line-height: 5vmin;
-    text-align: center;
-    padding: 0 3vmin 0 2vmin;
-    color: orange;
-    background-color: rgb(255, 255, 255);
-    opacity: 0.75;
-    position: relative;
-    display: block;
-    border-radius: 1vmin 2vmin 2vmin 1vmin;
-    z-index: 1;
-    -webkit-user-select: none;
-    -moz-user-select: -moz-none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-  .arrowButton:after{
-    position: absolute;
-    right: -1.37vmin;
-    top: 0;
-    content: "";
-    width: 5vmin;
-    height: 5vmin;
-    background-color: inherit;
-    border-radius: 2vmin 1.3vmin 1vmin 1.3vmin;
-    transform: rotate(-45deg) scale(0.707);
-    z-index: 0;
-  }
-  .arrowButton:hover {
-    opacity: 1;
-  }
-  .arrowButton:active {
-    transform: translateY(0.2vmin);
   }
 </style>

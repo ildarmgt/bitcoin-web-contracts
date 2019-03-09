@@ -1,5 +1,5 @@
 <template>
-  <div class="inheritance_heir">
+  <div class="inheritance_heir fa">
     <h2 class="green">
       Heir Access
     </h2>

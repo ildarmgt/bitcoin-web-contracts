@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="q fa">
+    <div class="q">
       <!-- main page q -->
       <div class="q__strong">
         What is the <span class="owner">Owner</span>'s private key?

@@ -35,7 +35,7 @@
         </div>
         <InheritanceOwnerForm
           class="form"
-          @input="{ fileName = '' }"
+          @input="formEdited"
         />
       </div>
       <!-- next button  -->
@@ -66,7 +66,9 @@ export default {
     showUpload: true,
     fileName: ''
   }),
-  mounted () {},
+  mounted () {
+    // (TODO) put in check if contract values are already filled out to determine what to display
+  },
   computed: {
     ...mapGetters('inheritanceOwner', [])
   },
@@ -94,6 +96,10 @@ export default {
     },
     manuallyClicked () {
       this.showUpload = false;
+    },
+    formEdited () {
+      this.fileName = '';
+      this.changeFile('');
     }
   }
 };

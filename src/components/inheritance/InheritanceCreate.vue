@@ -1,5 +1,5 @@
 <template>
-  <div class="inheritance_create">
+  <div class="inheritance_create fa">
     <InheritanceCreateMenu />
     <Stepper
       stepperName="Create Contract"

@@ -1,5 +1,5 @@
 <template>
-  <div class="inheritance_owner">
+  <div class="inheritance_owner fa">
     <Stepper
       stepperName="Spend as Owner"
       :pageWanted="getPageSelected"
