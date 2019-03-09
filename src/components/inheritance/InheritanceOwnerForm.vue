@@ -54,37 +54,48 @@ export default {
   props: {},
   computed: {
     ...mapGetters('inheritanceOwner', [
-      'getFile'
+      'getFile',
+      'getContractValues'
     ])
   },
   mounted () {
-    this.updateFromFile();
+    const file = this.getFile;
+    if (file) {
+      this.updateFromFile(file);
+    } else {
+      this.updateFromState();
+    }
   },
   methods: {
     ...mapActions('inheritanceOwner', [
       'changeContractValues'
     ]),
-    updateFromFile () {
-      const file = this.getFile;
-      if (file) {
-        const contract = JSON.parse(file);
-        let errors = {};
-        try {
-          this.contractAddress = contract.contractAddress;
-        } catch (e) { errors.contractAddress = true; }
-        try {
-          this.scriptHex = contract.redeemScriptHex || this.scriptHex;
-        } catch (e) { errors.redeemScriptHex = true; }
-        try {
-          this.scriptHex = contract.witnessScriptHex || this.scriptHex;
-        } catch (e) { errors.witnessScriptHex = true; }
-        try {
-          this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
-        } catch (e) { errors.ownerPrivateKeyWIF = true; }
-      }
+    updateFromState () {
+      const contract = this.getContractValues;
+      this.contractAddress = contract.contractAddress;
+      this.scriptHex = contract.scriptHex;
+      this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
+    },
+    // update contract data from file data if necessary
+    updateFromFile (file) {
+      const contract = JSON.parse(file.data);
+      let errors = {};
+      try {
+        this.contractAddress = contract.contractAddress;
+      } catch (e) { errors.contractAddress = true; }
+      try {
+        this.scriptHex = contract.redeemScriptHex || this.scriptHex;
+      } catch (e) { errors.redeemScriptHex = true; }
+      try {
+        this.scriptHex = contract.witnessScriptHex || this.scriptHex;
+      } catch (e) { errors.witnessScriptHex = true; }
+      try {
+        this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
+      } catch (e) { errors.ownerPrivateKeyWIF = true; }
+
       // update vuex
       this.changeContractValues({
-        ownerKey: this.ownerPrivateKeyWIF,
+        ownerPrivateKeyWIF: this.ownerPrivateKeyWIF,
         contractAddress: this.contractAddress,
         scriptHex: this.scriptHex
       });
@@ -111,7 +122,7 @@ export default {
 
       // update vuex
       this.changeContractValues({
-        ownerKey: this.ownerPrivateKeyWIF,
+        ownerPrivateKeyWIF: this.ownerPrivateKeyWIF,
         contractAddress: this.contractAddress,
         scriptHex: this.scriptHex
       });

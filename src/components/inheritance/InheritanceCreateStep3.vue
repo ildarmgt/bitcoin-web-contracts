@@ -65,8 +65,8 @@ export default {
   components: {},
   mounted () {
     // show initial private key
-    const heirKey = this.getContractValuesIC.heirKey;
-    this.key = heirKey;
+    const heirPrivateKeyWIF = this.getContractValuesIC.heirPrivateKeyWIF;
+    this.key = heirPrivateKeyWIF;
   },
   computed: {
     ...mapGetters('inheritanceCreate', [
@@ -85,7 +85,7 @@ export default {
     newKeyRequested () {
       const newKey = this.newKey();
       // update vuex
-      this.updateContractValuesIC({ heirKey: newKey });
+      this.updateContractValuesIC({ heirPrivateKeyWIF: newKey });
       // update view
       this.key = newKey;
     },
@@ -113,7 +113,7 @@ export default {
       }
 
       // update vuex
-      this.updateContractValuesIC({ heirKey: fixedKey });
+      this.updateContractValuesIC({ heirPrivateKeyWIF: fixedKey });
 
       // this seems to be necessary
       event.target.value = fixedKey;

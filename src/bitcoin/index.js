@@ -50,15 +50,15 @@ export const whatAddress = (address) => {
 // returns all the info necessary to fund inheritance contract
 // address should be unique for the 5 provided parameters
 export const inhertianceContract = (payload) => {
-  const { days, ownerWIF, heirWIF, networkChoice, addressType } = payload;
+  const { days, ownerPrivateKeyWIF, heirPrivateKeyWIF, networkChoice, addressType } = payload;
   // shortcuts
   const network = bitcoin.networks[networkChoice];
   const op = bitcoin.opcodes;
   const encode = bitcoin.script.number.encode;
 
   // get key pair object from WIF private keys
-  const ownerKey = bitcoin.ECPair.fromWIF(ownerWIF, network);
-  const heirKey = bitcoin.ECPair.fromWIF(heirWIF, network);
+  const ownerKeys = bitcoin.ECPair.fromWIF(ownerPrivateKeyWIF, network);
+  const heirKeys = bitcoin.ECPair.fromWIF(heirPrivateKeyWIF, network);
 
   const relLockTime = bip68.encode({
     // must be multiple of 512 seconds (see BIP68)
@@ -74,7 +74,7 @@ export const inhertianceContract = (payload) => {
 
       // check submitted signature vs this public key
       // if a match, puts TRUE on top of stack, otherwise FALSE
-      ownerKey.publicKey, op.OP_CHECKSIG,
+      ownerKeys.publicKey, op.OP_CHECKSIG,
 
     op.OP_ELSE, // spender submits FALSE (heir branch)
 
@@ -84,7 +84,7 @@ export const inhertianceContract = (payload) => {
       op.OP_DROP,
       // check submitted signature vs this public key
       // if a match, puts TRUE on top of stack, otherwise FALSE
-      heirKey.publicKey, op.OP_CHECKSIG,
+      heirKeys.publicKey, op.OP_CHECKSIG,
 
     op.OP_ENDIF
 
@@ -112,8 +112,8 @@ export const inhertianceContract = (payload) => {
     addressType: addressType,
     networkChoice: networkChoice,
     contractSummary: 'IF <ownerPublicKey> CHECKSIG ELSE <relativeLockTime> CHECKSEQUENCEVERIFY DROP <heirPublicKey> CHECKSIG ENDIF',
-    ownerPrivateKeyWIF: ownerWIF,
-    heirPrivateKeyWIF: heirWIF,
+    ownerPrivateKeyWIF: ownerPrivateKeyWIF,
+    heirPrivateKeyWIF: heirPrivateKeyWIF,
     witnessScriptHex: script.toString('hex'),
     witnessScriptHash: bitcoin.crypto.sha256(script).toString('hex'),
     relativeLockTime: relLockTime.toString(),
@@ -127,8 +127,8 @@ export const inhertianceContract = (payload) => {
     network: networkChoice,
     addressType: addressType,
     contractSummary: 'IF <ownerPublicKey> CHECKSIG ELSE <relativeLockTime> CHECKSEQUENCEVERIFY DROP <heirPublicKey> CHECKSIG ENDIF',
-    ownerPrivateKeyWIF: ownerWIF,
-    heirPrivateKeyWIF: heirWIF,
+    ownerPrivateKeyWIF: ownerPrivateKeyWIF,
+    heirPrivateKeyWIF: heirPrivateKeyWIF,
     redeemScriptHex: script.toString('hex'),
     redeemScriptHash: bitcoin.crypto.sha256(script).toString('hex'),
     relativeLockTime: relLockTime.toString(),

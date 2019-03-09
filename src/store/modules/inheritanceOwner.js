@@ -11,11 +11,11 @@ const state = {
     { pageTitle: 'Destination', valid: true, usable: false },
     { pageTitle: 'Transact', valid: true, usable: false }
   ],
-  file: '',
+  file: undefined,
   // 0 none, 1+ are pages
   pageSelected: 1,
   contractValues: {
-    ownerKey: '',
+    ownerPrivateKeyWIF: '',
     networkChoice: '',
     addressType: '',
     contractAddress: '',
@@ -30,8 +30,9 @@ const getters = {
 
   // returns latest file
   getFile: state => state.file,
+
   // return all contractValues
-  // getContractValuesIC: state => state.contractValues,
+  getContractValues: state => state.contractValues,
 
   // return all pages info
   getPagesInfo: state => state.pages
@@ -81,8 +82,8 @@ const actions = {
     // reset issues
     let issues = {};
     // check network & validity of the private key WIF
-    const keyNetwork = whatWIF(state.contractValues.ownerKey);
-    if (!keyNetwork) { issues.ownerKey = true; }
+    const keyNetwork = whatWIF(state.contractValues.ownerPrivateKeyWIF);
+    if (!keyNetwork) { issues.ownerPrivateKeyWIF = true; }
     // check network & validity of the address
     const addressNetwork = whatAddress(state.contractValues.contractAddress);
     if (!addressNetwork) { issues.address = true; }

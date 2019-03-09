@@ -117,8 +117,8 @@ export default {
       const stored = this.getContractValuesIC;
       const contractParams = {
         days: stored.daysDelay,
-        ownerWIF: stored.ownerKey,
-        heirWIF: stored.heirKey,
+        ownerPrivateKeyWIF: stored.ownerPrivateKeyWIF,
+        heirPrivateKeyWIF: stored.heirPrivateKeyWIF,
         networkChoice: stored.networkChoice,
         addressType: stored.addressType
       };

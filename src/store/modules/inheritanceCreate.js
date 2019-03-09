@@ -16,8 +16,8 @@ const state = {
   pageSelected: 1,
   contractValues: {
     daysDelay: '1',
-    ownerKey: '',
-    heirKey: '',
+    ownerPrivateKeyWIF: '',
+    heirPrivateKeyWIF: '',
     networkChoice: 'bitcoin',
     addressType: 'p2wsh'
   }
@@ -40,10 +40,10 @@ const getters = {
 const actions = {
   // if contract not initialized, generate first keys
   initializeIC ({ commit, state, dispatch }) {
-    if (!state.contractValues.ownerKey || !state.contractValues.heirKey) {
-      const ownerKey = newWIF(state.contractValues.networkChoice);
-      const heirKey = newWIF(state.contractValues.networkChoice);
-      commit('setContractValues', { ownerKey, heirKey });
+    if (!state.contractValues.ownerPrivateKeyWIF || !state.contractValues.heirPrivateKeyWIF) {
+      const ownerPrivateKeyWIF = newWIF(state.contractValues.networkChoice);
+      const heirPrivateKeyWIF = newWIF(state.contractValues.networkChoice);
+      commit('setContractValues', { ownerPrivateKeyWIF, heirPrivateKeyWIF });
       // redo the ready/valid checks
       dispatch('updatePageStatusIC');
     }
@@ -51,20 +51,20 @@ const actions = {
   // if keys are invalid for this network, it will update them
   updateKeysIfInvalid ({ commit, state, dispatch }) {
     const isOwnerKeyValid = isWifValid({
-      wif: state.contractValues.ownerKey,
+      wif: state.contractValues.ownerPrivateKeyWIF,
       networkChoice: state.contractValues.networkChoice
     });
     const isHeirKeyValid = isWifValid({
-      wif: state.contractValues.heirKey,
+      wif: state.contractValues.heirPrivateKeyWIF,
       networkChoice: state.contractValues.networkChoice
     });
     if (!isOwnerKeyValid) {
-      const ownerKey = newWIF(state.contractValues.networkChoice);
-      commit('setContractValues', { ownerKey });
+      const ownerPrivateKeyWIF = newWIF(state.contractValues.networkChoice);
+      commit('setContractValues', { ownerPrivateKeyWIF });
     }
     if (!isHeirKeyValid) {
-      const heirKey = newWIF(state.contractValues.networkChoice);
-      commit('setContractValues', { heirKey });
+      const heirPrivateKeyWIF = newWIF(state.contractValues.networkChoice);
+      commit('setContractValues', { heirPrivateKeyWIF });
     }
     dispatch('updatePageStatusIC');
   },
@@ -74,14 +74,14 @@ const actions = {
     const { networkChoice } = state.contractValues;
     // check daysDelay
     const isDaysValid = state.contractValues.daysDelay <= 388;
-    // check ownerKey
+    // check owner key
     const isOwnerKeyValid = isWifValid({
-      wif: state.contractValues.ownerKey,
+      wif: state.contractValues.ownerPrivateKeyWIF,
       networkChoice: networkChoice
     });
-    // check heirKey
+    // check heir key
     const isHeirKeyValid = isWifValid({
-      wif: state.contractValues.heirKey,
+      wif: state.contractValues.heirPrivateKeyWIF,
       networkChoice: networkChoice
     });
 

@@ -66,11 +66,25 @@ export default {
     showUpload: true,
     fileName: ''
   }),
-  mounted () {
-    // (TODO) put in check if contract values are already filled out to determine what to display
-  },
   computed: {
-    ...mapGetters('inheritanceOwner', [])
+    ...mapGetters('inheritanceOwner', [
+      'getFile',
+      'getContractValues'
+    ])
+  },
+  mounted () {
+    // if filename used, show it again as loaded
+    const file = this.getFile;
+    if (file) {
+      this.fileName = file.name;
+      this.showUpload = false;
+    }
+    // if contract data exists, show form filled out from start
+    const { contractAddress, ownerPrivateKeyWIF, scriptHex } = this.getContractValues;
+    if (contractAddress && ownerPrivateKeyWIF && scriptHex) {
+      this.showUpload = false;
+    }
+    // otherwise it will show upload dialogue as default
   },
   methods: {
     ...mapActions('inheritanceOwner', [
@@ -92,14 +106,15 @@ export default {
       });
       this.fileName = file.name;
       this.showUpload = false;
-      this.changeFile(result);
+      this.changeFile({ data: result, name: this.fileName });
     },
     manuallyClicked () {
       this.showUpload = false;
     },
+    // if form emits that it has been edited
     formEdited () {
       this.fileName = '';
-      this.changeFile('');
+      this.changeFile(undefined);
     }
   }
 };
