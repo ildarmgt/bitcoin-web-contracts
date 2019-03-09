@@ -2,7 +2,7 @@
   <div>
     <div class="q">
       <div class="q__lbl1">
-        Your contract address calculated:
+        Contract calculation done:
       </div>
       <div class="q__backup">
         First,

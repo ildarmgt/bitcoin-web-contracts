@@ -3,13 +3,13 @@
     <div class="q fa">
       <!-- main question -->
       <div class="q__strong">
-        Which outputs are we spending?
+        Which past contract fundings are we spending?
       </div>
       <div class="q__lbl1">
-        Search the address<br>
+        Search the address (for confirmed utxo)<br>
         <RoundButton
           class="q__lblInternet"
-          textContent="online at blockstream.info "
+          textContent="at blockstream.info"
           @click="getOutputs"
         />
         or
@@ -20,10 +20,16 @@
       </div>
       <div>
         <div
+          class="utxoList"
           v-for="(output, i) in utxo"
           :key="i"
         >
-          {{ output }}
+          <RoundButton
+            class="q__lbl"
+            :textContent="output.value + ' BTC'"
+            @click="utxoClicked(i)"
+          />
+          {{ output.ago }}<br>
         </div>
       </div>
       <!-- next button -->
@@ -83,17 +89,29 @@ export default {
         const apiPath = apiRoot + address + '/utxo';
         const res = await axios.get(apiPath);
         const outputs = res.data;
-        this.utxo = outputs.map((eaOutput, i) => {
-          if (eaOutput.status.block_time) {
-            const ago = timeDiff(eaOutput.status.block_time * 1000);
-            const value = (eaOutput.value / 1e8).toFixed(8);
-            const info = `${i + 1}: BTC: ${value} ` + ago;
+        this.utxo = outputs.map((out, i) => {
+          if (out.status.block_time) {
+            const ago = timeDiff(out.status.block_time * 1000);
+            const value = (out.value / 1e8).toFixed(8);
+            const info = {
+              index: i,
+              value: value,
+              ago: ago,
+              txid: out.txid,
+              vout: out.vout,
+              time: out.status.block_time
+            };
             return info;
           }
         });
       } catch (e) {
         console.log('Error caught trying api request from blockstream.info\n', e);
       }
+    },
+
+    // response to clicking utxo
+    utxoClicked (i) {
+      console.log('utxo selected: ', this.utxo[i].txid, ':', this.utxo[i].vout);
     }
   }
 };
@@ -120,5 +138,12 @@ export default {
     color: white;
     font-size: 3vmin;
     line-height: 5vmin;
+  }
+  .utxoList {
+    margin-left: 10%;
+    text-align: left;
+    color: white;
+    font-size: 2.5vmin;
+    line-height: 2.5vmin;
   }
 </style>

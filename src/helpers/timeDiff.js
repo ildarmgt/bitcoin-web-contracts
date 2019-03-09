@@ -5,5 +5,5 @@ export default function timeDiff (inTimeStamp) {
   const h = Math.floor(diff / (1000 * 60 * 60)) % 24;
   diff -= h * (1000 * 60 * 60); // remove hours
   const m = Math.floor(diff / (1000 * 60)) % 60;
-  return `${d} days ${h} hours ${m} minutes ago`;
+  return `${d} days ${h} hours ${m} min ago`;
 }

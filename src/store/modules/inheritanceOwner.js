@@ -8,8 +8,8 @@ const state = {
   // usable - whether can navigate to it
   pages: [
     { pageTitle: 'Input backup', valid: true, usable: true },
-    { pageTitle: 'From', valid: true, usable: false },
-    { pageTitle: 'To', valid: true, usable: false },
+    { pageTitle: 'From where', valid: true, usable: false },
+    { pageTitle: 'To where', valid: true, usable: false },
     { pageTitle: 'Transaction', valid: true, usable: false }
   ],
   file: undefined,
