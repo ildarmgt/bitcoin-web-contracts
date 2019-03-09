@@ -105,7 +105,7 @@ export default {
         // create backup link
         this.updateBackup(contract);
         // update local state
-        this.address = contract.contractAddress;
+        this.address = contract.address;
         this.contract = contract;
         // updateQR
         this.updateQR(this.address);

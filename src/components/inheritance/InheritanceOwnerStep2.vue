@@ -3,27 +3,61 @@
     <div class="q fa">
       <!-- main question -->
       <div class="q__strong">
-        Where to send the funds to?
+        Which outputs are we spending?
       </div>
-      <div
-        class="arrowButton"
+      <div class="q__lbl1">
+        Search the address<br>
+        <RoundButton
+          class="q__lblInternet"
+          textContent="online at blockstream.info "
+          @click="getOutputs"
+        />
+        or
+        <RoundButton
+          class="q__lbl"
+          textContent="fill out manually"
+        />
+      </div>
+      <div>
+        <div
+          v-for="(output, i) in utxo"
+          :key="i"
+        >
+          {{ output }}
+        </div>
+      </div>
+      <!-- next button -->
+      <ArrowButton
+        textContent="Next"
+        textColor="rgb(102, 102, 255)"
         @click="onNextButtonClick"
-      >
-        Next
-      </div>
+      />
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import timeDiff from './../../helpers/timeDiff';
+
 import { mapActions, mapGetters } from 'vuex'; // state
+import ArrowButton from './../general/ArrowButton';
+import RoundButton from './../general/RoundButton';
 
 export default {
   name: 'InheritanceOwnerStep2',
-  data: () => ({}),
+  components: {
+    ArrowButton,
+    RoundButton
+  },
+  data: () => ({
+    utxo: []
+  }),
   mounted () {},
   computed: {
-    ...mapGetters('inheritanceOwner', [])
+    ...mapGetters('inheritanceOwner', [
+      'getContractValues'
+    ])
   },
   methods: {
     ...mapActions('inheritanceOwner', [
@@ -33,6 +67,33 @@ export default {
     onNextButtonClick () {
       // now change page to step 3
       this.changePage(3);
+    },
+
+    // get a list of outputs for the address in step 1
+    async getOutputs () {
+      const MAIN_PATH = 'https://blockstream.info/api/address/';
+      const TEST_PATH = 'https://blockstream.info/testnet/api/address/';
+      const { address, networkChoice } = this.getContractValues;
+
+      try {
+        if (!address) { throw new Error('no address'); }
+        if (!networkChoice) { throw new Error('unknown network'); }
+
+        const apiRoot = (networkChoice === 'bitcoin') ? MAIN_PATH : TEST_PATH;
+        const apiPath = apiRoot + address + '/utxo';
+        const res = await axios.get(apiPath);
+        const outputs = res.data;
+        this.utxo = outputs.map((eaOutput, i) => {
+          if (eaOutput.status.block_time) {
+            const ago = timeDiff(eaOutput.status.block_time * 1000);
+            const value = (eaOutput.value / 1e8).toFixed(8);
+            const info = `${i + 1}: BTC: ${value} ` + ago;
+            return info;
+          }
+        });
+      } catch (e) {
+        console.log('Error caught trying api request from blockstream.info\n', e);
+      }
     }
   }
 };
@@ -51,84 +112,13 @@ export default {
     margin-left: 5%;
     font-weight: bold;
   }
-  .q__time {
-    display: block;
-    margin-top: 4vmin;
-    margin-bottom: 3vmin;
+  .q__lbl1 {
+    margin-left: 7%;
+    margin-top: 6vmin;
+    margin-bottom: 6vmin;
     text-align: left;
-    margin-left: 10%;
-  }
-  .q__time__input {
-    font-size: 3vmin;
-    height: 4vmin;
-    width: 10vmin;
-    text-align: center;
-    border: none;
-    background-color: white;
-    color: orange;
-    display: inline-block;
-    transition: background-color 0.15s;
-  }
-  .q__time__input:focus,.q__time__input:hover {
-    background: white;
-  }
-  .q__time__label {
-    font-size: 3vmin;
     color: white;
-    margin-left: 1vmin;
-    display: inline-block;
-    font-weight: bold;
-  }
-  .q__light {
-    display: block;
-    font-size: 2vmin;
-    color: white;
-    margin-top: 2vmin;
-    line-height: 3vmin;
-    margin-left: 15%;
-  }
-  input:focus{
-    outline: none;
-  }
-  .arrowButton {
-      font-size: 3vmin;
-      margin: 0 auto;
-      margin-top: 5vmin;
-      width: max-content;
-      height: 5vmin;
-      line-height: 5vmin;
-      text-align: center;
-      padding: 0 3vmin 0 2vmin;
-      color: rgb(102, 102, 255);
-      background-color: rgb(255, 255, 255);
-      opacity: 0.75;
-      position: relative;
-      display: block;
-      border-radius: 1vmin 2vmin 2vmin 1vmin;
-      z-index: 1;
-      -webkit-user-select: none;
-      -moz-user-select: -moz-none;
-      -ms-user-select: none;
-      user-select: none;
-      cursor: pointer;
-      transition: opacity 0.15s;
-  }
-  .arrowButton:after{
-      position: absolute;
-      right: -1.37vmin;
-      top: 0;
-      content: "";
-      width: 5vmin;
-      height: 5vmin;
-      background-color: inherit;
-      border-radius: 2vmin 1.3vmin 1vmin 1.3vmin;
-      transform: rotate(-45deg) scale(0.707);
-      z-index: 0;
-  }
-  .arrowButton:hover {
-    opacity: 1;
-  }
-  .arrowButton:active {
-    transform: translateY(0.2vmin);
+    font-size: 3vmin;
+    line-height: 5vmin;
   }
 </style>

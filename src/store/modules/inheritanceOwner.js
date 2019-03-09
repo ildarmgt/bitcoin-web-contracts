@@ -8,8 +8,9 @@ const state = {
   // usable - whether can navigate to it
   pages: [
     { pageTitle: 'Input backup', valid: true, usable: true },
-    { pageTitle: 'Destination', valid: true, usable: false },
-    { pageTitle: 'Transact', valid: true, usable: false }
+    { pageTitle: 'From', valid: true, usable: false },
+    { pageTitle: 'To', valid: true, usable: false },
+    { pageTitle: 'Transaction', valid: true, usable: false }
   ],
   file: undefined,
   // 0 none, 1+ are pages
@@ -18,10 +19,10 @@ const state = {
     ownerPrivateKeyWIF: '',
     networkChoice: '',
     addressType: '',
-    contractAddress: '',
+    address: '',
     scriptHex: ''
   },
-  issues: []
+  issues: {}
 };
 
 const getters = {
@@ -79,25 +80,32 @@ const actions = {
 
   // look at contract values and update their type & if pages are valid & usable
   updateStatus ({ commit, state }) {
-    // reset issues
-    let issues = {};
     // check network & validity of the private key WIF
     const keyNetwork = whatWIF(state.contractValues.ownerPrivateKeyWIF);
-    if (!keyNetwork) { issues.ownerPrivateKeyWIF = true; }
+    commit('setIssues', {
+      ownerPrivateKeyWIF: !keyNetwork,
+      ownerPrivateKeyWIFInfo: keyNetwork
+    });
+
     // check network & validity of the address
-    const addressNetwork = whatAddress(state.contractValues.contractAddress);
-    if (!addressNetwork) { issues.address = true; }
+    const addressNetwork = whatAddress(state.contractValues.address);
+    commit('setIssues', {
+      addressNetwork: !addressNetwork,
+      addressNetworkInfo: addressNetwork
+    });
+
     // check if networks are a match & defined
-    const areNetworksValid = (keyNetwork === addressNetwork);
-    if (!areNetworksValid) { issues.networkMatch = true; }
-    // update state
+    const doNetworksMatch = (keyNetwork === addressNetwork);
+    commit('setIssues', { addressNetwork: !doNetworksMatch });
+
+    // update state if known from above
     commit('setContractValues', {
-      networkChoice: (areNetworksValid && keyNetwork) ? keyNetwork : ''
+      networkChoice: (doNetworksMatch && keyNetwork) ? keyNetwork : ''
     });
 
     // should check if p2sh or p2wsh address
     // and then update state
-    const address = state.contractValues.contractAddress;
+    const address = state.contractValues.address;
     let addressType;
     if (address.substring(0, 1) === '3') { addressType = 'p2sh'; }
     if (address.substring(0, 1) === '2') { addressType = 'p2sh'; }
@@ -106,15 +114,13 @@ const actions = {
     commit('setContractValues', { addressType });
 
     // check page 1
-    const isPage1Valid = areNetworksValid && keyNetwork && addressNetwork;
+    const isPage1Valid = keyNetwork && addressNetwork && doNetworksMatch;
 
     // update pages
     commit('setPageStatus', { pageNumber: 1, valid: isPage1Valid, usable: true });
     commit('setPageStatus', { pageNumber: 2, valid: true, usable: isPage1Valid });
-
-    // update issues
-    commit('setIssues', issues);
   },
+
   // change pageSelected to given page if next page is usable
   changePage ({ commit, state }, newPage) {
     const pageObject = state.pages[newPage - 1];
@@ -124,6 +130,8 @@ const actions = {
       }
     }
   },
+
+  // changes contract values
   changeContractValues: ({ commit, dispatch }, payload) => {
     // update contract values
     commit('setContractValues', payload);
@@ -157,7 +165,7 @@ const mutations = {
     state.contractValues = { ...state.contractValues, ...payload };
   },
   setIssues: (state, payload) => {
-    state.issues = payload;
+    state.issues = { ...state.issues, ...payload };
   }
 };
 

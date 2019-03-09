@@ -33,7 +33,7 @@
         >
           {{ fileName ? fileName : 'not a file submission' }}
         </div>
-        <InheritanceOwnerForm
+        <InheritanceOwnerStep1Form
           class="form"
           @input="formEdited"
         />
@@ -53,14 +53,14 @@ import { mapActions, mapGetters } from 'vuex'; // state
 
 import ArrowButton from './../general/ArrowButton';
 import RoundButton from './../general/RoundButton';
-import InheritanceOwnerForm from './InheritanceOwnerForm';
+import InheritanceOwnerStep1Form from './InheritanceOwnerStep1Form';
 
 export default {
   name: 'InheritanceOwnerStep1',
   components: {
     ArrowButton,
     RoundButton,
-    InheritanceOwnerForm
+    InheritanceOwnerStep1Form
   },
   data: () => ({
     showUpload: true,
@@ -80,8 +80,8 @@ export default {
       this.showUpload = false;
     }
     // if contract data exists, show form filled out from start
-    const { contractAddress, ownerPrivateKeyWIF, scriptHex } = this.getContractValues;
-    if (contractAddress && ownerPrivateKeyWIF && scriptHex) {
+    const { address, ownerPrivateKeyWIF, scriptHex } = this.getContractValues;
+    if (address && ownerPrivateKeyWIF && scriptHex) {
       this.showUpload = false;
     }
     // otherwise it will show upload dialogue as default

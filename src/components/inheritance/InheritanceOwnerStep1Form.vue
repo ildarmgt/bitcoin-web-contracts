@@ -28,12 +28,12 @@
       Contract address
     </div>
     <textarea
-      id="contractAddress"
+      id="address"
       rows="1"
       class="textBox"
       ref="q__input3"
       spellcheck="false"
-      :value="contractAddress"
+      :value="address"
       @input="textChanged"
     />
   </div>
@@ -47,7 +47,7 @@ export default {
   name: 'InheritanceOwnerForm',
   components: {},
   data: () => ({
-    contractAddress: '',
+    address: '',
     scriptHex: '',
     ownerPrivateKeyWIF: ''
   }),
@@ -72,7 +72,7 @@ export default {
     ]),
     updateFromState () {
       const contract = this.getContractValues;
-      this.contractAddress = contract.contractAddress;
+      this.address = contract.address;
       this.scriptHex = contract.scriptHex;
       this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
     },
@@ -81,8 +81,8 @@ export default {
       const contract = JSON.parse(file.data);
       let errors = {};
       try {
-        this.contractAddress = contract.contractAddress;
-      } catch (e) { errors.contractAddress = true; }
+        this.address = contract.address;
+      } catch (e) { errors.address = true; }
       try {
         this.scriptHex = contract.redeemScriptHex || this.scriptHex;
       } catch (e) { errors.redeemScriptHex = true; }
@@ -96,7 +96,7 @@ export default {
       // update vuex
       this.changeContractValues({
         ownerPrivateKeyWIF: this.ownerPrivateKeyWIF,
-        contractAddress: this.contractAddress,
+        address: this.address,
         scriptHex: this.scriptHex
       });
     },
@@ -104,7 +104,7 @@ export default {
     textChanged (event) {
       // remove unwanted chars (depends on box)
       let fixedString;
-      if (event.target.id === 'contractAddress') {
+      if (event.target.id === 'address') {
         fixedString = sanitize(event.target.value, 'basic');
       }
       if (event.target.id === 'ownerPrivateKeyWIF') {
@@ -123,7 +123,7 @@ export default {
       // update vuex
       this.changeContractValues({
         ownerPrivateKeyWIF: this.ownerPrivateKeyWIF,
-        contractAddress: this.contractAddress,
+        address: this.address,
         scriptHex: this.scriptHex
       });
     }

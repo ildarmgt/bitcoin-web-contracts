@@ -22,6 +22,11 @@
       >
         <InheritanceOwnerStep3 />
       </StepperStep>
+      <StepperStep
+        :pageTitle="getPagesInfo[3].pageTitle"
+      >
+        transaction goes here
+      </StepperStep>
     </Stepper>
   </div>
 </template>

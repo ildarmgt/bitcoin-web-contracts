@@ -119,7 +119,7 @@ export const inhertianceContract = (payload) => {
     relativeLockTime: relLockTime.toString(),
     currentDate: new Date().toString(),
     daysAfterConfirmForUnlock: days,
-    contractAddress: p2wsh.address
+    address: p2wsh.address
   };
 
   const backupP2SH = {
@@ -134,7 +134,7 @@ export const inhertianceContract = (payload) => {
     relativeLockTime: relLockTime.toString(),
     currentDate: new Date().toString(),
     daysAfterConfirmForUnlock: days,
-    contractAddress: p2sh.address
+    address: p2sh.address
   };
 
   if (addressType === 'p2wsh') {
