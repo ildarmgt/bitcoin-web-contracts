@@ -112,6 +112,10 @@ export default {
     // response to clicking utxo
     utxoClicked (i) {
       console.log('utxo selected: ', this.utxo[i].txid, ':', this.utxo[i].vout);
+      // (TODO)
+      // 1) put selected utxo (1 at first, multiple later) into vuex
+      // 2) update component state from vuex on mount in manual fill view
+      // 3) enable page 3 if at least one utxo+vout has been selected
     }
   }
 };
