@@ -70,7 +70,8 @@ export default {
   },
   methods: {
     ...mapActions('inheritanceOwner', [
-      'changePage'
+      'changePage',
+      'changeContractValues'
     ]),
     // next button event
     onNextButtonClick () {
@@ -116,9 +117,15 @@ export default {
     utxoClicked (i) {
       console.log('utxo selected: ', this.utxo[i].txid, ':', this.utxo[i].vout);
       // (TODO)
-      // 1) put selected utxo (1 at first, multiple later) into local storage and vuex
+      // put selected utxo (1 at first, multiple later) into local storage
       this.txid = this.utxo[i].txid;
       this.vout = this.utxo[i].vout;
+      // put selected into vuex
+      this.changeContractValues({
+        txid: this.txid,
+        vout: this.vout
+      });
+      // put selected into text boxes
       // 2) update component state from vuex on mount in manual fill view
       // 3) enable page 3 if at least one utxo+vout has been selected
     }

@@ -20,7 +20,9 @@ const state = {
     networkChoice: '',
     addressType: '',
     address: '',
-    scriptHex: ''
+    scriptHex: '',
+    txid: '',
+    vout: ''
   },
   issues: {}
 };
