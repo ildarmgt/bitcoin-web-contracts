@@ -7,6 +7,8 @@ export default function sanitize (inString, type) {
     filter = '0123456789abcdef';
   } else if (type === 'basic') {
     filter = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  } else if (type === 'numbers') {
+    filter = '0123456789';
   } else {
     console.log('sanitize: valid type not provided');
     return undefined;

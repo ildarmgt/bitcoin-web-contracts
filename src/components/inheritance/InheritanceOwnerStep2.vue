@@ -3,7 +3,7 @@
     <div class="q fa">
       <!-- main question -->
       <div class="q__strong">
-        Which past contract fundings are we spending?
+        Which of contract's unspent funds to spend?
       </div>
       <div class="q__lbl1">
         Search the address (for confirmed utxo)<br>
@@ -12,11 +12,7 @@
           textContent="at blockstream.info"
           @click="getOutputs"
         />
-        or
-        <RoundButton
-          class="q__lbl"
-          textContent="fill out manually"
-        />
+        or fill out manually:
       </div>
       <div>
         <div
@@ -25,13 +21,15 @@
           :key="i"
         >
           <RoundButton
-            class="q__lbl"
-            :textContent="output.value + ' BTC'"
+            class="q__plus"
+            textContent="+"
             @click="utxoClicked(i)"
           />
-          {{ output.ago }}<br>
+          {{ output.value + ' BTC, ' + output.ago.dh }}<br>
         </div>
       </div>
+      <!-- textbox -->
+      <InheritanceOwnerStep2Form />
       <!-- next button -->
       <ArrowButton
         textContent="Next"
@@ -47,17 +45,22 @@ import axios from 'axios';
 import timeDiff from './../../helpers/timeDiff';
 
 import { mapActions, mapGetters } from 'vuex'; // state
+
 import ArrowButton from './../general/ArrowButton';
 import RoundButton from './../general/RoundButton';
+import InheritanceOwnerStep2Form from './InheritanceOwnerStep2Form';
 
 export default {
   name: 'InheritanceOwnerStep2',
   components: {
     ArrowButton,
-    RoundButton
+    RoundButton,
+    InheritanceOwnerStep2Form
   },
   data: () => ({
-    utxo: []
+    utxo: [],
+    txid: '',
+    vout: ''
   }),
   mounted () {},
   computed: {
@@ -113,7 +116,9 @@ export default {
     utxoClicked (i) {
       console.log('utxo selected: ', this.utxo[i].txid, ':', this.utxo[i].vout);
       // (TODO)
-      // 1) put selected utxo (1 at first, multiple later) into vuex
+      // 1) put selected utxo (1 at first, multiple later) into local storage and vuex
+      this.txid = this.utxo[i].txid;
+      this.vout = this.utxo[i].vout;
       // 2) update component state from vuex on mount in manual fill view
       // 3) enable page 3 if at least one utxo+vout has been selected
     }
@@ -149,5 +154,9 @@ export default {
     color: white;
     font-size: 2.5vmin;
     line-height: 2.5vmin;
+  }
+  .q__plus {
+    padding: 0 0.5vmin;
+
   }
 </style>
