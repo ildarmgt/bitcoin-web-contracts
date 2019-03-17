@@ -29,7 +29,10 @@
         </div>
       </div>
       <!-- textbox -->
-      <InheritanceOwnerStep2Form />
+      <InheritanceOwnerStep2Form
+        :txid="txid"
+        :vout="vout"
+      />
       <!-- next button -->
       <ArrowButton
         textContent="Next"
@@ -123,7 +126,7 @@ export default {
       // put selected into vuex
       this.changeContractValues({
         txid: this.txid,
-        vout: this.vout
+        vout: this.vout.toString()
       });
       // put selected into text boxes
       // 2) update component state from vuex on mount in manual fill view

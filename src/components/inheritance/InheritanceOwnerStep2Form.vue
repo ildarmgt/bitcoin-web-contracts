@@ -29,17 +29,20 @@ import { mapActions, mapGetters } from 'vuex'; // state
 import sanitize from './../../helpers/sanitize'; // string cleaner
 
 export default {
-  name: 'InheritanceOwnerForm',
+  name: 'InheritanceOwnerStep2Form',
   components: {},
-  data: () => ({
-    txid: '',
-    vout: ''
-  }),
-  props: {},
+  data: () => ({}),
+  props: {
+    txid: { type: String, default: '' },
+    vout: { type: String, default: '' }
+  },
   computed: {
-    ...mapGetters('inheritanceOwner', [])
+    ...mapGetters('inheritanceOwner', [
+      'getContractValues'
+    ])
   },
   mounted () {},
+  updated () {},
   methods: {
     ...mapActions('inheritanceOwner', []),
     // txid changed
