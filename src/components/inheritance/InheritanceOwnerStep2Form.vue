@@ -31,31 +31,49 @@ import sanitize from './../../helpers/sanitize'; // string cleaner
 export default {
   name: 'InheritanceOwnerStep2Form',
   components: {},
-  data: () => ({}),
-  props: {
-    txid: { type: String, default: '' },
-    vout: { type: String, default: '' }
-  },
+  data: () => ({
+    txid: '',
+    vout: ''
+  }),
+  props: {},
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
     ])
   },
-  mounted () {},
+  watch: {
+    // if vuex contract values change, update this component
+    getContractValues (contract) {
+      this.txid = contract.txid;
+      this.vout = contract.vout;
+    }
+  },
+  mounted () {
+    // update txid & vout from vuex
+    const contract = this.getContractValues;
+    this.txid = contract.txid;
+    this.vout = contract.vout;
+  },
   updated () {},
   methods: {
-    ...mapActions('inheritanceOwner', []),
+    ...mapActions('inheritanceOwner', [
+      'changeContractValues'
+    ]),
     // txid changed
     txidChanged (event) {
+      // sanitize and display string, update vuex
       const fixedString = sanitize(event.target.value, 'hex');
       event.target.value = fixedString;
-      this[event.target.id] = fixedString;
+      this.txid = fixedString;
+      this.changeContractvalues({ txid: this.txid });
     },
     // vout changed
     voutChanged (event) {
+      // sanitize and display string, update vuex
       const fixedString = sanitize(event.target.value, 'numbers');
       event.target.value = fixedString;
-      this[event.target.id] = fixedString;
+      this.vout = fixedString;
+      this.changeContractvalues({ vout: this.vout });
     },
     // load from vuex
     updateFromState () {}

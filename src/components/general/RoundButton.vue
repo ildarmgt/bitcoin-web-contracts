@@ -3,6 +3,7 @@
     class="RoundButton noselect"
     :style="{ color: textColor, 'border-color': textColor }"
     @click="$emit('click')"
+    :class="{ pushedIn: isPushedIn }"
   >
     {{ textContent }}
   </div>
@@ -15,7 +16,8 @@ export default {
   data: () => ({}),
   props: {
     textColor: { type: String, default: '' },
-    textContent: { type: String, default: '' }
+    textContent: { type: String, default: '' },
+    isPushedIn: { type: Boolean, default: false }
   },
   computed: {},
   mounted () {},
@@ -41,6 +43,9 @@ export default {
   }
   .RoundButton:active {
     transform: translateY(0.2vmin);
+  }
+  .pushedIn {
+    background-color: rgba(255, 255, 255, 1);
   }
   .noselect {
   -webkit-user-select: none;

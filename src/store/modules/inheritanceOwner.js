@@ -49,63 +49,35 @@ const actions = {
   changeFile ({ commit }, payload) {
     commit('setFile', payload);
   },
-  // if contract not initialized, generate first keys
-  // initializeIC ({ commit, state, dispatch }) {
-  //   if (!state.contractValues.ownerKey || !state.contractValues.heirKey) {
-  //     const ownerKey = newWIF(state.contractValues.networkChoice);
-  //     const heirKey = newWIF(state.contractValues.networkChoice);
-  //     commit('setContractValues', { ownerKey, heirKey });
-  //     // redo the ready/valid checks
-  //     dispatch('updatePageStatusIC');
-  //   }
-  // },
-  // if keys are invalid for this network, it will update them
-  // updateKeysIfInvalid ({ commit, state, dispatch }) {
-  //   const isOwnerKeyValid = isWifValid({
-  //     wif: state.contractValues.ownerKey,
-  //     networkChoice: state.contractValues.networkChoice
-  //   });
-  //   const isHeirKeyValid = isWifValid({
-  //     wif: state.contractValues.heirKey,
-  //     networkChoice: state.contractValues.networkChoice
-  //   });
-  //   if (!isOwnerKeyValid) {
-  //     const ownerKey = newWIF(state.contractValues.networkChoice);
-  //     commit('setContractValues', { ownerKey });
-  //   }
-  //   if (!isHeirKeyValid) {
-  //     const heirKey = newWIF(state.contractValues.networkChoice);
-  //     commit('setContractValues', { heirKey });
-  //   }
-  //   dispatch('updatePageStatusIC');
-  // },
 
   // look at contract values and update their type & if pages are valid & usable
   updateStatus ({ commit, state }) {
-    // check network & validity of the private key WIF
+    // page 1 checks
+
+    // page 1: check network & validity of the private key WIF
     const keyNetwork = whatWIF(state.contractValues.ownerPrivateKeyWIF);
     commit('setIssues', {
       ownerPrivateKeyWIF: !keyNetwork,
       ownerPrivateKeyWIFInfo: keyNetwork
     });
 
-    // check network & validity of the address
+    // page 1: check network & validity of the address
     const addressNetwork = whatAddress(state.contractValues.address);
     commit('setIssues', {
       addressNetwork: !addressNetwork,
       addressNetworkInfo: addressNetwork
     });
 
-    // check if networks are a match & defined
+    // page 1: check if networks are a match & defined
     const doNetworksMatch = (keyNetwork === addressNetwork);
     commit('setIssues', { addressNetwork: !doNetworksMatch });
 
-    // update state if known from above
+    // page 1: update state if known from above
     commit('setContractValues', {
       networkChoice: (doNetworksMatch && keyNetwork) ? keyNetwork : ''
     });
 
-    // should check if p2sh or p2wsh address
+    // page 1: should check if p2sh or p2wsh address
     // and then update state
     const address = state.contractValues.address;
     let addressType;
@@ -115,12 +87,32 @@ const actions = {
     if (address.substring(0, 2) === 'tb') { addressType = 'p2wsh'; }
     commit('setContractValues', { addressType });
 
-    // check page 1
+    // page 1: finalize page 1
     const isPage1Valid = keyNetwork && addressNetwork && doNetworksMatch;
 
+    // page 2
+
+    const isUtxoDone = !!state.contractValues.utxo;
+    const isVoutDone = !!state.contractValues.utxo;
+
+    const isPage2Valid = isUtxoDone && isVoutDone;
+
     // update pages
-    commit('setPageStatus', { pageNumber: 1, valid: isPage1Valid, usable: true });
-    commit('setPageStatus', { pageNumber: 2, valid: true, usable: isPage1Valid });
+    commit('setPageStatus', {
+      pageNumber: 1,
+      valid: isPage1Valid,
+      usable: true
+    });
+    commit('setPageStatus', {
+      pageNumber: 2,
+      valid: isPage2Valid,
+      usable: isPage1Valid
+    });
+    commit('setPageStatus', {
+      pageNumber: 3,
+      valid: true,
+      usable: isPage2Valid
+    });
   },
 
   // change pageSelected to given page if next page is usable

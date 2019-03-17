@@ -6,17 +6,23 @@
         Which of contract's unspent funds to spend?
       </div>
       <div class="q__lbl1">
-        Search the address (for confirmed utxo)<br>
+        Search the address (for&nbsp;confirmed&nbsp;unspent&nbsp;outputs)<br>
         <RoundButton
           class="q__lblInternet"
           textContent="at blockstream.info"
           @click="getOutputs"
         />
-        or fill out manually:
+        or
+        <RoundButton
+          class="q__lblInternet"
+          textContent="fill out manually"
+          @click="showFormNow"
+        />
+        ?
       </div>
-      <div>
+      <div class="utxoList">
         <div
-          class="utxoList"
+          class="utxoItem"
           v-for="(output, i) in utxo"
           :key="i"
         >
@@ -24,14 +30,14 @@
             class="q__plus"
             textContent="+"
             @click="utxoClicked(i)"
+            :isPushedIn="isSelected(i)"
           />
           {{ output.value + ' BTC, ' + output.ago.dh }}<br>
         </div>
       </div>
       <!-- textbox -->
       <InheritanceOwnerStep2Form
-        :txid="txid"
-        :vout="vout"
+        v-if="showForm"
       />
       <!-- next button -->
       <ArrowButton
@@ -63,7 +69,9 @@ export default {
   data: () => ({
     utxo: [],
     txid: '',
-    vout: ''
+    vout: '',
+    selected: -1,
+    showForm: false
   }),
   mounted () {},
   computed: {
@@ -76,6 +84,17 @@ export default {
       'changePage',
       'changeContractValues'
     ]),
+
+    // show the form
+    showFormNow () {
+      this.showForm = true;
+    },
+
+    // returns if specific utxo from api list was selected
+    isSelected (i) {
+      return this.selected === i;
+    },
+
     // next button event
     onNextButtonClick () {
       // now change page to step 3
@@ -105,7 +124,7 @@ export default {
               value: value,
               ago: ago,
               txid: out.txid,
-              vout: out.vout,
+              vout: out.vout.toString(),
               time: out.status.block_time
             };
             return info;
@@ -118,7 +137,11 @@ export default {
 
     // response to clicking utxo
     utxoClicked (i) {
-      console.log('utxo selected: ', this.utxo[i].txid, ':', this.utxo[i].vout);
+      // show form
+      this.showFormNow();
+
+      // mark option selected
+      this.selected = i;
       // (TODO)
       // put selected utxo (1 at first, multiple later) into local storage
       this.txid = this.utxo[i].txid;
@@ -126,7 +149,7 @@ export default {
       // put selected into vuex
       this.changeContractValues({
         txid: this.txid,
-        vout: this.vout.toString()
+        vout: this.vout
       });
       // put selected into text boxes
       // 2) update component state from vuex on mount in manual fill view
@@ -150,15 +173,14 @@ export default {
     font-weight: bold;
   }
   .q__lbl1 {
-    margin-left: 7%;
     margin-top: 6vmin;
     margin-bottom: 6vmin;
-    text-align: left;
+    text-align: center;
     color: white;
     font-size: 3vmin;
     line-height: 5vmin;
   }
-  .utxoList {
+  .utxoItem {
     margin-left: 10%;
     text-align: left;
     color: white;
@@ -167,6 +189,8 @@ export default {
   }
   .q__plus {
     padding: 0 0.5vmin;
-
+  }
+  .utxoList {
+    margin-bottom: 3vmin;
   }
 </style>
