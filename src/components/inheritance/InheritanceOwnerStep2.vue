@@ -73,7 +73,13 @@ export default {
     selected: -1,
     showForm: false
   }),
-  mounted () {},
+  mounted () {
+    // if page 2 utxo and vout filled out, show them at start
+    const contract = this.getContractValues;
+    if (contract.txid && contract.vout) {
+      this.showForm = true;
+    }
+  },
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
