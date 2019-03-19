@@ -65,7 +65,7 @@ export default {
       const fixedString = sanitize(event.target.value, 'hex');
       event.target.value = fixedString;
       this.txid = fixedString;
-      this.changeContractvalues({ txid: this.txid });
+      this.changeContractValues({ txid: this.txid });
     },
     // vout changed
     voutChanged (event) {
@@ -73,7 +73,7 @@ export default {
       const fixedString = sanitize(event.target.value, 'numbers');
       event.target.value = fixedString;
       this.vout = fixedString;
-      this.changeContractvalues({ vout: this.vout });
+      this.changeContractValues({ vout: this.vout });
     },
     // load from vuex
     updateFromState () {}
