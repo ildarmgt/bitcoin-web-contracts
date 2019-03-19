@@ -92,8 +92,8 @@ const actions = {
 
     // page 2
 
-    const isUtxoDone = !!state.contractValues.utxo;
-    const isVoutDone = !!state.contractValues.utxo;
+    const isUtxoDone = !!state.contractValues.txid;
+    const isVoutDone = !!state.contractValues.vout;
 
     const isPage2Valid = isUtxoDone && isVoutDone;
 
