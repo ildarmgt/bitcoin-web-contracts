@@ -46,6 +46,7 @@
       <div
         class="arrowButton"
         @click="onNextButtonClick"
+        v-if="getPagesInfoIC[3].usable"
       >
         Next
       </div>
