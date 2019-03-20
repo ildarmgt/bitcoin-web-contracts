@@ -55,6 +55,7 @@ const actions = {
     // page 1 checks
 
     // page 1: check network & validity of the private key WIF
+    // returns if there's key issue & which network it is
     const keyNetwork = whatWIF(state.contractValues.ownerPrivateKeyWIF);
     commit('setIssues', {
       ownerPrivateKeyWIF: !keyNetwork,
@@ -64,9 +65,10 @@ const actions = {
     // page 1: check network & validity of the address
     const addressNetwork = whatAddress(state.contractValues.address);
     commit('setIssues', {
-      addressNetwork: !addressNetwork,
-      addressNetworkInfo: addressNetwork
+      address: !addressNetwork,
+      addressInfo: addressNetwork
     });
+    console.log(addressNetwork, !addressNetwork);
 
     // page 1: check if networks are a match & defined
     const doNetworksMatch = (keyNetwork === addressNetwork);

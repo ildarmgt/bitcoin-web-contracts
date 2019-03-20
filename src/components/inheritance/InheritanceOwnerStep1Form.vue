@@ -37,11 +37,35 @@
       @input="textChanged"
     />
     <br><br><br>
-    <div v-if="getIssues.ownerPrivateKeyWIF">
-      Need a valid Owner private WIF key
+    <div
+      v-if="getIssues.ownerPrivateKeyWIF"
+      class="notice error"
+    >
+      Need a valid private key (WIF)
     </div>
-    <div v-if="getIssues.ownerPrivateKeyWIFInfo">
+    <div
+      v-if="getIssues.address"
+      class="notice error"
+    >
+      Need a valid address
+    </div>
+    <div
+      v-if="getIssues.doNetworksMatch"
+      class="notice error"
+    >
+      Key and address are not of same network
+    </div>
+    <div
+      v-if="getIssues.ownerPrivateKeyWIFInfo"
+      class="notice"
+    >
       {{ getIssues.ownerPrivateKeyWIFInfo }} network key recognized
+    </div>
+    <div
+      v-if="getIssues.addressInfo"
+      class="notice"
+    >
+      {{ getIssues.addressInfo }} network address recognized
     </div>
   </div>
 </template>
@@ -168,4 +192,16 @@ export default {
     margin-bottom: 0.5vmin;
     margin-top: 2vmin;
   }
+  .notice {
+    margin: 0 auto;
+    width: 90%;
+    padding: 1vmin;
+    border-radius: 1vmin;
+    margin-bottom: 1vmin;
+    margin-top: 0.5vmin;
+  }
+  .error {
+    background: rgb(194, 0, 0);
+  }
+
 </style>
