@@ -1,29 +1,46 @@
 <template>
   <div class="form">
-    <div class="label">
-      Transaction id : output number
+    <div class="form_line1">
+      <div class="label">
+        Transaction id : output number
+      </div>
+      <textarea
+        id="txid"
+        rows="1"
+        class="textbox txidbox"
+        ref="txidbox"
+        spellcheck="false"
+        placeholder="txid"
+        :value="txid"
+        @input="txidChanged"
+      />
+      :
+      <textarea
+        id="vout"
+        rows="1"
+        class="textbox voutbox"
+        ref="voutbox"
+        spellcheck="false"
+        placeholder="vout"
+        :value="vout"
+        @input="voutChanged"
+      />
     </div>
-    <textarea
-      id="txid"
-      rows="1"
-      class="txidbox"
-      ref="txidbox"
-      spellcheck="false"
-      placeholder="txid"
-      :value="txid"
-      @input="txidChanged"
-    />
-    :
-    <textarea
-      id="vout"
-      rows="1"
-      class="voutbox"
-      ref="voutbox"
-      spellcheck="false"
-      placeholder="vout"
-      :value="vout"
-      @input="voutChanged"
-    />
+    <div class="form_line1">
+      <div class="label">
+        Output value (BTC)
+      </div>
+      <textarea
+        id="utxovalue"
+        rows="1"
+        class="textbox utxovalue"
+        ref="utxovalue"
+        spellcheck="false"
+        placeholder="BTC value"
+        :value="utxoValue"
+        @input="utxoValueChanged"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,7 +53,8 @@ export default {
   components: {},
   data: () => ({
     txid: '',
-    vout: ''
+    vout: '',
+    utxoValue: ''
   }),
   props: {},
   computed: {
@@ -62,6 +80,7 @@ export default {
     ...mapActions('inheritanceOwner', [
       'changeContractValues'
     ]),
+
     // txid changed
     txidChanged (event) {
       // sanitize and display string, update vuex
@@ -70,6 +89,7 @@ export default {
       this.txid = fixedString;
       this.changeContractValues({ txid: this.txid });
     },
+
     // vout changed
     voutChanged (event) {
       // sanitize and display string, update vuex
@@ -78,6 +98,12 @@ export default {
       this.vout = fixedString;
       this.changeContractValues({ vout: this.vout });
     },
+
+    // utxo value changed
+    utxoValueChanged (event) {
+
+    },
+
     // load from vuex
     updateFromState () {}
   }
@@ -97,15 +123,13 @@ export default {
     margin-bottom: 0.5vmin;
     margin-top: 2vmin;
   }
-  .txidbox {
+  .textbox {
     font-family: 'Montserrat';
     display: inline-block;
     resize: none;
     font-size: 2.3vmin;
     padding: 0.2vmin 1vmin;
     height: 3.6vmin;
-    width: 70%;
-    margin-left: 5%;
     text-align: center;
     background-color: white;
     color: rgb(102, 102, 255);
@@ -113,7 +137,6 @@ export default {
     border-right: 0.3vmin solid white;
     border-left: 0.3vmin solid white;
     border-top: 0.5vmin solid white;
-    transition: background-color 0.15s;
     overflow-y: hidden;
     overflow-x: scroll;
     white-space: nowrap;
@@ -121,31 +144,21 @@ export default {
     vertical-align: middle;
   }
 
+  .txidbox {
+    width: 70%;
+    margin-left: 5%;
+  }
   .voutbox {
-    font-family: 'Montserrat';
-    display: inline-block;
-    resize: none;
-    font-size: 2.3vmin;
-    padding: 0.2vmin 1vmin;
-    height: 3.6vmin;
     width: 5vmin;
-    text-align: center;
-    background-color: white;
-    color: rgb(102, 102, 255);
-    border: 0.1vmin solid white;
-    border-right: 0.3vmin solid white;
-    border-left: 0.3vmin solid white;
-    border-top: 0.5vmin solid white;
-    transition: background-color 0.15s;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    white-space: nowrap;
-    cursor: default;
-    vertical-align: middle;
+  }
+  .utxovalue {
+    margin-left: 5%;
+    width: 50%;
   }
 
   .txidbox::placeholder,
-  .voutbox::placeholder {
+  .voutbox::placeholder,
+  .utxovalue::placeholder {
     color: rgba(105, 102, 136, 0.555);
   }
 </style>
