@@ -38,10 +38,10 @@ const getters = {
   getContractValues: state => state.contractValues,
 
   // return all pages info
-  getPagesInfo: state => state.pages
+  getPagesInfo: state => state.pages,
 
-  // returns daysDelay
-  // getDelayIC: state => state.contractValues.daysDelay
+  // get issues
+  getIssues: state => state.issues
 };
 
 const actions = {

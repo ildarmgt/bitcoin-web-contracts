@@ -36,6 +36,13 @@
       :value="address"
       @input="textChanged"
     />
+    <br><br><br>
+    <div v-if="getIssues.ownerPrivateKeyWIF">
+      Need a valid Owner private WIF key
+    </div>
+    <div v-if="getIssues.ownerPrivateKeyWIFInfo">
+      {{ getIssues.ownerPrivateKeyWIFInfo }} network key recognized
+    </div>
   </div>
 </template>
 
@@ -55,7 +62,8 @@ export default {
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getFile',
-      'getContractValues'
+      'getContractValues',
+      'getIssues'
     ])
   },
   mounted () {
