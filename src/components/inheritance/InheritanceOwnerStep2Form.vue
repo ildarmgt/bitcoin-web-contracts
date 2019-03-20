@@ -1,5 +1,8 @@
 <template>
   <div class="form">
+    <div class="label">
+      Transaction id : output number
+    </div>
     <textarea
       id="txid"
       rows="1"
@@ -86,7 +89,13 @@ export default {
   .form {
     color: white;
     font-size: 3vmin;
-    text-align: center;
+    text-align: left;
+  }
+  .label {
+    font-size: 2vmin;
+    text-align: left;
+    margin-bottom: 0.5vmin;
+    margin-top: 2vmin;
   }
   .txidbox {
     font-family: 'Montserrat';
@@ -95,7 +104,8 @@ export default {
     font-size: 2.3vmin;
     padding: 0.2vmin 1vmin;
     height: 3.6vmin;
-    width: 75%;
+    width: 70%;
+    margin-left: 5%;
     text-align: center;
     background-color: white;
     color: rgb(102, 102, 255);

@@ -37,6 +37,7 @@
       </div>
       <!-- textbox -->
       <InheritanceOwnerStep2Form
+        class="form"
         v-if="showForm"
       />
       <!-- next button -->
@@ -167,7 +168,7 @@ export default {
 
 <style scoped>
   .q {
-    text-align: left;
+    text-align: center;
     margin: 0vmin 2vmin;
   }
   .q__strong {
@@ -177,6 +178,7 @@ export default {
     margin-right: 3vmin;
     margin-left: 5%;
     font-weight: bold;
+    text-align: left;
   }
   .q__lbl1 {
     margin-top: 6vmin;
@@ -198,5 +200,9 @@ export default {
   }
   .utxoList {
     margin-bottom: 3vmin;
+  }
+  .form {
+    width: 85%;
+    display: inline-block;
   }
 </style>
