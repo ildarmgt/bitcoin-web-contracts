@@ -43,7 +43,7 @@
         textContent="Next"
         textColor="rgb(102, 102, 255)"
         @click="onNextButtonClick"
-        v-if="isNextOk"
+        v-if="getPagesInfo[1].usable"
       />
     </div>
   </div>
@@ -72,12 +72,7 @@ export default {
       'getFile',
       'getContractValues',
       'getPagesInfo'
-    ]),
-
-    // returns true if next should be available
-    isNextOk () {
-      return this.getPagesInfo[1].usable;
-    }
+    ])
   },
   mounted () {
     // if filename used, show it again as loaded
