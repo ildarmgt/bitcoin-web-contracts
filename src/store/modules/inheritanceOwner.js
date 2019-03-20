@@ -68,7 +68,6 @@ const actions = {
       address: !addressNetwork,
       addressInfo: addressNetwork
     });
-    console.log(addressNetwork, !addressNetwork);
 
     // page 1: check if networks are a match & defined
     const doNetworksMatch = (keyNetwork === addressNetwork);
