@@ -43,6 +43,7 @@
         textContent="Next"
         textColor="rgb(102, 102, 255)"
         @click="onNextButtonClick"
+        v-if="isNextOk"
       />
     </div>
   </div>
@@ -69,8 +70,14 @@ export default {
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getFile',
-      'getContractValues'
-    ])
+      'getContractValues',
+      'getPagesInfo'
+    ]),
+
+    // returns true if next should be available
+    isNextOk () {
+      return this.getPagesInfo[1].usable;
+    }
   },
   mounted () {
     // if filename used, show it again as loaded
