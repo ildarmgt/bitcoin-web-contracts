@@ -22,7 +22,8 @@ const state = {
     address: '',
     scriptHex: '',
     txid: '',
-    vout: ''
+    vout: '',
+    value: ''
   },
   issues: {}
 };

@@ -101,7 +101,7 @@ export default {
 
     // utxo value changed
     utxoValueChanged (event) {
-
+      // (TODO) sanitize and update vuex, and vise versa load from vuex if already filled out
     },
 
     // load from vuex
@@ -153,7 +153,7 @@ export default {
   }
   .utxovalue {
     margin-left: 5%;
-    width: 50%;
+    width: 75%;
   }
 
   .txidbox::placeholder,
