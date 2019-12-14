@@ -6,7 +6,10 @@
         Which of contract's unspent funds to spend?
       </div>
       <div class="q__lbl1">
-        Search the address (for&nbsp;confirmed&nbsp;unspent&nbsp;outputs)<br>
+        Search the address <br>
+        <!-- <div class="q__lbl2">
+          (for confirmed&nbsp;unspent&nbsp;outputs)
+        </div> -->
         <RoundButton
           class="q__lblInternet"
           textContent="at blockstream.info"
@@ -191,6 +194,14 @@ export default {
     color: white;
     font-size: 3vmin;
     line-height: 5vmin;
+  }
+  .q__lbl2 {
+    /* margin-top: 6vmin; */
+    /* margin-bottom: 6vmin; */
+    text-align: center;
+    color: white;
+    font-size: 2.5vmin;
+    /* line-height: 5vmin; */
   }
   .utxoItem {
     margin-left: 10%;
