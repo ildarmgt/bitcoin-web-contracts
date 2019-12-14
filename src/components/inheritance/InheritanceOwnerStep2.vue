@@ -71,6 +71,7 @@ export default {
     utxo: [],
     txid: '',
     vout: '',
+    value: '',
     selected: -1,
     showForm: false
   }),
@@ -122,6 +123,7 @@ export default {
         const apiPath = apiRoot + address + '/utxo';
         const res = await axios.get(apiPath);
         const outputs = res.data;
+        // update local storage
         this.utxo = outputs.map((out, i) => {
           if (out.status.block_time) {
             const ago = timeDiff(out.status.block_time * 1000);
@@ -153,10 +155,12 @@ export default {
       // put selected utxo (1 at first, multiple later) into local storage
       this.txid = this.utxo[i].txid;
       this.vout = this.utxo[i].vout;
+      this.value = this.utxo[i].value;
       // put selected into vuex
       this.changeContractValues({
         txid: this.txid,
-        vout: this.vout
+        vout: this.vout,
+        value: this.value
       });
       // put selected into text boxes
       // 2) update component state from vuex on mount in manual fill view

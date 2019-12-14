@@ -65,15 +65,22 @@ export default {
   watch: {
     // if vuex contract values change, update this component
     getContractValues (contract) {
-      this.txid = contract.txid;
-      this.vout = contract.vout;
+      // (TODO) replace with updateFromState
+      this.updateFromState(contract);
+      // this.txid = contract.txid;
+      // this.vout = contract.vout;
+      // this.utxoValue = contract.value;
     }
   },
   mounted () {
     // update txid & vout from vuex
     const contract = this.getContractValues;
-    this.txid = contract.txid;
-    this.vout = contract.vout;
+    // (TODO) replace with updateFromState
+    this.updateFromState(contract);
+
+    // this.txid = contract.txid;
+    // this.vout = contract.vout;
+    // this.utxoValue = contract.value;
   },
   updated () {},
   methods: {
@@ -101,11 +108,19 @@ export default {
 
     // utxo value changed
     utxoValueChanged (event) {
-      // (TODO) sanitize and update vuex, and vise versa load from vuex if already filled out
+      // sanitize, display, and update vuex
+      const fixedString = sanitize(event.target.value, 'numbers');
+      event.target.value = fixedString;
+      this.utxoValue = fixedString;
+      this.changeContractValues({ value: this.utxoValue });
     },
 
-    // load from vuex
-    updateFromState () {}
+    // update local data from vuex
+    updateFromState (contract) {
+      this.txid = contract.txid;
+      this.vout = contract.vout;
+      this.utxoValue = contract.value;
+    }
   }
 };
 

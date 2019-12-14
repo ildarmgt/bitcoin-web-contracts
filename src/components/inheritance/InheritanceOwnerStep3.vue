@@ -3,7 +3,7 @@
     <div class="q fa">
       <!-- main question -->
       <div class="q__strong">
-        Transaction ready for broadcast:
+        :
       </div>
       <div
         class="arrowButton"
