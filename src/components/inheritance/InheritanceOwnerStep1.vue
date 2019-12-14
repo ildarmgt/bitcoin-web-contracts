@@ -203,7 +203,7 @@ export default {
     border: 0.5vmin dotted rgba(255, 255, 255, 0.534);
     border-radius: 3vmin;
     line-height: 3vmin;
-    display: inline-block;
+    display: block;
     padding: 0.3vmin;
     padding-right: 5vmin;
     padding-left: 1.3vmin;
@@ -214,6 +214,7 @@ export default {
     max-width: 50%;
     cursor: pointer;
     opacity: 0.65;
+    margin: auto;
   }
   .fileInfo:hover {
     background-color: rgba(238, 238, 238, 0.13);
@@ -232,6 +233,7 @@ export default {
   }
   .form {
     width: 85%;
-    display: inline-block;
+    display: block;
+    margin: auto;
   }
 </style>
