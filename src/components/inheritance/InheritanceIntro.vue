@@ -15,7 +15,7 @@
         </li>
       </ul>
       <span class="text_light example">
-        Example: I will spend Bitcoin using my "Owner" key, moving them at least once a year to a new contract. But if something happens to me and I don't move them within 1 year, my sister can spend the funds with her "Heir" key.
+        Example: I will spend Bitcoin using my "Owner" key, moving them at least once a year to a new contract. But if something happens to me and I don't move them within 1 year, my sister can then also spend the funds with just her "Heir" key.
       </span>
     </div>
   </div>
