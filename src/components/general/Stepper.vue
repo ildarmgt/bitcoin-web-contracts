@@ -52,7 +52,10 @@ export default {
     stepperName: { type: String, default: '' },
     pageWanted: { type: Number, default: 0 },
     pageInfo: { type: Array, default: () => [] },
-    primaryColor: Object
+    primaryColor: {
+      type: Object,
+      default () { return {}; }
+    }
   },
   methods: {
     // return array of step titles

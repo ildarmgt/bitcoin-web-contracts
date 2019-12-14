@@ -1,6 +1,8 @@
 import bitcoin from 'bitcoinjs-lib';
 import bip68 from 'bip68';
 
+console.log(bitcoin);
+
 // generate new key
 // network_choice = { 'bitcoin' | 'testnet' }
 export const newWIF = (network_choice) => {
@@ -12,7 +14,7 @@ export const newWIF = (network_choice) => {
 export const isWifValid = ({ wif, networkChoice }) => {
   try {
     const network = bitcoin.networks[networkChoice];
-    void bitcoin.ECPair.fromWIF(wif, network);
+    bitcoin.ECPair.fromWIF(wif, network);
     return true;
   } catch (e) {
     return false;
@@ -23,11 +25,11 @@ export const isWifValid = ({ wif, networkChoice }) => {
 export const whatWIF = (wif) => {
   let network;
   try {
-    void bitcoin.ECPair.fromWIF(wif, bitcoin.networks.bitcoin);
+    bitcoin.ECPair.fromWIF(wif, bitcoin.networks.bitcoin);
     network = 'bitcoin';
   } catch (e) {}
   try {
-    void bitcoin.ECPair.fromWIF(wif, bitcoin.networks.testnet);
+    bitcoin.ECPair.fromWIF(wif, bitcoin.networks.testnet);
     network = 'testnet';
   } catch (e) {}
   return network;
@@ -37,11 +39,11 @@ export const whatWIF = (wif) => {
 export const whatAddress = (address) => {
   let network;
   try {
-    void bitcoin.address.toOutputScript(address, bitcoin.networks.bitcoin);
+    bitcoin.address.toOutputScript(address, bitcoin.networks.bitcoin);
     network = 'bitcoin';
   } catch (e) {}
   try {
-    void bitcoin.address.toOutputScript(address, bitcoin.networks.testnet);
+    bitcoin.address.toOutputScript(address, bitcoin.networks.testnet);
     network = 'testnet';
   } catch (e) {}
   return network;
