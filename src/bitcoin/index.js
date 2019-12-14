@@ -1,8 +1,6 @@
 import bitcoin from 'bitcoinjs-lib';
 import bip68 from 'bip68';
 
-console.log(bitcoin);
-
 // generate new key
 // network_choice = { 'bitcoin' | 'testnet' }
 export const newWIF = (network_choice) => {

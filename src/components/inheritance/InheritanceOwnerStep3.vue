@@ -3,10 +3,12 @@
     <div class="q fa">
       <!-- main question -->
       <div class="q__strong">
-        What to do with 11.04 BTC selected?
+        <div class="q__strong_text">
+          What to do with 11.04 BTC selected?
+        </div>
         <div class="q__lbl1">
           <RoundButton
-            textContent="Reset timer only"
+            textContent="Only reset timer"
             textColor="white"
             @click="showResetForm"
           />
@@ -19,11 +21,9 @@
         </div>
       </div>
       <!-- (TODO) replace outline -->
-      <!-- send to another  -->
-      Recepient address:<br>
-      Amount (send all)<br>
-      Fee (suggest)<br>
-      Remaining 0.54 BTC to be sent back and timer reset<br>
+      <InheritanceOwnerStep3Form
+        class="form"
+      />
       <!-- next button -->
       <ArrowButton
         textContent="Next"
@@ -39,12 +39,14 @@ import { mapActions, mapGetters } from 'vuex'; // state
 
 import ArrowButton from './../general/ArrowButton';
 import RoundButton from './../general/RoundButton';
+import InheritanceOwnerStep3Form from './InheritanceOwnerStep3Form';
 
 export default {
   name: 'InheritanceOwnerStep3',
   components: {
     ArrowButton,
-    RoundButton
+    RoundButton,
+    InheritanceOwnerStep3Form
   },
   data: () => ({}),
   mounted () {},
@@ -58,7 +60,7 @@ export default {
     // next button event
     onNextButtonClick () {
       // now change page to step 2
-      this.changePage(2);
+      this.changePage(3);
     },
 
     showSpendingForm () {
@@ -79,10 +81,23 @@ export default {
   }
   .q__strong {
     display: block;
+    text-align: center;
     font-size: 3vmin;
     color: white;
     margin-right: 3vmin;
     margin-left: 5%;
     font-weight: bold;
+  }
+  .q__strong_text {
+    text-align: left;
+    margin-bottom: 2vmin;
+  }
+  .form {
+    width: 88%;
+    display: block;
+    margin: auto;
+  }
+  .q__lbl1 {
+    display: inline-block;
   }
 </style>

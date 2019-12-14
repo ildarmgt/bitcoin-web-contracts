@@ -28,7 +28,7 @@
     </div>
     <div class="form_line1">
       <div class="label">
-        Output value (BTC)
+        Stored value (BTC)
       </div>
       <textarea
         id="utxovalue"
