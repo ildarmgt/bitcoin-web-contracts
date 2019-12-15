@@ -12,7 +12,7 @@
             textColor="white"
             @click="showResetForm"
           />
-          or
+          <br>or<br>
           <RoundButton
             textContent="Send to another address"
             textColor="white"

@@ -35,7 +35,7 @@ export default {
     color: white;
     background-color: rgba(255, 255, 255, 0);
     border: 0.15vmin solid white;
-    border-radius: 3vmin;
+    border-radius: 1.5vmin;
     padding: 0.4vmin 2vmin;
     padding-bottom: 0.6vmin;
     cursor: pointer;
