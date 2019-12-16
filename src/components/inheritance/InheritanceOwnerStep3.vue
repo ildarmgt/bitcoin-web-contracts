@@ -4,7 +4,7 @@
       <!-- main question -->
       <div class="q__strong">
         <div class="q__strong_text">
-          What to do with 11.04 BTC selected?
+          What to do with {{ getContractValues.sumOfUTXO }} BTC selected?
         </div>
         <div class="q__lbl1">
         <!--
@@ -53,7 +53,9 @@ export default {
   data: () => ({}),
   mounted () {},
   computed: {
-    ...mapGetters('inheritanceOwner', [])
+    ...mapGetters('inheritanceOwner', [
+      'getContractValues'
+    ])
   },
   methods: {
     ...mapActions('inheritanceOwner', [
@@ -61,8 +63,7 @@ export default {
     ]),
     // next button event
     onNextButtonClick () {
-      // now change page to step 2
-      this.changePage(3);
+      this.changePage(4);
     },
 
     showSpendingForm () {

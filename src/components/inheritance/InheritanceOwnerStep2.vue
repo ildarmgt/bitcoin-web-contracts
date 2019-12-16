@@ -7,10 +7,6 @@
       </div>
       <div class="q__lbl1">
         Search the address <br>
-        <!-- <div class="q__lbl2">
-          (TODO) specify unspent outputs somewhere
-          (for confirmed&nbsp;unspent&nbsp;outputs)
-        </div> -->
         <RoundButton
           class="q__lblInternet"
           textContent="at blockstream.info"
@@ -24,7 +20,14 @@
         />
         ?
       </div>
+
       <div class="utxoList">
+        <div
+          class="q__lbl2"
+          v-if="utxo.length"
+        >
+          Select confirmed outputs to use:
+        </div>
         <div
           class="utxoItem"
           v-for="(output, i) in utxo"
@@ -197,11 +200,13 @@ export default {
   }
   .q__lbl2 {
     /* margin-top: 6vmin; */
-    /* margin-bottom: 6vmin; */
+    margin-bottom: 3vmin;
     text-align: center;
     color: white;
     font-size: 2.5vmin;
     /* line-height: 5vmin; */
+    margin-left: 10%;
+    text-align: left;
   }
   .utxoItem {
     margin-left: 10%;

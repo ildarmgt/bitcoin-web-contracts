@@ -13,8 +13,11 @@ const state = {
     { pageTitle: 'Transaction', valid: true, usable: false }
   ],
   file: undefined,
+
   // 0 none, 1+ are pages
   pageSelected: 1,
+
+  // values important for contracts
   contractValues: {
     // parts of existing contract
     ownerPrivateKeyWIF: '',
@@ -27,6 +30,7 @@ const state = {
     txid: '',
     vout: '',
     utxoValue: '',
+    sumOfUTXO: '', // for future use, derived
 
     // destination information
     toAddress: '',
@@ -36,7 +40,6 @@ const state = {
     feeAmount: '', // derived
     changeAmount: '', // derived
     vBytes: '' // derived
-
   },
   issues: {}
 };
@@ -58,8 +61,54 @@ const getters = {
   getIssues: state => state.issues
 };
 
+// setters
+const mutations = {
+  // set file contents as a string
+  setFile: (state, payload) => {
+    state.file = payload;
+  },
+  // set each page title & valid/usable status
+  setPageStatus: (state, { pageNumber, valid, usable }) => {
+    state.pages[pageNumber - 1].valid = valid;
+    state.pages[pageNumber - 1].usable = usable;
+  },
+  // set value for pageSelected
+  setPage: (state, newPage) => {
+    // change first to 0 so change is detected by all the components
+    state.pageSelected = 0;
+    state.pageSelected = newPage;
+    // const oldPage = state.pageSelected;
+    // const maxPage = state.pages.length + 1;
+    // state.pageSelected = 0;
+    // state.pageSelected = (newPage <= maxPage) ? newPage : oldPage;
+  },
+  setContractValues: (state, payload) => {
+    state.contractValues = { ...state.contractValues, ...payload };
+  },
+  setIssues: (state, payload) => {
+    state.issues = { ...state.issues, ...payload };
+  }
+};
+
 const actions = {
-  // change file
+  // changes contract values
+  changeContractValues: ({ commit, dispatch }, payload) => {
+    // update contract values
+    commit('setContractValues', payload);
+    // do necessary derivations
+    dispatch('deriveSpendingInfo');
+    // redo the ready/valid checks
+    dispatch('updateStatus');
+  },
+
+  // derive input tx paramters
+  deriveSpendingInfo ({ commit, state }) {
+    // this will be just 1 utxo at first but to be replaced by multiple
+    const sumOfUTXO = state.contractValues.utxoValue;
+    commit('setContractValues', { sumOfUTXO: sumOfUTXO });
+  },
+
+  // update backup file data provided
   changeFile ({ commit }, payload) {
     commit('setFile', payload);
   },
@@ -109,8 +158,9 @@ const actions = {
 
     const isUtxoDone = !!state.contractValues.txid;
     const isVoutDone = !!state.contractValues.vout;
+    const isUtxoValue = !!state.contractValues.utxoValue;
 
-    const isPage2Valid = isUtxoDone && isVoutDone;
+    const isPage2Valid = isUtxoDone && isVoutDone && isUtxoValue;
 
     // update pages
     commit('setPageStatus', {
@@ -138,43 +188,6 @@ const actions = {
         commit('setPage', newPage);
       }
     }
-  },
-
-  // changes contract values
-  changeContractValues: ({ commit, dispatch }, payload) => {
-    // update contract values
-    commit('setContractValues', payload);
-    // redo the ready/valid checks
-    dispatch('updateStatus');
-  }
-};
-
-// setters
-const mutations = {
-  // set file contents as a string
-  setFile: (state, payload) => {
-    state.file = payload;
-  },
-  // set each page title & valid/usable status
-  setPageStatus: (state, { pageNumber, valid, usable }) => {
-    state.pages[pageNumber - 1].valid = valid;
-    state.pages[pageNumber - 1].usable = usable;
-  },
-  // set value for pageSelected
-  setPage: (state, newPage) => {
-    // change first to 0 so change is detected by all the components
-    state.pageSelected = 0;
-    state.pageSelected = newPage;
-    // const oldPage = state.pageSelected;
-    // const maxPage = state.pages.length + 1;
-    // state.pageSelected = 0;
-    // state.pageSelected = (newPage <= maxPage) ? newPage : oldPage;
-  },
-  setContractValues: (state, payload) => {
-    state.contractValues = { ...state.contractValues, ...payload };
-  },
-  setIssues: (state, payload) => {
-    state.issues = { ...state.issues, ...payload };
   }
 };
 
