@@ -8,6 +8,7 @@
       <div class="q__lbl1">
         Search the address <br>
         <!-- <div class="q__lbl2">
+          (TODO) specify unspent outputs somewhere
           (for confirmed&nbsp;unspent&nbsp;outputs)
         </div> -->
         <RoundButton
@@ -165,9 +166,6 @@ export default {
         vout: this.vout,
         value: this.value
       });
-      // put selected into text boxes
-      // 2) update component state from vuex on mount in manual fill view
-      // 3) enable page 3 if at least one utxo+vout has been selected
     }
   }
 };

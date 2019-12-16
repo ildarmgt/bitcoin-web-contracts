@@ -31,7 +31,7 @@
       class="btnMax"
     />
     <div class="label">
-      Miner Fee ( sat/b )
+      Miner Fee ( sat / vByte )
     </div>
     <textarea
       id="feeAmount"
@@ -46,6 +46,7 @@
     <RoundButton
       textContent="Check Net"
       class="btnFee"
+      @click="onFeeClick"
     />
     <div class="lblReturn">
       Timer for the rest is reset via <br>
@@ -57,6 +58,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
 // import sanitize from './../../helpers/sanitize'; // string cleaner
+
+import fees from '../../api/fees'; // fee estimate api
 
 import RoundButton from './../general/RoundButton';
 
@@ -85,6 +88,11 @@ export default {
       'changeContractValues'
     ]),
     updateFromState () {
+    },
+    // fee button clicked
+    async onFeeClick () {
+      const feeEstimates = await fees();
+      this.feeAmount = feeEstimates['2']; // 2 block estimate for now
     },
     // textbox contents changed
     textChanged (event) {
