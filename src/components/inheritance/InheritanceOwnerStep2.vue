@@ -36,7 +36,9 @@
             @click="utxoClicked(i)"
             :isPushedIn="isSelected(i)"
           />
-          {{ output.value + ' BTC, ' + output.ago.dh }}<br>
+          <span @click="utxoClicked(i)">
+            {{ output.value + ' BTC, ' + output.ago.dh }}
+          </span>
         </div>
       </div>
       <!-- textbox -->
