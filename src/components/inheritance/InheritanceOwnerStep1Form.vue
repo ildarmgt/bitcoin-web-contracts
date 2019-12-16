@@ -1,5 +1,38 @@
 <template>
   <div>
+    <div class="info">
+      <div
+        v-if="getIssues.ownerPrivateKeyWIF"
+        class="notice error"
+      >
+        Need a valid private key (WIF)
+      </div>
+      <div
+        v-if="getIssues.address"
+        class="notice error"
+      >
+        Need a valid address
+      </div>
+      <div
+        v-if="getIssues.doNetworksMatch"
+        class="notice error"
+      >
+        Key and address are not of same network
+      </div>
+      <div
+        v-if="getIssues.ownerPrivateKeyWIFInfo"
+        class="notice"
+      >
+        {{ getIssues.ownerPrivateKeyWIFInfo }} network key recognized ✓
+      </div>
+      <div
+        v-if="getIssues.addressInfo"
+        class="notice"
+      >
+        {{ getIssues.addressInfo }} network address recognized ✓
+      </div>
+    </div>
+
     <div class="label">
       Owner Private Key (WIF)
     </div>
@@ -36,37 +69,6 @@
       :value="address"
       @input="textChanged"
     />
-    <br><br><br>
-    <div
-      v-if="getIssues.ownerPrivateKeyWIF"
-      class="notice error"
-    >
-      Need a valid private key (WIF)
-    </div>
-    <div
-      v-if="getIssues.address"
-      class="notice error"
-    >
-      Need a valid address
-    </div>
-    <div
-      v-if="getIssues.doNetworksMatch"
-      class="notice error"
-    >
-      Key and address are not of same network
-    </div>
-    <div
-      v-if="getIssues.ownerPrivateKeyWIFInfo"
-      class="notice"
-    >
-      {{ getIssues.ownerPrivateKeyWIFInfo }} network key recognized
-    </div>
-    <div
-      v-if="getIssues.addressInfo"
-      class="notice"
-    >
-      {{ getIssues.addressInfo }} network address recognized
-    </div>
   </div>
 </template>
 
@@ -165,6 +167,10 @@ export default {
 </script>
 
 <style scoped>
+  .info {
+    margin-top: 6vmin;
+    margin-bottom: 6vmin;
+  }
   .textBox {
     font-family: 'Montserrat';
     display: inline-block;

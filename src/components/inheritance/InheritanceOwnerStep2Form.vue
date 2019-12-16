@@ -2,7 +2,7 @@
   <div class="form">
     <div class="form_line1">
       <div class="label">
-        Transaction id : output number
+        Confirmed transaction id : unspent output number
       </div>
       <textarea
         id="txid"

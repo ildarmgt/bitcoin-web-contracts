@@ -265,6 +265,12 @@ export default {
   .heir {
     color: rgb(0, 134, 0);
     white-space:nowrap;
+    font-weight: bold;
+    text-shadow:
+      -0.1vmin -0.1vmin 0.05vmin #FFF,
+      0.1vmin -0.1vmin 0.05vmin #FFF,
+      -0.1vmin 0.1vmin 0.05vmin #FFF,
+      0.1vmin 0.1vmin 0.05vmin #FFF;
   }
   .q__key__btns__warn {
     display: inline-block;

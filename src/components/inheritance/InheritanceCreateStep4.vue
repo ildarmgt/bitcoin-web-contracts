@@ -1,17 +1,14 @@
 <template>
   <div>
-    <div class="q">
-      <div class="q__lbl1">
+    <div class="q noselect">
+      <div class="q__lbl1 noselect">
         Contract calculation done:
       </div>
-      <div>
-        Save this information necessary to spend later
-      </div>
       <!-- owner -->
-      <div>
-        For owner:
+      <div class="q__lblWho noselect">
+        for <span class="owner">Owner</span> :
       </div>
-      <div class="q__backup">
+      <div class="q__backup noselect">
         <a
           ref="backupOwner"
           class="q__backup__link noselect"
@@ -20,20 +17,18 @@
         </a>
         or
         <div
-          @click="copyBackupClicked"
+          @click="copyBackupClicked(true)"
           class="q__backup__link noselect"
         >
           copy
         </div>
-        <div class="q__backup__note1">
-          Keep private! Lose it, lose access!<br>
-        </div>
       </div>
+      <br>
       <!-- heir -->
-      <div>
-        For heir:
+      <div class="q__lblWho noselect">
+        for <span class="heir">Heir</span> :
       </div>
-      <div class="q__backup">
+      <div class="q__backup noselect">
         <a
           ref="backupHeir"
           class="q__backup__link noselect"
@@ -42,15 +37,18 @@
         </a>
         or
         <div
-          @click="copyBackupClicked"
+          @click="copyBackupClicked(false)"
           class="q__backup__link noselect"
         >
           copy
         </div>
-        <div class="q__backup__note1">
-          Keep private! Lose it, lose access!<br>
-        </div>
       </div>
+      <div class="q__note1 noselect">
+        Save your backup to be able to spend!<br>
+        Give Heir their backup. It doesn't have your key.<br>
+        Keep backups private! Lose it, lose access!<br>
+      </div>
+      <br>
       <!-- address hidden at first -->
       <div
         class="q__btnShow noselect"
@@ -60,7 +58,7 @@
         Show address
       </div>
       <div
-        class="q__contract"
+        class="q__contract noselect"
         v-if="showRest"
       >
         <img
@@ -196,8 +194,12 @@ export default {
         });
       }
     },
-    copyBackupClicked () {
-      const contractText = JSON.stringify(this.contract, null, 2);
+    copyBackupClicked (isOwner) {
+      const filteredContract = isOwner
+        ? this.contract
+        : { ...this.contract, ownerPrivateKeyWIF: '' };
+
+      const contractText = JSON.stringify(filteredContract, null, 2);
       if (copyToClipboard(contractText)) {
       // notify user
         this.flash('Contract info copied to clipboard!', 'success', {
@@ -223,15 +225,32 @@ export default {
     margin-left: 5%;
     font-weight: bold;
     text-align: left;
+    margin-bottom: 3vmin;
+  }
+  .q__lblWho {
+    display: inline-block;
+    vertical-align: middle;
+    width: 28%;
+    font-size: 3vmin;
+    color: white;
+    text-align: right;
+    margin-right: 5%;
+    margin-bottom: 3vmin;
+    margin-top: 2vmin;
   }
   .q__backup {
-    margin-top: 6vmin;
-    margin-bottom: 6vmin;
+    /* margin-top: 6vmin; */
+    /* margin-bottom: 6vmin; */
     text-align: left;
+    display: inline-block;
+    vertical-align: middle;
     color: white;
     font-size: 3vmin;
     line-height: 5vmin;
-    width: 70%;
+    width: 50%;
+    left: 30%;
+    margin-bottom: 3vmin;
+    margin-top: 2vmin;
   }
   .q__backup__link {
     display: inline-block;
@@ -251,7 +270,7 @@ export default {
   .q__backup__link:active {
     transform: translateY(0.1vmin);
   }
-  .q__backup__note1 {
+  .q__note1 {
     display: block;
     font-size: 2vmin;
     color: white;
@@ -298,6 +317,7 @@ export default {
     padding: 0.2vmin 2vmin;
     padding-left: 5vmin;
     margin-bottom: 1vmin;
+    margin-top: 1vmin;
     color: white;
     background-color: orange;
     border: 0.15vmin solid white;
@@ -344,5 +364,25 @@ export default {
   .btnCopy:active {
     transform: translateY(0.2vmin);
   }
+  .owner {
+    font-weight: bold;
+    color: rgb(44, 44, 218);
+    white-space:nowrap;
+    text-shadow:
+      -0.1vmin -0.1vmin 0.05vmin #FFF,
+      0.1vmin -0.1vmin 0.05vmin #FFF,
+      -0.1vmin 0.1vmin 0.05vmin #FFF,
+      0.1vmin 0.1vmin 0.05vmin #FFF;
 
+  }
+  .heir {
+    font-weight: bold;
+    color: rgb(0, 134, 0);
+    white-space:nowrap;
+    text-shadow:
+      -0.1vmin -0.1vmin 0.05vmin #FFF,
+      0.1vmin -0.1vmin 0.05vmin #FFF,
+      -0.1vmin 0.1vmin 0.05vmin #FFF,
+      0.1vmin 0.1vmin 0.05vmin #FFF;
+  }
 </style>

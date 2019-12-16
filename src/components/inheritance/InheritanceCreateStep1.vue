@@ -3,7 +3,7 @@
     <div class="q">
       <!-- main page q -->
       <div class="q__strong">
-        How long until inheritance can be spent by the Heir?
+        How long until inheritance can be spent by the <span class="heir">Heir</span> ?
       </div>
       <!-- input value -->
       <div class="q__time">
@@ -38,7 +38,7 @@
         @click="onDoneButtonClick"
       />
       <ArrowButton
-        textContent="Customize keys..."
+        textContent="Edit keys..."
         textColor="orange"
         @click="onNextButtonClick"
       />
@@ -191,5 +191,15 @@ export default {
   }
   input:focus{
     outline: none;
+  }
+  .heir {
+    color: rgb(0, 134, 0);
+    white-space:nowrap;
+    font-weight: bold;
+    text-shadow:
+      -0.1vmin -0.1vmin 0.05vmin #FFF,
+      0.1vmin -0.1vmin 0.05vmin #FFF,
+      -0.1vmin 0.1vmin 0.05vmin #FFF,
+      0.1vmin 0.1vmin 0.05vmin #FFF;
   }
 </style>
