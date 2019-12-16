@@ -4,10 +4,16 @@
       <div class="q__lbl1">
         Contract calculation done:
       </div>
+      <div>
+        Save this information necessary to spend later
+      </div>
+      <!-- owner -->
+      <div>
+        For owner:
+      </div>
       <div class="q__backup">
-        First,
         <a
-          ref="backup"
+          ref="backupOwner"
           class="q__backup__link noselect"
         >
           save
@@ -19,12 +25,33 @@
         >
           copy
         </div>
-        your
-        <br>backup for later spending
         <div class="q__backup__note1">
           Keep private! Lose it, lose access!<br>
         </div>
       </div>
+      <!-- heir -->
+      <div>
+        For heir:
+      </div>
+      <div class="q__backup">
+        <a
+          ref="backupHeir"
+          class="q__backup__link noselect"
+        >
+          save
+        </a>
+        or
+        <div
+          @click="copyBackupClicked"
+          class="q__backup__link noselect"
+        >
+          copy
+        </div>
+        <div class="q__backup__note1">
+          Keep private! Lose it, lose access!<br>
+        </div>
+      </div>
+      <!-- address hidden at first -->
       <div
         class="q__btnShow noselect"
         v-if="!showRest"
@@ -127,16 +154,27 @@ export default {
     },
     // downloads contract info as json in .txt
     updateBackup (contract) {
-      // assemble all the data to back up
-      const backupObject = contract;
+      // assemble owner data to back up (complete)
+      const backupObjectOwner = contract;
 
       // creates the right link for downloading the data
-      const data = 'text/json;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(backupObject, null, 2));
-      const a = this.$refs.backup;
-      a.href = 'data:' + data;
-      a.download = 'Inhertiance Owner backup.txt';
+      const dataOwner = 'text/json;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(backupObjectOwner, null, 2));
+      const a1 = this.$refs.backupOwner;
+      a1.href = 'data:' + dataOwner;
+      a1.download = 'Inhertiance Owner Backup.txt';
+
+      // assemble owner data to back up (no owner key)
+      const backupObjectHeir = { ...backupObjectOwner, ownerPrivateKeyWIF: '' };
+
+      // creates the right link for downloading the data
+      const dataHeir = 'text/json;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(backupObjectHeir, null, 2));
+      const a2 = this.$refs.backupHeir;
+      a2.href = 'data:' + dataHeir;
+      a2.download = 'Inhertiance Heir Backup.txt';
     },
+    // qr refresh
     updateQR (text) {
       if (this.$refs.q__contract__qr) {
         // generate qr png image buffer
@@ -189,10 +227,11 @@ export default {
   .q__backup {
     margin-top: 6vmin;
     margin-bottom: 6vmin;
-    text-align: center;
+    text-align: left;
     color: white;
     font-size: 3vmin;
     line-height: 5vmin;
+    width: 70%;
   }
   .q__backup__link {
     display: inline-block;
