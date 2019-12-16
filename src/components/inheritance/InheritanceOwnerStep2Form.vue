@@ -112,14 +112,14 @@ export default {
       const fixedString = sanitize(event.target.value, 'numbers');
       event.target.value = fixedString;
       this.utxoValue = fixedString;
-      this.changeContractValues({ value: this.utxoValue });
+      this.changeContractValues({ utxoValue: this.utxoValue });
     },
 
     // update local data from vuex
     updateFromState (contract) {
       this.txid = contract.txid;
       this.vout = contract.vout;
-      this.utxoValue = contract.value;
+      this.utxoValue = contract.utxoValue;
     }
   }
 };

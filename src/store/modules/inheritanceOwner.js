@@ -26,7 +26,7 @@ const state = {
     // outputs to spend
     txid: '',
     vout: '',
-    value: '',
+    utxoValue: '',
 
     // destination information
     toAddress: '',

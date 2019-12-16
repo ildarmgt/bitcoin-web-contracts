@@ -37,7 +37,7 @@
             :isPushedIn="isSelected(i)"
           />
           <span @click="utxoClicked(i)">
-            {{ output.value + ' BTC, ' + output.ago.dh }}
+            {{ output.utxoValue + ' BTC, ' + output.ago.dh }}
           </span>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default {
     utxo: [],
     txid: '',
     vout: '',
-    value: '',
+    utxoValue: '',
     selected: -1,
     showForm: false
   }),
@@ -136,7 +136,7 @@ export default {
             const value = (out.value / 1e8).toFixed(8);
             const info = {
               index: i,
-              value: value,
+              utxoValue: value,
               ago: ago,
               txid: out.txid,
               vout: out.vout.toString(),
@@ -161,12 +161,12 @@ export default {
       // put selected utxo (1 at first, multiple later) into local storage
       this.txid = this.utxo[i].txid;
       this.vout = this.utxo[i].vout;
-      this.value = this.utxo[i].value;
+      this.utxoValue = this.utxo[i].utxoValue;
       // put selected into vuex
       this.changeContractValues({
         txid: this.txid,
         vout: this.vout,
-        value: this.value
+        utxoValue: this.utxoValue
       });
     }
   }
