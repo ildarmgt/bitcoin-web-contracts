@@ -34,13 +34,13 @@
       Miner Fee ( sat / vByte )
     </div>
     <textarea
-      id="feeAmount"
+      id="feeRate"
       placeholder="Fee rate"
       rows="1"
       class="textBox txtFee"
       ref="q__input3"
       spellcheck="false"
-      :value="feeAmount"
+      :value="feeRate"
       @input="textChanged"
     />
     <RoundButton
@@ -60,6 +60,7 @@ import { mapActions, mapGetters } from 'vuex'; // state
 // import sanitize from './../../helpers/sanitize'; // string cleaner
 
 import fees from '../../api/fees'; // fee estimate api
+import sanitize from './../../helpers/sanitize'; // string cleaner
 
 import RoundButton from './../general/RoundButton';
 
@@ -69,57 +70,81 @@ export default {
     RoundButton
   },
   data: () => ({
+    lastTimer: {
+      toAddress: null,
+      toAmount: null,
+      feeRate: null
+    },
     toAddress: '',
     toAmount: '',
-    feeAmount: '',
+    feeRate: '',
     changeAddress: ''
   }),
   props: {},
   computed: {
     ...mapGetters('inheritanceOwner', [
-      'getContractValues',
-      'getIssues'
+      'getContractValues'
     ])
   },
   mounted () {
+    this.updateFromState();
   },
   methods: {
     ...mapActions('inheritanceOwner', [
       'changeContractValues'
     ]),
+    // this grabs values from vuex and puts them into page variables
     updateFromState () {
+      const contract = this.getContractValues;
+
+      this.toAddress = contract.toAddress;
+      this.toAmount = contract.toAmount;
+      this.feeRate = contract.feeRate;
+      this.changeAddress = contract.changeAddress;
     },
     // fee button clicked
     async onFeeClick () {
       const feeEstimates = await fees();
-      this.feeAmount = feeEstimates['2']; // 2 block estimate for now
+      this.feeRate = feeEstimates['2']; // 2 block estimate for now
     },
     // textbox contents changed
     textChanged (event) {
-      // // remove unwanted chars (depends on box)
-      // let fixedString;
-      // if (event.target.id === 'address') {
-      //   fixedString = sanitize(event.target.value, 'basic');
-      // }
-      // if (event.target.id === 'ownerPrivateKeyWIF') {
-      //   fixedString = sanitize(event.target.value, 'base58');
-      // }
-      // if (event.target.id === 'scriptHex') {
-      //   fixedString = sanitize(event.target.value, 'hex');
-      // }
-      // event.target.value = fixedString;
-      // this[event.target.id] = fixedString;
+      // update page variables
+      this[event.target.id] = event.target.value;
 
-      // // signal to parent change was done
-      // // so parent knows it's no longer the file settings
-      // this.$emit('input');
+      // put 3 second delay on correcting inputs, refresh delay if changed
+      const DELAY_MS = 2000;
+      clearTimeout(this.lastTimer[event.target.id]);
+      this.lastTimer[event.target.id] = setTimeout(() => {
+        // remove unwanted chars (depends on box)
+        let fixedString;
+        if (event.target.id === 'toAddress') {
+          fixedString = sanitize(event.target.value, 'basic');
+        }
+        if (event.target.id === 'toAmount') {
+          fixedString = sanitize(event.target.value, 'fractions');
+          fixedString = parseFloat(fixedString).toFixed(8);
+          fixedString = isNaN(fixedString) ? (0).toFixed(8) : fixedString;
+        }
+        if (event.target.id === 'feeRate') {
+          fixedString = sanitize(event.target.value, 'fractions');
+        }
 
-      // // update vuex
-      // this.changeContractValues({
-      //   ownerPrivateKeyWIF: this.ownerPrivateKeyWIF,
-      //   address: this.address,
-      //   scriptHex: this.scriptHex
-      // });
+        event.target.value = fixedString;
+        this[event.target.id] = fixedString;
+
+        // signal to parent change was done
+        // so parent knows it's updated
+        // this.$emit('input');
+
+        // update vuex
+        this.changeContractValues({
+          toAddress: this.toAddress,
+          toAmount: this.toAmount,
+          feeRate: this.feeRate,
+          changeAddress: this.changeAddress
+        });
+      }, DELAY_MS);
     }
   }
 };

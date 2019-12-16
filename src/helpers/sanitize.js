@@ -9,6 +9,8 @@ export default function sanitize (inString, type) {
     filter = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   } else if (type === 'numbers') {
     filter = '0123456789';
+  } else if (type === 'fractions') {
+    filter = '0123456789.';
   } else {
     console.log('sanitize: valid type not provided');
     return undefined;

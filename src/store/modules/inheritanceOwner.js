@@ -16,14 +16,27 @@ const state = {
   // 0 none, 1+ are pages
   pageSelected: 1,
   contractValues: {
+    // parts of existing contract
     ownerPrivateKeyWIF: '',
-    networkChoice: '',
-    addressType: '',
     address: '',
     scriptHex: '',
+    networkChoice: '',
+    addressType: '',
+
+    // outputs to spend
     txid: '',
     vout: '',
-    value: ''
+    value: '',
+
+    // destination information
+    toAddress: '',
+    toAmount: (0).toFixed(8),
+    feeRate: '1',
+    changeAddress: '',
+    feeAmount: '', // derived
+    changeAmount: '', // derived
+    vBytes: '' // derived
+
   },
   issues: {}
 };
