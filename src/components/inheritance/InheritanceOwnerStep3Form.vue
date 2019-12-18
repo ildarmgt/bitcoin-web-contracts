@@ -29,6 +29,7 @@
     <RoundButton
       textContent="Max"
       class="btnMax"
+      @click="onMaxClick"
     />
     <div class="label">
       Miner Fee ( sat / vByte )
@@ -101,6 +102,12 @@ export default {
       this.toAmount = contract.toAmount;
       this.feeRate = contract.feeRate;
       this.changeAddress = contract.changeAddress;
+    },
+    // max button clicked
+    onMaxClick () {
+      // TODO this needs to subtract fee but skipping for a moment
+      this.toAmount = this.getContractValues.sumOfUTXO;
+      this.changeContractValues({ toAmount: this.toAmount });
     },
     // fee button clicked
     async onFeeClick () {
