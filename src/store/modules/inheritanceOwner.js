@@ -1,4 +1,4 @@
-import { whatWIF, whatAddress } from './../../bitcoin'; // bitcoin helper
+import { whatWIF, whatAddress, ownerTx } from './../../bitcoin'; // bitcoin helper
 
 // inheritanceOwner
 const namespaced = true;
@@ -38,7 +38,7 @@ const state = {
     feeRate: '1',
     changeAddress: '',
     feeAmount: '', // derived
-    changeAmount: '', // derived
+    changeAmount: '0', // derived
     vBytes: '' // derived
   },
   issues: {}
@@ -101,11 +101,12 @@ const actions = {
     dispatch('updateStatus');
   },
 
-  // derive input tx paramters
+  // derive input tx paramters (bitcoin calculations)
   deriveSpendingInfo ({ commit, state }) {
     // this will be just 1 utxo at first but to be replaced by multiple
     const sumOfUTXO = state.contractValues.utxoValue;
     commit('setContractValues', { sumOfUTXO: sumOfUTXO });
+    ownerTx(state.contractValues);
   },
 
   // update backup file data provided

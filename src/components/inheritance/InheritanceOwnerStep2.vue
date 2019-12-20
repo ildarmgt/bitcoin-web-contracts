@@ -39,7 +39,10 @@
             @click="utxoClicked(i)"
             :isPushedIn="isSelected(i)"
           />
-          <span @click="utxoClicked(i)">
+          <span
+            @click="utxoClicked(i)"
+            class="q__utxoItem"
+          >
             {{ output.utxoValue + ' BTC, ' + output.ago.dh }}
           </span>
         </div>
@@ -224,5 +227,8 @@ export default {
   .form {
     width: 85%;
     display: inline-block;
+  }
+  .q__utxoItem {
+    cursor: pointer;
   }
 </style>
