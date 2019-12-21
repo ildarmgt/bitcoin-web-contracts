@@ -70,11 +70,7 @@ export const ownerTx = (contract) => {
 
   return tx;
 
-  // leaving off here:
   // (TODO)
-  // - popular vuex with networkChoice from file
-  // make sure other values are tehre as well like owner keys
-  // add fees
   // add p2sh version
 };
 
