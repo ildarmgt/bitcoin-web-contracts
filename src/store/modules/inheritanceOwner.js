@@ -35,11 +35,11 @@ const state = {
     // destination information
     toAddress: '',
     toAmount: (0).toFixed(8),
-    feeRate: '1',
+    feeRate: '1', // (sat/vByte)
     changeAddress: '',
-    feeAmount: '', // derived
+    feeAmount: '0', // derived
     changeAmount: '0', // derived
-    vBytes: '' // derived
+    vSize: '' // derived
   },
   issues: {}
 };
@@ -103,10 +103,53 @@ const actions = {
 
   // derive input tx paramters (bitcoin calculations)
   deriveSpendingInfo ({ commit, state }) {
-    // this will be just 1 utxo at first but to be replaced by multiple
-    const sumOfUTXO = state.contractValues.utxoValue;
-    commit('setContractValues', { sumOfUTXO: sumOfUTXO });
-    ownerTx(state.contractValues);
+    const contract = state.contractValues;
+
+    // sum all input utxo values, just 1 utxo at first
+    const sumOfUTXO = contract.utxoValue;
+    commit('setContractValues', { sumOfUTXO });
+
+    // change address should be this contracts address so money isn't lost
+    const changeAddress = contract.address;
+    commit('setContractValues', { changeAddress });
+
+    // attempt to build tx
+    try {
+      const roughTx = ownerTx(contract);
+
+      // make sure amounts are consistent
+      // priority: inputs & fee > target > change
+      const vSize = roughTx.virtualSize();
+      const fee = Math.floor(vSize * parseFloat(contract.feeRate));
+      const inputs = Math.floor(1e8 * parseFloat(sumOfUTXO));
+      let target = Math.floor(1e8 * parseFloat(contract.toAmount));
+
+      let remaining = inputs - fee - target;
+      if (remaining < 0) {
+        // take sats out of target's to cover missing sats
+        target = target + remaining;
+        remaining = 0;
+        // if target's amount is less than 0,
+        // can't take it out of fee or tx might get stuck
+        // ideally should warn to add more inputs w/ possibly different sigs but maybe in later version
+        // for now best to have the negative sending value as a warning that not enough funds
+      }
+
+      // update state
+      commit('setContractValues', {
+        sumOfUTXO,
+        vSize,
+        feeAmount: (fee * 1e-8).toFixed(8),
+        toAmount: (target * 1e-8).toFixed(8),
+        changeAmount: (remaining * 1e-8).toFixed(8)
+      });
+
+      // recalculate the transaction
+      const tx = ownerTx(contract);
+      console.log('Broadcast this to transact (hex):', tx.toHex());
+    } catch (e) {
+      // console.log(e);
+    }
   },
 
   // update backup file data provided

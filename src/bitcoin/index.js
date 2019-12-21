@@ -4,69 +4,71 @@ import bip68 from 'bip68';
 // === OWNER SPENDING TRANSACTION GENERATION ==
 
 export const ownerTx = (contract) => {
-  try {
-    const op = bitcoin.opcodes; // abreviation for op codes
-    const network = bitcoin.networks[contract.networkChoice]; // network choice
-    const hashType = bitcoin.Transaction.SIGHASH_ALL; // regular signature, signs all
+  const op = bitcoin.opcodes; // abreviation for op codes
+  const network = bitcoin.networks[contract.networkChoice]; // network choice
+  const hashType = bitcoin.Transaction.SIGHASH_ALL; // regular signature, signs all
 
-    const ownerKeys = bitcoin.ECPair.fromWIF(contract.ownerPrivateKeyWIF, network);
-    console.log('public key:', ownerKeys.publicKey.toString('hex'));
-    const scriptHex = contract.scriptHex;
+  const ownerKeys = bitcoin.ECPair.fromWIF(contract.ownerPrivateKeyWIF, network);
+  // console.log('public key:', ownerKeys.publicKey.toString('hex'));
+  const scriptHex = contract.scriptHex;
 
-    // redeemScript is referenced as a hash in an unspent p2sh output (scriptPubKey)
-    // and requires to provide it to run the script now
-    // have to provide redeemScript (p2sh) or witnessScript (p2wsh) to spend
-    const redeemScript = Buffer.from(scriptHex, 'hex');
-    const witnessScript = redeemScript; // for now no difference
+  // amounts conversions to satoshi
+  const satToAmount = Math.floor(parseFloat(contract.toAmount) * 1e8);
+  const satChangeAmount = Math.floor(parseFloat(contract.changeAmount) * 1e8);
+  const satFromAmount = Math.floor(parseFloat(contract.utxoValue) * 1e8);
 
-    // get current time
-    const now = Math.floor(Date.now() / 1000);
-    console.log('Current time data:', now);
+  // redeemScript is referenced as a hash in an unspent p2sh output (scriptPubKey)
+  // and requires to provide it to run the script now
+  // have to provide redeemScript (p2sh) or witnessScript (p2wsh) to spend
+  const redeemScript = Buffer.from(scriptHex, 'hex');
+  const witnessScript = redeemScript; // for now no difference
 
-    // start tx assemble
-    const buildTx = new bitcoin.TransactionBuilder(network);
-    // adding contract's chosen unspent input
-    buildTx.addInput(contract.txid, contract.vout, 0xfffffffe);
-    // adding desired destination output
-    buildTx.addOutput(contract.toAddress, parseInt(contract.toAmount));
-    // adding change output
-    buildTx.addOutput(contract.changeAddress, parseInt(contract.changeAmount));
-    // pre-build tx
-    const tx = buildTx.buildIncomplete();
+  // get current time
+  // const now = Math.floor(Date.now() / 1000);
+  // console.log('Current time data:', now);
 
-    // hash the tx so you can sign - p2wsh version (+ requires coin value of input signed)
-    const hashForSigWitness = tx.hashForWitnessV0(0, witnessScript, contract.utxoValue, hashType);
-    // and now for regular p2sh version
-    const hashForSig = tx.hashForSignature(0, redeemScript, hashType);
+  // start tx assemble
+  const buildTx = new bitcoin.TransactionBuilder(network);
+  // adding contract's chosen unspent input
+  buildTx.addInput(contract.txid, parseInt(contract.vout), 0xfffffffe);
+  // adding desired destination output
+  buildTx.addOutput(contract.toAddress, satToAmount);
+  // adding change output
+  buildTx.addOutput(contract.changeAddress, satChangeAmount);
+  // pre-build tx
+  const tx = buildTx.buildIncomplete();
 
-    // create the signatures for above tx hashes - p2wsh version
-    const ownerSigWitness = bitcoin.script.signature.encode(ownerKeys.sign(hashForSigWitness), hashType);
-    // and p2sh version
-    const ownerSig = bitcoin.script.signature.encode(ownerKeys.sign(hashForSig), hashType);
+  // hash the tx so you can sign - p2wsh version (+ requires coin value of input signed)
+  const hashForSigWitness = tx.hashForWitnessV0(0, witnessScript, satFromAmount, hashType);
+  // and p2sh version
+  // const hashForSig = tx.hashForSignature(0, redeemScript, hashType);
 
-    // generate scriptSigs = input stack (like signatures) + the redeemScript
-    // scriptSig provides data to the locked output's scriptPubKey
-    // scriptSig ~ witness and redeemScript ~ witnessScript
-    // witness = initial witness stack (variables) + witnessScript
-    const witnessStackOwnerBranch = bitcoin.payments.p2wsh({
-      redeem: {
-        input: bitcoin.script.compile([
-          ownerSigWitness, // submitting sig for comparison w/ pub key
-          op.OP_TRUE // submit TRUE so it selects first branch of IF statement
-        ]),
-        output: witnessScript
-      }
-    }).witness;
-    console.log('Owner branch stack: \n', witnessStackOwnerBranch.map(stack => stack.toString('hex')));
-    console.log('owner sig: ', ownerSig);
+  // create the signatures for above tx hashes - p2wsh version
+  const ownerSigWitness = bitcoin.script.signature.encode(ownerKeys.sign(hashForSigWitness), hashType);
+  // and p2sh version
+  // const ownerSig = bitcoin.script.signature.encode(ownerKeys.sign(hashForSig), hashType);
 
-    // adding the scriptWitness stack to the transaction
-    tx.setWitness(0, witnessStackOwnerBranch);
+  // generate scriptSigs = input stack (like signatures) + the redeemScript
+  // scriptSig provides data to the locked output's scriptPubKey
+  // scriptSig ~ witness and redeemScript ~ witnessScript
+  // witness = initial witness stack (variables) + witnessScript
+  // stack fed reverse with bottom item ending up on top of received stack
+  const witnessStackOwnerBranch = bitcoin.payments.p2wsh({
+    redeem: {
+      input: bitcoin.script.compile([
+        ownerSigWitness, // submitting sig for comparison w/ pub key
+        op.OP_TRUE // submit TRUE so it selects first branch of IF statement
+      ]),
+      output: witnessScript
+    }
+  }).witness;
+  // console.log('Owner branch stack: \n', witnessStackOwnerBranch.map(stack => stack.toString('hex')));
+  // console.log('owner sig: ', ownerSig);
 
-    console.log('Broadcast this to transact (hex):', tx.toHex());
-  } catch (e) {
-    console.log('error: ', e);
-  }
+  // adding the scriptWitness stack to the transaction
+  tx.setWitness(0, witnessStackOwnerBranch);
+
+  return tx;
 
   // leaving off here:
   // (TODO)

@@ -52,6 +52,12 @@
     <div class="lblReturn">
       Timer for the rest is reset via <br>
       sending remainder back to this address
+      <div v-if="parseFloat(changeAmount) > 0">
+        ( {{ this.changeAmount }} BTC to be re-locked )
+      </div>
+      <div v-else>
+        ( None remaining )
+      </div>
     </div>
   </div>
 </template>
@@ -79,13 +85,20 @@ export default {
     toAddress: '',
     toAmount: '',
     feeRate: '',
-    changeAddress: ''
+    changeAddress: '',
+    changeAmount: ''
   }),
   props: {},
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
     ])
+  },
+  watch: {
+    // if vuex contract values change, update this component
+    getContractValues () {
+      this.updateFromState();
+    }
   },
   mounted () {
     this.updateFromState();
@@ -102,6 +115,7 @@ export default {
       this.toAmount = contract.toAmount;
       this.feeRate = contract.feeRate;
       this.changeAddress = contract.changeAddress;
+      this.changeAmount = contract.changeAmount;
     },
     // max button clicked
     onMaxClick () {
@@ -113,6 +127,7 @@ export default {
     async onFeeClick () {
       const feeEstimates = await fees();
       this.feeRate = feeEstimates['2']; // 2 block estimate for now
+      this.changeContractValues({ feeRate: this.feeRate });
     },
     // textbox contents changed
     textChanged (event) {
