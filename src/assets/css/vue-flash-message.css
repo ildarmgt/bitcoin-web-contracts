@@ -13,6 +13,7 @@
   color: white;
   background-color: #48a025;
   border: white;
+  opacity: 0.9;
 }
 
 .flash__message.warning {
