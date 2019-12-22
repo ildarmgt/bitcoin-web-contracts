@@ -117,14 +117,18 @@ export default {
   },
   watch: {
     // if vuex contract values change, update this component
-    getContractValues () {
+    getContractValues (newValue, oldValue) {
+      console.log('contract changed');
+      console.log('old:', JSON.stringify(oldValue));
+      console.log('new:', JSON.stringify(newValue));
       this.updateFromState();
     },
     // if type of tx change, update calculations
-    showSending (value) {
+    showSending (newValue, oldValue) {
       this.changeContractValues({
-        spending: value
+        spending: newValue
       });
+      console.log('form detected change from', oldValue, 'to', newValue);
     }
   },
   mounted () {
@@ -136,8 +140,9 @@ export default {
     ]),
     // this grabs values from vuex and puts them into page variables
     updateFromState () {
+      // read vuex state
       const contract = this.getContractValues;
-
+      // update display variables
       this.toAddress = contract.toAddress;
       this.toAmount = contract.toAmount;
       this.feeRate = contract.feeRate;

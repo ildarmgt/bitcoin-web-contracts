@@ -10,8 +10,8 @@ export const ownerTx = (contract) => {
     const hashType = bitcoin.Transaction.SIGHASH_ALL; // regular signature, signs all
 
     const ownerKeys = bitcoin.ECPair.fromWIF(contract.ownerPrivateKeyWIF, network);
-    // console.log('public key:', ownerKeys.publicKey.toString('hex'));
     const scriptHex = contract.scriptHex;
+    const spending = contract.spending; // to include or not the spending utxo
 
     // amounts conversions to satoshi
     const satToAmount = Math.floor(parseFloat(contract.toAmount) * 1e8);
@@ -30,10 +30,12 @@ export const ownerTx = (contract) => {
 
     // start tx assemble
     const buildTx = new bitcoin.TransactionBuilder(network);
-    // adding contract's chosen unspent input
+    // adding contract's chosen unspent output for input
     buildTx.addInput(contract.txid, parseInt(contract.vout), 0xfffffffe);
-    // adding desired destination output
-    buildTx.addOutput(contract.toAddress, satToAmount);
+    // adding desired destination output if spending selected
+    if (spending) {
+      buildTx.addOutput(contract.toAddress, satToAmount);
+    }
     // adding change output
     buildTx.addOutput(contract.changeAddress, satChangeAmount);
     // pre-build tx
