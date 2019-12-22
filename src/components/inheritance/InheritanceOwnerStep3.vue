@@ -4,7 +4,9 @@
       <!-- main question -->
       <div class="q__strong">
         <div class="q__strong_text">
-          What to do with {{ getContractValues.sumOfUTXO }} BTC selected?
+          What to do with
+          <span class="amt">{{ getContractValues.sumOfUTXO }}</span>
+          BTC selected?
         </div>
         <div class="q__lbl1">
           <RoundButton
@@ -22,6 +24,7 @@
       <div v-if="showForm">
         <InheritanceOwnerStep3Form
           class="form"
+          :showSending="showSending"
         />
       </div>
       <!-- next button -->
@@ -49,7 +52,8 @@ export default {
     InheritanceOwnerStep3Form
   },
   data: () => ({
-    showForm: false
+    showForm: false,
+    showSending: true
   }),
   mounted () {},
   computed: {
@@ -68,10 +72,12 @@ export default {
 
     showSpendingForm () {
       this.showForm = true;
+      this.showSending = true;
     },
 
     showResetForm () {
-
+      this.showForm = true;
+      this.showSending = false;
     }
   }
 };
@@ -103,5 +109,10 @@ export default {
   .q__lbl1 {
     display: inline-block;
     margin-top: 2vmin;
+  }
+  .amt {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.1vmin 1vmin;
+    border-radius: 1vmin;
   }
 </style>

@@ -11,6 +11,8 @@ export default function sanitize (inString, type) {
     filter = '0123456789';
   } else if (type === 'fractions') {
     filter = '0123456789.';
+  } else if (type === 'oneline') {
+    filter = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.';
   } else {
     console.log('sanitize: valid type not provided');
     return undefined;

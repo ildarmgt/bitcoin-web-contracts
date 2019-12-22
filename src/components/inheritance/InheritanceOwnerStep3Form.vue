@@ -146,7 +146,9 @@ export default {
     // textbox contents changed
     textChanged (event) {
       // update page variables
-      this[event.target.id] = event.target.value;
+      this[event.target.id] = event.target.value = sanitize(event.target.value, 'oneline');
+
+      // do basic character enforcement instantly
 
       // put 3 second delay on correcting inputs, refresh delay if changed
       const DELAY_MS = 2000;
@@ -250,11 +252,12 @@ export default {
   }
   .details {
     margin-top: 2vmin;
+    transform: scale(0.9);
   }
   .change {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 0.1vmin 1vmin;
-    border-radius: 0.5vmin;
+    border-radius: 1vmin;
   }
   .btnTestnet {
     display: block;

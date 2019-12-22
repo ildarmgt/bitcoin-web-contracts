@@ -1,11 +1,12 @@
 <template>
   <div>
     <div class="sum">
-      Total selected: {{ this.utxoValue }} BTC
+      Total selected: <span class="amt">{{ this.utxoValue }}</span> BTC
     </div>
     <Details
       :buttonText="'See details'"
       :showAtStart="showDetails"
+      class="details"
     >
       <div class="form">
         <div class="form_line1">
@@ -65,6 +66,7 @@ export default {
     Details
   },
   data: () => ({
+    lastTimer: null,
     txid: '',
     vout: '',
     utxoValue: ''
@@ -124,10 +126,21 @@ export default {
     // utxo value changed
     utxoValueChanged (event) {
       // sanitize, display, and update vuex
-      const fixedString = sanitize(event.target.value, 'numbers');
+      let fixedString = sanitize(event.target.value, 'fractions');
       event.target.value = fixedString;
       this.utxoValue = fixedString;
-      this.changeContractValues({ utxoValue: this.utxoValue });
+
+      // delayed so typing "." doesn't get removed instantly
+      const DELAY_MS = 2000;
+      clearTimeout(this.lastTimer);
+      this.lastTimer = setTimeout(() => {
+        // lastTimer
+        fixedString = parseFloat(fixedString).toFixed(8);
+        fixedString = isNaN(fixedString) ? (0).toFixed(8) : fixedString;
+        event.target.value = fixedString;
+        this.utxoValue = fixedString;
+        this.changeContractValues({ utxoValue: this.utxoValue });
+      }, DELAY_MS);
     },
 
     // update local data from vuex
@@ -144,6 +157,7 @@ export default {
 <style scoped>
   .sum {
     text-align: right;
+    margin-top: 2vmin;
   }
   .form {
     color: white;
@@ -188,10 +202,17 @@ export default {
     margin-left: 5%;
     width: 75%;
   }
-
   .txidbox::placeholder,
   .voutbox::placeholder,
   .utxovalue::placeholder {
     color: rgba(105, 102, 136, 0.555);
+  }
+  .amt {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.1vmin 1vmin;
+    border-radius: 1vmin;
+  }
+  .details {
+    margin-top: 1vmin;
   }
 </style>

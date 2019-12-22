@@ -221,5 +221,4 @@ export default {
   .error {
     background: rgba(194, 0, 0, 0.5);
   }
-
 </style>

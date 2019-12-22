@@ -39,7 +39,7 @@ const state = {
     changeAddress: '',
     feeAmount: '0', // derived
     changeAmount: '0', // derived
-    vSize: '' // derived
+    vSize: 0 // derived
   },
   issues: {}
 };
@@ -121,7 +121,7 @@ const actions = {
 
     // make sure amounts are consistent
     // priority: inputs & fee > target > change
-    const vSize = roughTx ? roughTx.virtualSize() : 0;
+    const vSize = roughTx ? roughTx.virtualSize() : contract.vSize;
     const fee = Math.floor(vSize * parseFloat(contract.feeRate));
     const inputs = Math.floor(1e8 * parseFloat(sumOfUTXO));
     let target = Math.floor(1e8 * parseFloat(contract.toAmount));

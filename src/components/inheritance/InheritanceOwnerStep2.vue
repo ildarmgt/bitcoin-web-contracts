@@ -26,7 +26,7 @@
           class="q__lbl2"
           v-if="utxo.length"
         >
-          Select which confirmed outputs to use:
+          Select confirmed outputs:
         </div>
         <div
           class="utxoItem"
@@ -153,7 +153,7 @@ export default {
           }
         });
       } catch (e) {
-        console.log('Error caught trying api request from blockstream.info\n', e);
+        console.log('Error while trying api request from blockstream.info\n', e);
       }
     },
 
