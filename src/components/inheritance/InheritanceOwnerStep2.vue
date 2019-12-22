@@ -32,15 +32,14 @@
           class="utxoItem"
           v-for="(output, i) in utxo"
           :key="i"
+          @click="utxoClicked(i)"
         >
           <RoundButton
             class="q__plus"
             textContent="+"
-            @click="utxoClicked(i)"
             :isPushedIn="isSelected(i)"
           />
           <span
-            @click="utxoClicked(i)"
             class="q__utxoItem__lblTime"
           >
             {{ output.utxoValue + ' BTC, ' + output.ago.dh }}

@@ -36,6 +36,7 @@
         <InheritanceOwnerStep1Form
           class="form"
           @input="formEdited"
+          :showDetails="showDetails"
         />
       </div>
       <!-- next button  -->
@@ -65,6 +66,7 @@ export default {
   },
   data: () => ({
     showUpload: true,
+    showDetails: false,
     fileName: ''
   }),
   computed: {
@@ -112,6 +114,7 @@ export default {
     },
     manuallyClicked () {
       this.showUpload = false;
+      this.showDetails = true;
     },
     // if form emits that it has been edited
     formEdited () {

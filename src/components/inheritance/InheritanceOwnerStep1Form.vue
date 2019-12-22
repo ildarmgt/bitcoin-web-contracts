@@ -11,7 +11,7 @@
         v-if="getIssues.address"
         class="notice error"
       >
-        Need a valid address
+        Need a valid contract address
       </div>
       <div
         v-if="getIssues.doNetworksMatch"
@@ -23,68 +23,78 @@
         v-if="getIssues.ownerPrivateKeyWIFInfo"
         class="notice"
       >
-        {{ getIssues.ownerPrivateKeyWIFInfo }} network key recognized ✓
+        ✓ {{ getIssues.ownerPrivateKeyWIFInfo }} key recognized
       </div>
       <div
         v-if="getIssues.addressInfo"
         class="notice"
       >
-        {{ getIssues.addressInfo }} network address recognized ✓
+        ✓ {{ getIssues.addressInfo }} contract address recognized
       </div>
     </div>
-
-    <div class="label">
-      Contract address
-    </div>
-    <textarea
-      id="address"
-      rows="1"
-      class="textBox"
-      ref="q__input3"
-      spellcheck="false"
-      :value="address"
-      @input="textChanged"
-    />
-    <div class="label">
-      Owner Private Key (WIF)
-    </div>
-    <textarea
-      id="ownerPrivateKeyWIF"
-      rows="1"
-      class="textBox"
-      ref="q__input1"
-      spellcheck="false"
-      :value="ownerPrivateKeyWIF"
-      @input="textChanged"
-    />
-    <div class="label">
-      Script (hex)
-    </div>
-    <textarea
-      id="scriptHex"
-      rows="1"
-      class="textBox"
-      ref="q__input2"
-      spellcheck="false"
-      :value="scriptHex"
-      @input="textChanged"
-    />
+    <Details
+      class="inputFieldsWrapper"
+      buttonText="Edit details"
+      :showAtStart="showDetails"
+    >
+      <div class="label">
+        Contract address
+      </div>
+      <textarea
+        id="address"
+        rows="1"
+        class="textBox"
+        ref="q__input3"
+        spellcheck="false"
+        :value="address"
+        @input="textChanged"
+      />
+      <div class="label">
+        Owner Private Key (WIF)
+      </div>
+      <textarea
+        id="ownerPrivateKeyWIF"
+        rows="1"
+        class="textBox"
+        ref="q__input1"
+        spellcheck="false"
+        :value="ownerPrivateKeyWIF"
+        @input="textChanged"
+      />
+      <div class="label">
+        Script (hex)
+      </div>
+      <textarea
+        id="scriptHex"
+        rows="1"
+        class="textBox"
+        ref="q__input2"
+        spellcheck="false"
+        :value="scriptHex"
+        @input="textChanged"
+      />
+    </Details>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
 import sanitize from './../../helpers/sanitize'; // string cleaner
+import Details from './../general/Details'; // my expanding component
 
 export default {
   name: 'InheritanceOwnerForm',
-  components: {},
+  components: {
+    Details
+  },
   data: () => ({
     address: '',
     scriptHex: '',
     ownerPrivateKeyWIF: ''
   }),
-  props: {},
+  props: {
+    showDetails: { type: Boolean, default: false }
+  },
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getFile',
@@ -169,7 +179,7 @@ export default {
 <style scoped>
   .info {
     margin-top: 6vmin;
-    margin-bottom: 6vmin;
+    margin-bottom: 2vmin;
   }
   .textBox {
     font-family: 'Montserrat';
@@ -200,14 +210,16 @@ export default {
   }
   .notice {
     margin: 0 auto;
+    text-align: left;
     width: 90%;
     padding: 1vmin;
+    padding-left: 2vmin;
     border-radius: 1vmin;
     margin-bottom: 1vmin;
     margin-top: 0.5vmin;
   }
   .error {
-    background: rgb(194, 0, 0);
+    background: rgba(194, 0, 0, 0.5);
   }
 
 </style>

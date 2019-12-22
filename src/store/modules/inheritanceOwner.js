@@ -90,6 +90,7 @@ const mutations = {
   }
 };
 
+// complicated action
 const actions = {
   // changes contract values
   changeContractValues: ({ commit, dispatch }, payload) => {

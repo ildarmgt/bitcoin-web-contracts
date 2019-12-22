@@ -41,6 +41,7 @@ export default {
     padding-bottom: 0.6vmin;
     cursor: pointer;
     margin: 1vmin;
+    transition: background-color 0.1s linear;
   }
   .RoundButton:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -48,7 +49,8 @@ export default {
   .RoundButton:active {
     transform: translateY(0.2vmin);
   }
-  .pushedIn {
+  .pushedIn,
+  .pushedIn:hover {
     background-color: rgba(255, 255, 255, 1);
   }
   .noselect {

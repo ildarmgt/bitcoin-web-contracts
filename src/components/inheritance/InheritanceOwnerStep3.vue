@@ -19,10 +19,11 @@
           />
         </div>
       </div>
-      <!-- (TODO) replace outline -->
-      <InheritanceOwnerStep3Form
-        class="form"
-      />
+      <div v-if="showForm">
+        <InheritanceOwnerStep3Form
+          class="form"
+        />
+      </div>
       <!-- next button -->
       <ArrowButton
         textContent="Next"
@@ -47,7 +48,9 @@ export default {
     RoundButton,
     InheritanceOwnerStep3Form
   },
-  data: () => ({}),
+  data: () => ({
+    showForm: false
+  }),
   mounted () {},
   computed: {
     ...mapGetters('inheritanceOwner', [
