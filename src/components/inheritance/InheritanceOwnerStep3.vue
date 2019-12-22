@@ -7,19 +7,16 @@
           What to do with {{ getContractValues.sumOfUTXO }} BTC selected?
         </div>
         <div class="q__lbl1">
-        <!--
           <RoundButton
-            textContent="Only reset timer"
-            textColor="white"
-            @click="showResetForm"
-          />
-          <br>or<br>
-          <RoundButton
-            textContent="Send to another address"
+            textContent="Spend"
             textColor="white"
             @click="showSpendingForm"
           />
-        -->
+          <RoundButton
+            textContent="Only reset"
+            textColor="white"
+            @click="showResetForm"
+          />
         </div>
       </div>
       <!-- (TODO) replace outline -->
@@ -40,14 +37,14 @@
 import { mapActions, mapGetters } from 'vuex'; // state
 
 import ArrowButton from './../general/ArrowButton';
-// import RoundButton from './../general/RoundButton';
+import RoundButton from './../general/RoundButton';
 import InheritanceOwnerStep3Form from './InheritanceOwnerStep3Form';
 
 export default {
   name: 'InheritanceOwnerStep3',
   components: {
     ArrowButton,
-    // RoundButton,
+    RoundButton,
     InheritanceOwnerStep3Form
   },
   data: () => ({}),

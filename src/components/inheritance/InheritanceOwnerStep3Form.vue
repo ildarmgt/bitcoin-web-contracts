@@ -58,8 +58,9 @@
       </div>
       <br>
       <div>
-        The timer for any remaining funds is reset via <br>
-        sending them back to this address
+        The timer for any remaining funds <br>
+        is reset via sending them back <br>
+        to this contract's address
       </div>
     </div>
   </div>

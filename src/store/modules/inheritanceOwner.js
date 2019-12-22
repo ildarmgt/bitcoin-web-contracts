@@ -113,6 +113,8 @@ const actions = {
     const changeAddress = contract.address;
     commit('setContractValues', { changeAddress });
 
+    // tx building choices on which outputs to keep to save space and fees
+
     // attempt to build tx
     const roughTx = ownerTx(contract);
 

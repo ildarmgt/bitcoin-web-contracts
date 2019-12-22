@@ -13,6 +13,7 @@ const API_PATH = 'https://blockstream.info/api/fee-estimates';
 export default async function fees () {
   try {
     const res = await axios.get(API_PATH);
+    console.log('fees data from blockstream.info', res);
     return res.data;
   } catch (e) {
     console.error('fees.js', e);

@@ -34,6 +34,18 @@
     </div>
 
     <div class="label">
+      Contract address
+    </div>
+    <textarea
+      id="address"
+      rows="1"
+      class="textBox"
+      ref="q__input3"
+      spellcheck="false"
+      :value="address"
+      @input="textChanged"
+    />
+    <div class="label">
       Owner Private Key (WIF)
     </div>
     <textarea
@@ -55,18 +67,6 @@
       ref="q__input2"
       spellcheck="false"
       :value="scriptHex"
-      @input="textChanged"
-    />
-    <div class="label">
-      Contract address
-    </div>
-    <textarea
-      id="address"
-      rows="1"
-      class="textBox"
-      ref="q__input3"
-      spellcheck="false"
-      :value="address"
       @input="textChanged"
     />
   </div>

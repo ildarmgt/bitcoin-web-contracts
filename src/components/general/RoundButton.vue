@@ -28,6 +28,7 @@ export default {
 
 <style scoped>
   .RoundButton {
+    font-weight: normal;
     display: inline-block;
     text-decoration: none;
     font-size: 2.5vmin;
@@ -40,6 +41,9 @@ export default {
     padding-bottom: 0.6vmin;
     cursor: pointer;
     margin: 1vmin;
+  }
+  .RoundButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .RoundButton:active {
     transform: translateY(0.2vmin);

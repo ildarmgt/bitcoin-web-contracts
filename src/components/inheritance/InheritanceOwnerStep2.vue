@@ -41,7 +41,7 @@
           />
           <span
             @click="utxoClicked(i)"
-            class="q__utxoItem"
+            class="q__utxoItem__lblTime"
           >
             {{ output.utxoValue + ' BTC, ' + output.ago.dh }}
           </span>
@@ -217,6 +217,10 @@ export default {
     color: white;
     font-size: 2.5vmin;
     line-height: 2.5vmin;
+    cursor: pointer;
+  }
+  .utxoItem:hover {
+    background-color: rgba(10,10,10,0.3);
   }
   .q__plus {
     padding: 0 0.5vmin;
@@ -227,8 +231,5 @@ export default {
   .form {
     width: 85%;
     display: inline-block;
-  }
-  .q__utxoItem {
-    cursor: pointer;
   }
 </style>
