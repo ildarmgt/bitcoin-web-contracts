@@ -194,7 +194,7 @@ export default {
   }
   .heir {
     color: rgb(0, 134, 0);
-    white-space:nowrap;
+    white-space: nowrap;
     font-weight: bold;
     text-shadow:
       -0.1vmin -0.1vmin 0.05vmin #FFF,

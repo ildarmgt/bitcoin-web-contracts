@@ -99,5 +99,6 @@ export default {
   }
   .q__lbl1 {
     display: inline-block;
+    margin-top: 2vmin;
   }
 </style>

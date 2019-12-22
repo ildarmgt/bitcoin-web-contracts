@@ -263,7 +263,7 @@ export default {
   }
   .owner {
     color: rgb(44, 44, 218);
-    white-space:nowrap;
+    white-space: nowrap;
     font-weight: bold;
     text-shadow:
       -0.1vmin -0.1vmin 0.05vmin #FFF,

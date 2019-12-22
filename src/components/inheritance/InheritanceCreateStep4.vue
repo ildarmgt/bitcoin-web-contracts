@@ -367,7 +367,7 @@ export default {
   .owner {
     font-weight: bold;
     color: rgb(44, 44, 218);
-    white-space:nowrap;
+    white-space: nowrap;
     text-shadow:
       -0.1vmin -0.1vmin 0.05vmin #FFF,
       0.1vmin -0.1vmin 0.05vmin #FFF,
@@ -378,7 +378,7 @@ export default {
   .heir {
     font-weight: bold;
     color: rgb(0, 134, 0);
-    white-space:nowrap;
+    white-space: nowrap;
     text-shadow:
       -0.1vmin -0.1vmin 0.05vmin #FFF,
       0.1vmin -0.1vmin 0.05vmin #FFF,
