@@ -13,6 +13,7 @@
         :class="{ down: showDetails }"
       />
     </div>
+    <div />
     <!-- v-show used so dom still exists for important data, just not visible if off -->
     <div
       v-show="showDetails"
@@ -36,12 +37,14 @@ export default {
   props: {
     buttonText: { type: String, default: 'See details' },
     showAtStart: { type: Boolean, default: false },
-    opacity: { type: Number, default: 0.7 }
+    opacity: { type: Number, default: 0.7 },
+    alignment: { type: String, default: 'right' }
   },
   computed: {
     cssVars () {
       return {
-        '--opacity': this.opacity
+        '--opacity': this.opacity,
+        '--alignment': this.alignment
       };
     }
   },
@@ -89,7 +92,7 @@ export default {
     margin-left: 5%;
     padding: 1vmin;
     /* background-color: rgba(0, 0, 0, 0.1); */
-    opacity: var(--opacity);
+    opacity: var(--opacity, 0.7);
     transition: background-color 0.1s linear;
     /* border-radius: 1.5vmin; */
     font-weight: normal;
@@ -108,7 +111,8 @@ export default {
     /* padding: 0.5vmin; */
   }
   .wrapper {
-    text-align: right;
+    text-align: var(--alignment, 'right');
+    display: block;
   }
   .down {
     transform: rotate(0deg);

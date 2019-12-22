@@ -2,6 +2,12 @@
   <div>
     <div class="label">
       Send to
+      <RoundButton
+        v-if="getContractValues.networkChoice === 'testnet'"
+        textContent="testnet faucet"
+        @click="changeContractValues({ toAddress: '2NGZrVvZG92qGYqzTLjCAewvPZ7JE8S8VxE' })"
+        class="btnTestnet"
+      />
     </div>
     <textarea
       id="toAddress"
@@ -51,17 +57,19 @@
     />
     <div class="lblReturn">
       <div v-if="parseFloat(changeAmount) > 0">
-        {{ this.changeAmount }} BTC to be re-locked
+        <span class="change">{{ this.changeAmount }} BTC</span> to be re-locked
       </div>
       <div v-else>
         No balance remaining for re-lock
       </div>
-      <br>
-      <div>
-        The timer for any remaining funds <br>
-        is reset via sending them back <br>
+      <Details
+        class="details"
+        :alignment="'middle'"
+      >
+        The timer for any remaining funds
+        is reset via sending them back
         to this contract's address
-      </div>
+      </Details>
     </div>
   </div>
 </template>
@@ -74,11 +82,13 @@ import fees from '../../api/fees'; // fee estimate api
 import sanitize from './../../helpers/sanitize'; // string cleaner
 
 import RoundButton from './../general/RoundButton';
+import Details from './../general/Details';
 
 export default {
   name: 'InheritanceOwnerStep3Form',
   components: {
-    RoundButton
+    RoundButton,
+    Details
   },
   data: () => ({
     lastTimer: {
@@ -237,5 +247,29 @@ export default {
   .btnMax, .btnFee {
     vertical-align: middle;
     margin: 0;
+  }
+  .details {
+    margin-top: 2vmin;
+  }
+  .change {
+    background-color: rgba(255,255,255,0.1);
+    padding: 0.1vmin 1vmin;
+    border-radius: 0.5vmin;
+  }
+  .btnTestnet {
+    display: block;
+    width: 25vmin;
+    margin: 0;
+    opacity: 0.65;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(0.6);
+    float: right;
+  }
+  .btnTestnet:active {
+    transform: scale(0.6);
+  }
+  .btnTestnet:hover {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 </style>

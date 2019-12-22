@@ -42,6 +42,7 @@ export default {
     cursor: pointer;
     margin: 1vmin;
     transition: background-color 0.1s linear;
+    text-align: center;
   }
   .RoundButton:hover {
     background-color: rgba(0, 0, 0, 0.1);

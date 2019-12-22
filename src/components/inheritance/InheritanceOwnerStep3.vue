@@ -13,7 +13,7 @@
             @click="showSpendingForm"
           />
           <RoundButton
-            textContent="Only reset"
+            textContent="Only reset timer"
             textColor="white"
             @click="showResetForm"
           />
@@ -67,7 +67,7 @@ export default {
     },
 
     showSpendingForm () {
-
+      this.showForm = true;
     },
 
     showResetForm () {
