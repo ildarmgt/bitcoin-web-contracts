@@ -50,13 +50,16 @@
       @click="onFeeClick"
     />
     <div class="lblReturn">
-      Timer for the rest is reset via <br>
-      sending remainder back to this address
       <div v-if="parseFloat(changeAmount) > 0">
-        ( {{ this.changeAmount }} BTC to be re-locked )
+        {{ this.changeAmount }} BTC to be re-locked
       </div>
       <div v-else>
-        ( None remaining )
+        No balance remaining for re-lock
+      </div>
+      <br>
+      <div>
+        The timer for any remaining funds is reset via <br>
+        sending them back to this address
       </div>
     </div>
   </div>
