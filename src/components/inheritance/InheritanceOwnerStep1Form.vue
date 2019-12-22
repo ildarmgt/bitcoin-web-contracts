@@ -179,7 +179,7 @@ export default {
 <style scoped>
   .info {
     margin-top: 6vmin;
-    margin-bottom: 2vmin;
+    margin-bottom: 3vmin;
   }
   .textBox {
     font-family: 'Montserrat';

@@ -1,62 +1,77 @@
 <template>
-  <div class="form">
-    <div class="form_line1">
-      <div class="label">
-        Confirmed transaction id : unspent output number
-      </div>
-      <textarea
-        id="txid"
-        rows="1"
-        class="textbox txidbox"
-        ref="txidbox"
-        spellcheck="false"
-        placeholder="txid"
-        :value="txid"
-        @input="txidChanged"
-      />
-      :
-      <textarea
-        id="vout"
-        rows="1"
-        class="textbox voutbox"
-        ref="voutbox"
-        spellcheck="false"
-        placeholder="vout"
-        :value="vout"
-        @input="voutChanged"
-      />
+  <div>
+    <div class="sum">
+      Total selected: {{ this.utxoValue }} BTC
     </div>
-    <div class="form_line1">
-      <div class="label">
-        Stored value (BTC)
+    <Details
+      :buttonText="'See details'"
+      :showAtStart="showDetails"
+    >
+      <div class="form">
+        <div class="form_line1">
+          <div class="label">
+            Confirmed transaction id : unspent output number
+          </div>
+          <textarea
+            id="txid"
+            rows="1"
+            class="textbox txidbox"
+            ref="txidbox"
+            spellcheck="false"
+            placeholder="txid"
+            :value="txid"
+            @input="txidChanged"
+          />
+          :
+          <textarea
+            id="vout"
+            rows="1"
+            class="textbox voutbox"
+            ref="voutbox"
+            spellcheck="false"
+            placeholder="vout"
+            :value="vout"
+            @input="voutChanged"
+          />
+        </div>
+        <div class="form_line1">
+          <div class="label">
+            Selected output's value (BTC)
+          </div>
+          <textarea
+            id="utxovalue"
+            rows="1"
+            class="textbox utxovalue"
+            ref="utxovalue"
+            spellcheck="false"
+            placeholder="BTC value"
+            :value="utxoValue"
+            @input="utxoValueChanged"
+          />
+        </div>
       </div>
-      <textarea
-        id="utxovalue"
-        rows="1"
-        class="textbox utxovalue"
-        ref="utxovalue"
-        spellcheck="false"
-        placeholder="BTC value"
-        :value="utxoValue"
-        @input="utxoValueChanged"
-      />
-    </div>
+    </Details>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
 import sanitize from './../../helpers/sanitize'; // string cleaner
+import Details from './../general/Details'; // to hide details
 
 export default {
   name: 'InheritanceOwnerStep2Form',
-  components: {},
+  components: {
+    Details
+  },
   data: () => ({
     txid: '',
     vout: '',
     utxoValue: ''
   }),
-  props: {},
+  props: {
+    showDetails: { type: Boolean, default: false }
+  },
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
@@ -127,6 +142,9 @@ export default {
 </script>
 
 <style scoped>
+  .sum {
+    text-align: right;
+  }
   .form {
     color: white;
     font-size: 3vmin;

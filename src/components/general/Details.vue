@@ -1,5 +1,8 @@
 <template>
-  <div class="wrapper noselect">
+  <div
+    class="wrapper noselect"
+    :style="cssVars"
+  >
     <div
       class="btnExpand"
       @click="onClickExpand"
@@ -31,10 +34,17 @@ export default {
     showDetails: false
   }),
   props: {
-    buttonText: { type: String, default: 'Details...' },
-    showAtStart: { type: Boolean, default: false }
+    buttonText: { type: String, default: 'See details' },
+    showAtStart: { type: Boolean, default: false },
+    opacity: { type: Number, default: 0.7 }
   },
-  computed: {},
+  computed: {
+    cssVars () {
+      return {
+        '--opacity': this.opacity
+      };
+    }
+  },
   mounted () {
     // set initial state based on prop, but then independent
     this.showDetails = this.showAtStart;
@@ -79,7 +89,7 @@ export default {
     margin-left: 5%;
     padding: 1vmin;
     /* background-color: rgba(0, 0, 0, 0.1); */
-    opacity: 0.7;
+    opacity: var(--opacity);
     transition: background-color 0.1s linear;
     /* border-radius: 1.5vmin; */
     font-weight: normal;

@@ -26,7 +26,7 @@
           class="q__lbl2"
           v-if="utxo.length"
         >
-          Select confirmed outputs to use:
+          Select which confirmed outputs to use:
         </div>
         <div
           class="utxoItem"
@@ -50,6 +50,7 @@
       <InheritanceOwnerStep2Form
         class="form"
         v-if="showForm"
+        :showDetails="showDetails"
       />
       <!-- next button -->
       <ArrowButton
@@ -84,7 +85,8 @@ export default {
     vout: '',
     utxoValue: '',
     selected: -1,
-    showForm: false
+    showForm: false,
+    showDetails: false
   }),
   mounted () {
     // if page 2 utxo and vout filled out, show them at start
@@ -106,7 +108,7 @@ export default {
 
     // show the form
     showFormNow () {
-      this.showForm = true;
+      this.showDetails = true;
     },
 
     // returns if specific utxo from api list was selected
@@ -158,7 +160,7 @@ export default {
     // response to clicking utxo
     utxoClicked (i) {
       // show form
-      this.showFormNow();
+      this.showForm = true;
 
       // mark option selected
       this.selected = i;
