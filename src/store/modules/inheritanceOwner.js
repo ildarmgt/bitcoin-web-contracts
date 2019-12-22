@@ -25,12 +25,14 @@ const state = {
     scriptHex: '',
     networkChoice: '',
     addressType: '',
+    daysLocked: '',
 
     // outputs to spend
     txid: '',
     vout: '',
     utxoValue: '',
     sumOfUTXO: '', // for future use, derived
+    spending: true, // use spending utxo or not
 
     // destination information
     toAddress: '',

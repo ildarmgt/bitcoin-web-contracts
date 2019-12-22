@@ -21,7 +21,7 @@
           />
         </div>
       </div>
-      <div v-if="showForm">
+      <div v-show="showForm">
         <InheritanceOwnerStep3Form
           class="form"
           :showSending="showSending"
@@ -53,7 +53,7 @@ export default {
   },
   data: () => ({
     showForm: false,
-    showSending: true
+    showSending: undefined // include sending fields or just recycling?
   }),
   mounted () {},
   computed: {
@@ -65,6 +65,7 @@ export default {
     ...mapActions('inheritanceOwner', [
       'changePage'
     ]),
+
     // next button event
     onNextButtonClick () {
       this.changePage(4);

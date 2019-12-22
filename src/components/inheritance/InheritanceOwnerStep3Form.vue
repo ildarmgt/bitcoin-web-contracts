@@ -1,42 +1,44 @@
 <template>
   <div>
-    <div class="label">
-      Send to
+    <div v-show="showSending">
+      <div class="label">
+        Send to
+        <RoundButton
+          v-if="getContractValues.networkChoice === 'testnet'"
+          textContent="testnet faucet"
+          @click="changeContractValues({ toAddress: '2NGZrVvZG92qGYqzTLjCAewvPZ7JE8S8VxE' })"
+          class="btnTestnet"
+        />
+      </div>
+      <textarea
+        id="toAddress"
+        placeholder="Bitcoin address"
+        rows="1"
+        class="textBox"
+        ref="q__input1"
+        spellcheck="false"
+        :value="toAddress"
+        @input="textChanged"
+      />
+      <div class="label">
+        Amount ( BTC )
+      </div>
+      <textarea
+        id="toAmount"
+        placeholder="BTC to send"
+        rows="1"
+        class="textBox txtAmount"
+        ref="q__input2"
+        spellcheck="false"
+        :value="toAmount"
+        @input="textChanged"
+      />
       <RoundButton
-        v-if="getContractValues.networkChoice === 'testnet'"
-        textContent="testnet faucet"
-        @click="changeContractValues({ toAddress: '2NGZrVvZG92qGYqzTLjCAewvPZ7JE8S8VxE' })"
-        class="btnTestnet"
+        textContent="Max"
+        class="btnMax"
+        @click="onMaxClick"
       />
     </div>
-    <textarea
-      id="toAddress"
-      placeholder="Bitcoin address"
-      rows="1"
-      class="textBox"
-      ref="q__input1"
-      spellcheck="false"
-      :value="toAddress"
-      @input="textChanged"
-    />
-    <div class="label">
-      Amount ( BTC )
-    </div>
-    <textarea
-      id="toAmount"
-      placeholder="BTC to send"
-      rows="1"
-      class="textBox txtAmount"
-      ref="q__input2"
-      spellcheck="false"
-      :value="toAmount"
-      @input="textChanged"
-    />
-    <RoundButton
-      textContent="Max"
-      class="btnMax"
-      @click="onMaxClick"
-    />
     <div class="label">
       Miner Fee ( sat / vByte )
     </div>
@@ -102,7 +104,12 @@ export default {
     changeAddress: '',
     changeAmount: ''
   }),
-  props: {},
+  props: {
+    showSending: {
+      type: Boolean,
+      default: undefined
+    }
+  },
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
@@ -112,6 +119,12 @@ export default {
     // if vuex contract values change, update this component
     getContractValues () {
       this.updateFromState();
+    },
+    // if type of tx change, update calculations
+    showSending (value) {
+      this.changeContractValues({
+        spending: value
+      });
     }
   },
   mounted () {
@@ -170,10 +183,6 @@ export default {
 
         event.target.value = fixedString;
         this[event.target.id] = fixedString;
-
-        // signal to parent change was done
-        // so parent knows it's updated
-        // this.$emit('input');
 
         // update vuex
         this.changeContractValues({

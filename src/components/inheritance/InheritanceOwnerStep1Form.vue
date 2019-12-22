@@ -136,12 +136,16 @@ export default {
       try {
         this.ownerPrivateKeyWIF = contract.ownerPrivateKeyWIF;
       } catch (e) { errors.ownerPrivateKeyWIF = true; }
+      try {
+        this.daysLocked = contract.daysAfterConfirmForUnlock;
+      } catch (e) { errors.daysLocked = true; }
 
       // update vuex
       this.changeContractValues({
         ownerPrivateKeyWIF: this.ownerPrivateKeyWIF,
         address: this.address,
-        scriptHex: this.scriptHex
+        scriptHex: this.scriptHex,
+        daysLocked: this.daysLocked
       });
     },
     // textbox contents changed
