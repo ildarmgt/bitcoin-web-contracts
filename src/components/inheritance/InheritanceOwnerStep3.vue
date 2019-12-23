@@ -115,5 +115,6 @@ export default {
     background-color: rgba(0, 0, 0, 0.1);
     padding: 0.1vmin 1vmin;
     border-radius: 1vmin;
+    font-weight: normal;
   }
 </style>

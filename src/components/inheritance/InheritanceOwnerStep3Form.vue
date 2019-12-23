@@ -68,9 +68,14 @@
         class="details"
         :alignment="'middle'"
       >
-        The timer for any remaining funds
-        is reset via sending them back
-        to this contract's address
+        <div class="lblInfoBlob">
+          [Check net] button fetches fee rate recommendations from blockstream.info and fills in the fee expected to allow confirmation within 2 blocks or ~20 min
+        </div>
+        <div class="lblInfoBlob">
+          The timer for any remaining funds
+          is reset via sending them back
+          to this contract's address
+        </div>
       </Details>
     </div>
   </div>
@@ -288,5 +293,11 @@ export default {
   }
   .btnTestnet:hover {
     background-color: rgba(0, 0, 0, 0.2);
+  }
+  .lblInfoBlob {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 2vmin;
+    padding: 1vmin;
+    margin-bottom: 1vmin;
   }
 </style>

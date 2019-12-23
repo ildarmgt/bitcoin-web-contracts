@@ -109,9 +109,9 @@ export default {
         .filter(letter => base58filter.indexOf(letter) > -1)
         .join(''); // specific chars only
 
-      if (fixedKey !== newKey) {
-        console.log('String had illegal chars. Old string:', newKey);
-      }
+      // if (fixedKey !== newKey) {
+        // console.log('String had illegal chars. Old string:', newKey);
+      // }
 
       // update vuex
       this.updateContractValuesIC({ heirPrivateKeyWIF: fixedKey });
