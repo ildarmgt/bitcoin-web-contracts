@@ -55,7 +55,7 @@
         v-if="!showRest"
         @click="showClicked"
       >
-        Show address
+        Show address when ready
       </div>
       <div
         class="q__contract noselect"

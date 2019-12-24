@@ -4,7 +4,9 @@
     class="selectionButton"
     :style="determineStyle"
   >
-    {{ buttonText }}
+    <div class="darken">
+      {{ buttonText }}
+    </div>
   </div>
 </template>
 
@@ -56,8 +58,6 @@ export default {
 <style scoped>
   .selectionButton {
     display: inline-block;
-
-    padding: 1vmin 2vmin;
     margin: 1vmin 1vmin;
     font-size: 2.5vmin;
     border-radius: 3vmin;
@@ -71,11 +71,15 @@ export default {
     user-select: none;
 
     cursor: pointer;
-
-    /* transition: transform 0.1s; */
   }
-  .selectionButton:hover {
-    transform: translateY(-0.1vmin);
+  .darken {
+    padding: 1vmin 2vmin;
+    border-radius: 3vmin;
+    transition: background-color 0.05s linear;
+    cursor: pointer;
+  }
+  .darken:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .selectionButton:active {
     transform: translateY(0.1vmin);

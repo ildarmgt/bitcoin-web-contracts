@@ -35,7 +35,7 @@ export default {
     line-height: 2.5vmin;
     color: white;
     background-color: rgba(255, 255, 255, 0);
-    border: 0.15vmin solid white;
+    border: 0.2vmin solid white;
     border-radius: 1.5vmin;
     padding: 0.4vmin 2vmin;
     padding-bottom: 0.6vmin;
