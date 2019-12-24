@@ -34,7 +34,7 @@
         @input="textChanged"
       />
       <RoundButton
-        textContent="Max"
+        textContent="Send All"
         class="btnMax"
         @click="onMaxClick"
       />
@@ -58,21 +58,71 @@
       @click="onFeeClick"
     />
     <div class="lblReturn">
-      <div v-if="parseFloat(changeAmount) > 0">
-        <span class="change">{{ this.changeAmount }} BTC</span> to be re-locked
+      <div v-if="!getContractValues.reset">
+        Timer reset output removed to send all
+      </div>
+      <div v-else-if="parseFloat(changeAmount) > parseFloat(getContractValues.feeAmount)">
+        <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
       </div>
       <div v-else>
-        No balance remaining for re-lock
+        Only <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
+        <div class="suggestion">
+          Use Send All to save on fees by not reseting any and send more.
+        </div>
       </div>
       <Details
         class="details"
         :alignment="'middle'"
       >
+        <div
+          class="lblInfoBlob"
+          v-if="tx"
+        >
+          Your transaction information:<br>
+          <table>
+            <tr>
+              <td>fee:</td>
+              <td>{{ Math.floor(parseFloat(getContractValues.feeAmount) * 1e8) }} sats</td>
+            </tr>
+            <tr>
+              <td>txid:</td>
+              <td>{{ tx ? tx.getId() : 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td>size:</td>
+              <td>{{ tx ? tx.virtualSize() : 'N/A' }} vBytes</td>
+            </tr>
+            <tr>
+              <td>outputs:</td>
+              <td>
+                <div
+                  v-for="(item, name) in tx.outs"
+                  :key="name"
+                >
+                  #{{ name }} is {{ item.value }} sats
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>inputs:</td>
+              <td>
+                <div
+                  v-for="(item, name) in tx.ins"
+                  :key="name"
+                >
+                  #{{ name }} is from
+                  {{ item.hash.reverse().toString('hex') }} :
+                  {{ item.index }}
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
         <div class="lblInfoBlob">
           [Check net] button fetches fee rate recommendations from blockstream.info and fills in the fee expected to allow confirmation within 2 blocks or ~20 min
         </div>
         <div class="lblInfoBlob">
-          The timer for any remaining funds
+          The timer for relocked funds
           is reset via sending them back
           to this contract's address
         </div>
@@ -118,14 +168,17 @@ export default {
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
-    ])
+    ]),
+    tx () {
+      return this.getContractValues.tx;
+    }
   },
   watch: {
     // if vuex contract values change, update this component
     getContractValues (newValue, oldValue) {
-      console.log('contract changed');
-      console.log('old:', JSON.stringify(oldValue));
-      console.log('new:', JSON.stringify(newValue));
+      // console.log('contract changed');
+      // console.log('old:', JSON.stringify(oldValue));
+      // console.log('new:', JSON.stringify(newValue));
       this.updateFromState();
     },
     // if type of tx change, update calculations
@@ -158,7 +211,11 @@ export default {
     onMaxClick () {
       // TODO this needs to subtract fee but skipping for a moment
       this.toAmount = this.getContractValues.sumOfUTXO;
-      this.changeContractValues({ toAmount: this.toAmount });
+
+      this.changeContractValues({
+        toAmount: this.toAmount,
+        reset: false
+      });
     },
     // fee button clicked
     async onFeeClick () {
@@ -169,9 +226,9 @@ export default {
     // textbox contents changed
     textChanged (event) {
       // update page variables
-      this[event.target.id] = event.target.value = sanitize(event.target.value, 'oneline');
 
       // do basic character enforcement instantly
+      this[event.target.id] = event.target.value = sanitize(event.target.value, 'oneline');
 
       // put 3 second delay on correcting inputs, refresh delay if changed
       const DELAY_MS = 2000;
@@ -295,9 +352,32 @@ export default {
     background-color: rgba(0, 0, 0, 0.2);
   }
   .lblInfoBlob {
+    font-size: 2vmin;
     background-color: rgba(0,0,0,0.1);
     border-radius: 2vmin;
-    padding: 1vmin;
+    padding: 2vmin;
     margin-bottom: 1vmin;
+    text-align: left;
+  }
+  table {
+    border-collapse: collapse;
+    /* border: red 1px solid; */
+    text-align: right;
+    user-select: text;
+  }
+  td:nth-child(even) {
+    padding: 1vmin;
+    color: greenyellow;
+    word-break: break-all;
+    text-align: left;
+    text-justify:distribute;
+  }
+  td:nth-child(odd) {
+    white-space: nowrap;
+  }
+  .suggestion {
+    margin-top: 1vmin;
+    width: 70%;
+    display: inline-block;
   }
 </style>

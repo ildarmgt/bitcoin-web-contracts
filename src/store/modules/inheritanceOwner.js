@@ -33,6 +33,7 @@ const state = {
     utxoValue: '',
     sumOfUTXO: '', // for future use, derived
     spending: true, // use spending utxo or not
+    reset: true, // use change utxo to reset timer
 
     // destination information
     toAddress: '',
@@ -41,8 +42,9 @@ const state = {
     changeAddress: '',
     feeAmount: '0', // derived
     changeAmount: '0', // derived
-    vSize: 0, // derived
+    vSize: 100, // derived
 
+    // buffer of current tx
     tx: ''
   },
   issues: {}
@@ -81,10 +83,6 @@ const mutations = {
     // change first to 0 so change is detected by all the components
     state.pageSelected = 0;
     state.pageSelected = newPage;
-    // const oldPage = state.pageSelected;
-    // const maxPage = state.pages.length + 1;
-    // state.pageSelected = 0;
-    // state.pageSelected = (newPage <= maxPage) ? newPage : oldPage;
   },
   setContractValues: (state, payload) => {
     state.contractValues = { ...state.contractValues, ...payload };
@@ -97,13 +95,21 @@ const mutations = {
 // complicated action
 const actions = {
   // changes contract values
-  changeContractValues: ({ commit, dispatch }, payload) => {
-    // update contract values
+  changeContractValues: ({ commit, dispatch, state }, payload) => {
+    // re-add reset output unless the change is to remove it
+    payload.reset = (payload.reset === false) ? !true : true;
+    // update contract values, the main purpose of this action
     commit('setContractValues', payload);
+    // some derived values have to be updated as well:
     // do necessary derivations
     dispatch('deriveSpendingInfo');
-    dispatch('calculateTxInfo');
-    // redo the ready/valid checks
+    dispatch('deriveFromLastData');
+    // test tx & rederive
+    commit('setContractValues', { tx: ownerTx(state.contractValues) });
+    dispatch('deriveFromLastData');
+    // now real tx derivation
+    commit('setContractValues', { tx: ownerTx(state.contractValues) });
+    // update page status
     dispatch('updateStatus');
   },
 
@@ -124,55 +130,37 @@ const actions = {
       // remove remaining balance from toAmount
       // and put all instead into changeAmount (for fee estimat)
       commit('setContractValues', {
-        toAmount: '0',
-        changeAmount: contract.sumOfUTXO
+        toAmount: '0'
       });
-      console.log('converted to non spending');
     }
   },
 
-  calculateTxInfo ({ commit, state }) {
+  deriveFromLastData ({ commit, state }) {
     const contract = state.contractValues;
-    // attempt to build tx
-    const roughTx = ownerTx(contract);
 
     // make sure amounts are consistent
     // priority: inputs & fee > target > change
-    const vSize = roughTx ? roughTx.virtualSize() : contract.vSize;
-    const fee = Math.floor(vSize * parseFloat(contract.feeRate));
+    const tx = contract.tx;
+    const vSize = tx ? tx.virtualSize() : contract.vSize;
+    let minFee = Math.floor(vSize * parseFloat(contract.feeRate));
     const inputs = Math.floor(1e8 * parseFloat(contract.sumOfUTXO));
     let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
-    let remaining = inputs - fee - target;
-    if (remaining < 0) {
-      // take sats out of target's to cover missing sats. remaining is negative here.
+    let remaining = inputs - minFee - target;
+    if (remaining < 0 || !contract.reset) {
+      // take sats out of target's to cover missing sats.
+      // similarly if coins aren't to be reset, add to target
       target = target + remaining;
       remaining = 0;
-      // if target's amount is less than 0,
-      // can't take it out of fee or tx might get stuck
-      // ideally should warn to add more inputs w/ possibly different sigs but maybe in later version
-      // for now best to have the negative sending value as a warning that not enough funds
     }
-
-    console.log('to:', contract.toAmount, 'change:', contract.changeAmount);
 
     // update state
     commit('setContractValues', {
       vSize,
-      feeAmount: (fee * 1e-8).toFixed(8),
+      feeAmount: (minFee * 1e-8).toFixed(8),
       toAmount: (target * 1e-8).toFixed(8),
       changeAmount: (remaining * 1e-8).toFixed(8)
     });
-
-    if (roughTx) {
-      console.log('tx vbytes', roughTx.virtualSize());
-    }
-    // // recalculate the transaction with new parameters if last one worked
-    // if (roughTx) {
-    //   const tx = ownerTx(contract);
-    //   console.log('tx size in vbytes =', roughTx.virtualSize());
-    //   console.log('tx (hex):', tx.toHex());
-    // }
   },
   // update backup file data provided
   changeFile ({ commit }, payload) {
