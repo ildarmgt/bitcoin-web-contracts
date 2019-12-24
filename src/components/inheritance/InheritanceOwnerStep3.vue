@@ -24,7 +24,6 @@
       <div v-show="showForm">
         <InheritanceOwnerStep3Form
           class="form"
-          :showSending="showSending"
         />
       </div>
       <!-- next button -->
@@ -52,10 +51,13 @@ export default {
     InheritanceOwnerStep3Form
   },
   data: () => ({
-    showForm: false,
-    showSending: undefined // include sending fields or just recycling?
+    showForm: false
   }),
-  mounted () {},
+  mounted () {
+    if (this.getContractValues.showForm) {
+      this.showForm = true;
+    }
+  },
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
@@ -63,7 +65,8 @@ export default {
   },
   methods: {
     ...mapActions('inheritanceOwner', [
-      'changePage'
+      'changePage',
+      'changeContractValues'
     ]),
 
     // next button event
@@ -73,12 +76,12 @@ export default {
 
     showSpendingForm () {
       this.showForm = true;
-      this.showSending = true;
+      this.changeContractValues({ showForm: true, spending: true });
     },
 
     showResetForm () {
       this.showForm = true;
-      this.showSending = false;
+      this.changeContractValues({ showForm: true, spending: false });
     }
   }
 };

@@ -37,8 +37,8 @@ export const ownerTx = (contract) => {
     if (spending && (satToAmount !== 0)) {
       buildTx.addOutput(contract.toAddress, satToAmount);
     }
-    // adding change output (if user allowed the reset output)
-    if (contract.reset) {
+    // adding change output (if user allowed the change output)
+    if (contract.change) {
       buildTx.addOutput(contract.changeAddress, satChangeAmount);
     }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="showSending">
+    <div v-show="getContractValues.spending">
       <div class="label">
         Send to
         <RoundButton
@@ -58,14 +58,14 @@
       @click="onFeeClick"
     />
     <div class="lblReturn">
-      <div v-if="!getContractValues.reset">
-        Timer reset output removed to send all
+      <div v-if="!getContractValues.change">
+        Timer change output removed to send all
       </div>
       <div v-else-if="parseFloat(changeAmount) > parseFloat(getContractValues.feeAmount)">
-        <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
+        <span class="change">{{ this.changeAmount }} BTC</span> left for timer change.
       </div>
       <div v-else>
-        Only <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
+        Only <span class="change">{{ this.changeAmount }} BTC</span> left for timer change.
         <div class="suggestion">
           Use Send All to save on fees by not reseting any and send more.
         </div>
@@ -123,7 +123,7 @@
         </div>
         <div class="lblInfoBlob">
           The timer for relocked funds
-          is reset via sending them back
+          is change via sending them back
           to this contract's address
         </div>
       </Details>
@@ -159,12 +159,12 @@ export default {
     changeAddress: '',
     changeAmount: ''
   }),
-  props: {
-    showSending: {
-      type: Boolean,
-      default: undefined
-    }
-  },
+  // props: {
+  //   showSending: {
+  //     type: Boolean,
+  //     default: false
+  //   }
+  // },
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
@@ -176,18 +176,16 @@ export default {
   watch: {
     // if vuex contract values change, update this component
     getContractValues (newValue, oldValue) {
-      // console.log('contract changed');
-      // console.log('old:', JSON.stringify(oldValue));
-      // console.log('new:', JSON.stringify(newValue));
       this.updateFromState();
-    },
-    // if type of tx change, update calculations
-    showSending (newValue, oldValue) {
-      this.changeContractValues({
-        spending: newValue
-      });
-      console.log('form detected change from', oldValue, 'to', newValue);
     }
+    // if type of tx change, update calculations
+    // showSending (newValue, oldValue) {
+    //   this.changeContractValues({
+    //     spending: newValue,
+    //     change: true
+    //   });
+    //   console.log('test', newValue, oldValue);
+    // }
   },
   mounted () {
     this.updateFromState();
@@ -214,14 +212,17 @@ export default {
 
       this.changeContractValues({
         toAmount: this.toAmount,
-        reset: false
+        change: false
       });
     },
     // fee button clicked
     async onFeeClick () {
       const feeEstimates = await fees();
       this.feeRate = feeEstimates['2']; // 2 block estimate for now
-      this.changeContractValues({ feeRate: this.feeRate });
+      this.changeContractValues({
+        feeRate: this.feeRate,
+        change: true
+      });
     },
     // textbox contents changed
     textChanged (event) {
@@ -256,7 +257,8 @@ export default {
           toAddress: this.toAddress,
           toAmount: this.toAmount,
           feeRate: this.feeRate,
-          changeAddress: this.changeAddress
+          changeAddress: this.changeAddress,
+          change: true
         });
       }, DELAY_MS);
     }

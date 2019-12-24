@@ -33,11 +33,12 @@ const state = {
     utxoValue: '',
     sumOfUTXO: '', // for future use, derived
     spending: true, // use spending utxo or not
-    reset: true, // use change utxo to reset timer
+    change: true, // use change utxo to reset timer
+    showForm: false, // show form if not first time
 
     // destination information
     toAddress: '',
-    toAmount: (0).toFixed(8),
+    toAmount: '0',
     feeRate: '1', // (sat/vByte)
     changeAddress: '',
     feeAmount: '0', // derived
@@ -97,7 +98,7 @@ const actions = {
   // changes contract values
   changeContractValues: ({ commit, dispatch, state }, payload) => {
     // re-add reset output unless the change is to remove it
-    payload.reset = (payload.reset === false) ? !true : true;
+    // payload.reset = (payload.reset === false) ? !true : true;
     // update contract values, the main purpose of this action
     commit('setContractValues', payload);
     // some derived values have to be updated as well:
@@ -130,7 +131,8 @@ const actions = {
       // remove remaining balance from toAmount
       // and put all instead into changeAmount (for fee estimat)
       commit('setContractValues', {
-        toAmount: '0'
+        toAmount: '0',
+        change: true
       });
     }
   },
@@ -146,11 +148,11 @@ const actions = {
     const inputs = Math.floor(1e8 * parseFloat(contract.sumOfUTXO));
     let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
-    let remaining = inputs - minFee - target;
-    if (remaining < 0 || !contract.reset) {
+    let remaining = Math.floor(inputs - minFee - target);
+    if (remaining < 0 || !contract.change) {
       // take sats out of target's to cover missing sats.
       // similarly if coins aren't to be reset, add to target
-      target = target + remaining;
+      target = Math.floor(target + remaining);
       remaining = 0;
     }
 
@@ -169,18 +171,19 @@ const actions = {
 
   // look at contract values and update their type & if pages are valid & usable
   updateStatus ({ commit, state }) {
+    const contract = state.contractValues;
     // page 1 checks
 
     // page 1: check network & validity of the private key WIF
     // returns if there's key issue & which network it is
-    const keyNetwork = whatWIF(state.contractValues.ownerPrivateKeyWIF);
+    const keyNetwork = whatWIF(contract.ownerPrivateKeyWIF);
     commit('setIssues', {
       ownerPrivateKeyWIF: !keyNetwork,
       ownerPrivateKeyWIFInfo: keyNetwork
     });
 
     // page 1: check network & validity of the address
-    const addressNetwork = whatAddress(state.contractValues.address);
+    const addressNetwork = whatAddress(contract.address);
     commit('setIssues', {
       address: !addressNetwork,
       addressInfo: addressNetwork
@@ -197,7 +200,7 @@ const actions = {
 
     // page 1: should check if p2sh or p2wsh address
     // and then update state
-    const address = state.contractValues.address;
+    const address = contract.address;
     let addressType;
     if (address.substring(0, 1) === '3') { addressType = 'p2sh'; }
     if (address.substring(0, 1) === '2') { addressType = 'p2sh'; }
@@ -210,11 +213,31 @@ const actions = {
 
     // page 2
 
-    const isUtxoDone = !!state.contractValues.txid;
-    const isVoutDone = !!state.contractValues.vout;
-    const isUtxoValue = !!state.contractValues.utxoValue;
+    const isUtxoDone = !!contract.txid;
+    const isVoutDone = !!contract.vout;
+    const isUtxoValue = !!contract.utxoValue;
 
     const isPage2Valid = isUtxoDone && isVoutDone && isUtxoValue;
+
+    // page 3
+    const isToAddressDone = !!contract.toAddress;
+    const isChangeAmountDone = !!contract.changeAmount;
+    const isToAmountDone = !!contract.toAmount;
+    const isFeeRateDone = !!contract.feeRate;
+    const isToAmountEnough = parseFloat(contract.toAmount) > 0;
+    const isChangeAmountEnough = parseFloat(contract.changeAmount) > 0;
+    const isFeeRateEnough = parseFloat(contract.feeRate) > 0;
+    const isTxReady = !!contract.tx;
+
+    const isPage3Valid = (
+      isToAddressDone &&
+      isChangeAmountDone &&
+      isToAmountDone &&
+      isFeeRateDone &&
+      (isToAmountEnough || isChangeAmountEnough) &&
+      isFeeRateEnough &&
+      isTxReady
+    );
 
     // update pages
     commit('setPageStatus', {
@@ -229,8 +252,13 @@ const actions = {
     });
     commit('setPageStatus', {
       pageNumber: 3,
-      valid: true,
+      valid: isPage3Valid,
       usable: isPage2Valid
+    });
+    commit('setPageStatus', {
+      pageNumber: 4,
+      valid: true,
+      usable: isPage3Valid
     });
   },
 
