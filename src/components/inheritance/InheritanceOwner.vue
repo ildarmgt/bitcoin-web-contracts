@@ -25,7 +25,7 @@
       <StepperStep
         :pageTitle="getPagesInfo[3].pageTitle"
       >
-        transaction goes here
+        <InheritanceOwnerStep4 />
       </StepperStep>
     </Stepper>
   </div>
@@ -38,6 +38,7 @@ import StepperStep from './../general/StepperStep';
 import InheritanceOwnerStep1 from './InheritanceOwnerStep1';
 import InheritanceOwnerStep2 from './InheritanceOwnerStep2';
 import InheritanceOwnerStep3 from './InheritanceOwnerStep3';
+import InheritanceOwnerStep4 from './InheritanceOwnerStep4';
 
 // vuex state
 import { mapGetters, mapActions } from 'vuex';
@@ -49,7 +50,8 @@ export default {
     StepperStep,
     InheritanceOwnerStep1,
     InheritanceOwnerStep2,
-    InheritanceOwnerStep3
+    InheritanceOwnerStep3,
+    InheritanceOwnerStep4
   },
   computed: {
     ...mapGetters('inheritanceOwner', [
