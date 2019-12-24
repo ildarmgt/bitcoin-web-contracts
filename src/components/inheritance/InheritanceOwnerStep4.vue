@@ -1,15 +1,26 @@
 <template>
   <div>
-    content
+    <div class="txHex">
+      {{ getContractValues.tx.toHex() }}
+    </div>
+    <RoundButton
+      textContent="Broadcast via blockstream.info"
+      textColor="white"
+      @click="btnBroadcast"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
+import RoundButton from './../general/RoundButton';
+import { blockstreamPush } from './../../api/broadcast';
 
 export default {
   name: 'InheritanceOwnerStep4',
-  components: {},
+  components: {
+    RoundButton
+  },
   data: () => ({}),
   mounted () {},
   computed: {
@@ -21,11 +32,22 @@ export default {
     ...mapActions('inheritanceOwner', [
       'changePage',
       'changeContractValues'
-    ])
+    ]),
+    btnDecode () {
+      console.log('bam');
+    },
+    btnBroadcast () {
+      console.log('bam');
+      blockstreamPush(this.getContractValues.tx.toHex());
+    }
   }
 };
 </script>
 
 <style scoped>
-
+  .txHex {
+    width: 80%;
+    white-space: pre-wrap; /* CSS3 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+  }
 </style>

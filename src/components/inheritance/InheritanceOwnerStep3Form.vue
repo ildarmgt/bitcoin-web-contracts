@@ -111,9 +111,15 @@
                   :key="name"
                 >
                   #{{ name }} is from
-                  {{ item.hash.reverse().toString('hex') }} :
+                  {{ calcTxid(item.hash) }} :
                   {{ item.index }}
                 </div>
+              </td>
+            </tr>
+            <tr>
+              <td>redeemScript:</td>
+              <td>
+                {{ getContractValues.scriptHex }}
               </td>
             </tr>
           </table>
@@ -194,6 +200,10 @@ export default {
     ...mapActions('inheritanceOwner', [
       'changeContractValues'
     ]),
+    calcTxid (hash) {
+      // this gives many errors if reversing source instead of copy
+      return Buffer.from(hash).reverse().toString('hex');
+    },
     // this grabs values from vuex and puts them into page variables
     updateFromState () {
       // read vuex state
@@ -372,7 +382,7 @@ export default {
     color: greenyellow;
     word-break: break-all;
     text-align: left;
-    text-justify:distribute;
+    text-justify: distribute;
   }
   td:nth-child(odd) {
     white-space: nowrap;

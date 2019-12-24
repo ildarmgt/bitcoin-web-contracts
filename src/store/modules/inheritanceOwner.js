@@ -222,7 +222,6 @@ const actions = {
     // page 3
     const isToAddressDone = !!contract.toAddress;
     const isChangeAmountDone = !!contract.changeAmount;
-    const isToAmountDone = !!contract.toAmount;
     const isFeeRateDone = !!contract.feeRate;
     const isToAmountEnough = parseFloat(contract.toAmount) > 0;
     const isChangeAmountEnough = parseFloat(contract.changeAmount) > 0;
@@ -230,14 +229,21 @@ const actions = {
     const isTxReady = !!contract.tx;
 
     const isPage3Valid = (
-      isToAddressDone &&
-      isChangeAmountDone &&
-      isToAmountDone &&
+      (isToAddressDone || !contract.spending) &&
+      (isChangeAmountDone || !contract.change) &&
       isFeeRateDone &&
       (isToAmountEnough || isChangeAmountEnough) &&
       isFeeRateEnough &&
       isTxReady
     );
+    // console.log(
+    //   (isToAddressDone || !contract.spending),
+    //   (isChangeAmountDone || !contract.change),
+    //   isFeeRateDone,
+    //   (isToAmountEnough || isChangeAmountEnough),
+    //   isFeeRateEnough,
+    //   isTxReady
+    // );
 
     // update pages
     commit('setPageStatus', {

@@ -31,8 +31,11 @@ export const ownerTx = (contract) => {
 
     // start tx assemble
     const buildTx = new bitcoin.TransactionBuilder(network);
+
     // adding contract's chosen unspent output for input
-    buildTx.addInput(contract.txid, parseInt(contract.vout), 0xfffffffe);
+    // for some reason buffer has to be reversed
+    buildTx.addInput(Buffer.from(contract.txid, 'hex').slice().reverse(), parseInt(contract.vout), 0xfffffffe);
+
     // adding desired destination output if spending selected
     if (spending && (satToAmount !== 0)) {
       buildTx.addOutput(contract.toAddress, satToAmount);
@@ -69,7 +72,8 @@ export const ownerTx = (contract) => {
           op.OP_TRUE // submit TRUE so it selects first branch of IF statement
         ]),
         output: witnessScript
-      }
+      },
+      network
     }).witness;
 
     // p2sh version
@@ -162,15 +166,17 @@ export const inhertianceContract = (payload) => {
   const p2wsh = bitcoin.payments.p2wsh({
     redeem: {
       output: script,
-      network: network
-    }
+      network
+    },
+    network
   });
 
   const p2sh = bitcoin.payments.p2sh({
     redeem: {
       output: script,
-      network: network
-    }
+      network
+    },
+    network
   });
 
   const backupP2WSH = {
