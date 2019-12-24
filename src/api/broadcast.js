@@ -32,6 +32,7 @@ export async function blockexplorerPush (content) {
   }
 }
 
+// no segwit
 export async function blockcypherPush (content) {
   const API_PATH = 'https://api.blockcypher.com/v1/btc/test3/txs/push';
   try {
@@ -46,6 +47,7 @@ export async function blockcypherPush (content) {
   }
 }
 
+// no segwit
 export async function blockcypherDecode (content) {
   const API_PATH = 'https://api.blockcypher.com/v1/btc/test3/txs/decode';
   try {

@@ -39,6 +39,7 @@ export default {
     border-radius: 1.5vmin;
     padding: 0.4vmin 2vmin;
     padding-bottom: 0.6vmin;
+    padding-top: 0.6vmin;
     cursor: pointer;
     margin: 1vmin;
     transition: background-color 0.1s linear;
