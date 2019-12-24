@@ -27,10 +27,11 @@ npm run build
 
 ### To run project on localhost
 
+```
+npm run serve
+```
 This makes it accessible locally at http://localhost:8080
 
-`npm run serve`
+### Testnet bitcoin faucets (free testnet coins)
 
-### Testnet bitcoin faucets
-
-https://bitcoinfaucet.uo1.net/send.php
+https://bitcoinfaucet.uo1.net/send.php (segwit compatible)
