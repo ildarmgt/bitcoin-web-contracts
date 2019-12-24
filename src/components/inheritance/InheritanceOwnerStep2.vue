@@ -26,7 +26,8 @@
           class="q__lbl2"
           v-if="utxo.length"
         >
-          Select confirmed outputs:
+          Select confirmed outputs:<br><br>
+          BTC locked and time it's unlocked for the heir
         </div>
         <div
           class="utxoItem"
@@ -42,7 +43,13 @@
           <span
             class="q__utxoItem__lblTime"
           >
-            {{ output.utxoValue + ' BTC, ' + output.ago.dh }}
+            {{ output.utxoValue + ' BTC ' }}
+          </span>
+          <span
+            class="locked"
+            :class="{ unlocked : output.ago.unlocked }"
+          >
+            {{ output.ago.dh }}
           </span>
         </div>
       </div>
@@ -139,7 +146,8 @@ export default {
         // update local storage
         this.utxo = outputs.map((out, i) => {
           if (out.status.block_time) {
-            const ago = timeDiff(out.status.block_time * 1000);
+            const { daysLocked } = this.getContractValues;
+            const ago = timeDiff(out.status.block_time * 1000, daysLocked);
             const value = (out.value / 1e8).toFixed(8);
             const info = {
               index: i,
@@ -232,5 +240,17 @@ export default {
   .form {
     width: 85%;
     display: inline-block;
+  }
+  .locked {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 1.5vmin;
+    padding: 0.2vmin;
+    padding-left: 1vmin;
+    padding-right: 1vmin;
+    vertical-align: baseline;
+  }
+  .unlocked {
+    background-color: rgb(122, 0, 0);
+    background-color: rgba(122, 0, 0, 0.5);
   }
 </style>
