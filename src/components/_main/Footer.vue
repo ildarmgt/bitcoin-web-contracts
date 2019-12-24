@@ -20,7 +20,7 @@
       class="footer__dl text_light"
       href="./dapp.zip"
     >
-      &lt; download as zip &gt;
+      download as zip
     </a>
     <br>
     <BitcoinLogo class="footer__logo" />
