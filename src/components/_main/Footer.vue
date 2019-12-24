@@ -16,8 +16,14 @@
     </div>
 
     <br>
-
-    <BitcoinLogo />
+    <a
+      class="footer__dl text_light"
+      href="./dapp.zip"
+    >
+      &lt; download as zip &gt;
+    </a>
+    <br>
+    <BitcoinLogo class="footer__logo" />
   </div>
 </template>
 
@@ -42,16 +48,18 @@ export default {
   .footer__warning {
     display: block;
     margin: 0 1vmin;
+    margin-bottom: 0.2vmin;
   }
 
-  .footer__source {
+  .footer__source,
+  .footer__email,
+  .footer__dl {
     display: inline-block;
-    margin: 1vmin;
+    margin: 2vmin;
+    margin-bottom: 0;
+    margin-top: 0;
   }
-
-  .footer__email {
-    display: inline-block;
-    margin: 1vmin;
+  .footer__logo {
+    margin-top: 1vmin;
   }
-
 </style>
