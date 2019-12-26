@@ -125,7 +125,7 @@
           </table>
         </div>
         <div class="lblInfoBlob">
-          [Check net] button fetches fee rate recommendations from blockstream.info and fills in the fee expected to allow confirmation within 2 blocks or ~20 min
+          [Check net] button fetches fee rate recommendations from blockstream.info and fills in the fee expected to allow confirmation within 2 blocks or ~20 min (always mainnet prices)
         </div>
         <div class="lblInfoBlob">
           The timer for relocked funds

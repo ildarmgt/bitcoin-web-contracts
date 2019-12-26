@@ -13,7 +13,7 @@
         />
         <RoundButton
           class="btnCopy"
-          textContent="Copy to clipboard"
+          textContent="Copy it to clipboard"
           textColor="white"
           @click="btnCopy"
         />
@@ -21,10 +21,16 @@
           class="apiResponse"
           v-show="bRes"
         >
-          blockstream.info: <b>success!</b><br>
-          txid: {{ bRes }}
+          {{ bOk ? 'Success!' : 'Failure: ' + bRes }} <br>
+          <a
+            class="txid"
+            :href="calcPath"
+            target="_blank"
+            v-show="bOk"
+          >
+            txid: {{ bRes }}
+          </a>
         </div>
-        <!-- overflowed to the right (TODO) -->
         <Details class="details">
           <div class="txHex">
             <div>
@@ -32,6 +38,20 @@
               (contains signatures and no private keys):
             </div>
             <span class="hex">{{ getContractValues.tx.toHex() }}</span>
+          </div>
+        </Details>
+        <Details
+          class="details"
+          buttonText="Where to broadcast copied transaction"
+        >
+          <div class="pushInfo">
+            https://www.smartbit.com.au/txs/pushtx & https://testnet.smartbit.com.au/txs/pushtx *<br>
+            https://blockstream.info/tx/push & https://blockstream.info/testnet/tx/push *<br>
+            https://testnet.blockexplorer.com/tx/send <br>
+            https://live.blockcypher.com/btc/pushtx/<br>
+            https://btc.com/tools/tx/publish<br>
+            possibly more<br>
+            (not all allow p2wsh transactions! supporting marked by *)<br>
           </div>
         </Details>
       </div>
@@ -44,6 +64,7 @@ import { mapActions, mapGetters } from 'vuex'; // state
 import RoundButton from './../general/RoundButton';
 import { blockstreamPush } from './../../api/broadcast'; // api
 import Details from './../general/Details';
+import copyToClipboard from './../../helpers/copyToClipboard';
 
 export default {
   name: 'InheritanceOwnerStep4',
@@ -52,13 +73,19 @@ export default {
     Details
   },
   data: () => ({
-    bRes: ''
+    bRes: '',
+    bOk: false
   }),
   mounted () {},
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
-    ])
+    ]),
+    calcPath () {
+      const networkChoice = this.getContractValues.networkChoice;
+      const networkDependentPart = networkChoice === 'testnet' ? 'testnet/' : '';
+      return 'https://blockstream.info/' + networkDependentPart + 'tx/' + this.bRes;
+    }
   },
   methods: {
     ...mapActions('inheritanceOwner', [
@@ -66,11 +93,23 @@ export default {
       'changeContractValues'
     ]),
     async btnBroadcast () {
-      const txid = await blockstreamPush(this.getContractValues.tx.toHex());
-      this.bRes = txid;
+      const res = await blockstreamPush(this.getContractValues.tx.toHex());
+      if (res.status === 200) {
+        this.bRes = res.data;
+        this.bOk = true;
+      } else {
+        this.bRes = res.response.data;
+        this.bOk = false;
+      }
     },
     btnCopy () {
-      // copy to clipboard text here (TODO)
+      const hex = this.getContractValues.tx.toHex();
+      if (copyToClipboard(hex)) {
+        this.flash('Transaction (hex) copied to clipboard!', 'success', {
+          timeout: 3000,
+          important: true
+        });
+      }
     }
   }
 };
@@ -116,18 +155,39 @@ export default {
     color: greenyellow;
   }
   .apiResponse {
-    color: white;
-    font-weight: normal;
+    color: rgb(255, 217, 93);
+    font-weight: bold;
     font-size: 2.5vmin;
     background-color:rgba(0, 0, 0, 0.1);
     padding: 1vmin;
-    text-align: left;
+    text-align: center;
     width: 80%;
     word-wrap: break-word;
     display: inline-block;
     user-select: text;
+    margin-top: 2vmin;
   }
   .details {
     margin-top: 2vmin;
+    font-size: 2vmin;
+    font-weight: normal;
+  }
+  .txid {
+    color: rgb(121, 255, 150);
+    text-decoration: none;
+    font-size: 2vmin;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  .txid:hover {
+    color: yellow;
+  }
+  .pushInfo {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2vmin;
+    padding: 2vmin;
+    text-align: left;
+    user-select: text;
+    line-height: 3vmin;
   }
 </style>

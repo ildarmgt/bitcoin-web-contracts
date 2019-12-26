@@ -10,10 +10,12 @@ export async function blockstreamPush (content) {
         tx: content
       }
     });
-    console.log(res);
-    return res.data; // txid on success
+    // console.log(res);
+    return res; // txid on success
   } catch (e) {
-    console.error('failed push', e);
+    console.log('failed push', e);
+    // console.log(e.response.data);
+    return e;
   }
 }
 
@@ -24,9 +26,8 @@ export async function blockexplorerPush (content) {
     const res = await axios.post(API_PATH, {
       rawtx: content
     });
-    console.log('got this far');
-    console.log(res);
-    // return res.data;
+    // console.log(res);
+    return res.data;
   } catch (e) {
     console.error('failed push', e);
   }
@@ -39,9 +40,8 @@ export async function blockcypherPush (content) {
     const res = await axios.post(API_PATH, JSON.stringify({
       tx: content
     }));
-    console.log('got this far');
-    console.log(res);
-    // return res.data;
+    // console.log(res);
+    return res.data;
   } catch (e) {
     console.error('failed push', e);
   }
@@ -54,9 +54,8 @@ export async function blockcypherDecode (content) {
     const res = await axios.post(API_PATH, JSON.stringify({
       tx: content
     }));
-    console.log('got this far');
-    console.log(res);
-    // return res.data;
+    // console.log(res);
+    return res.data;
   } catch (e) {
     console.error('failed push', e);
   }
