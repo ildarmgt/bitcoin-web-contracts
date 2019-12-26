@@ -92,8 +92,17 @@
               />
             </svg>
           </div>
+          <a
+            href="https://bitcoinfaucet.uo1.net/"
+            target="_blank"
+            class="faucet"
+            v-show="showFaucet"
+          >
+            Testnet-only faucet for free coins
+          </a>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -109,7 +118,8 @@ export default {
   data: () => ({
     address: '',
     showRest: false,
-    contract: {}
+    contract: {},
+    showFaucet: false
   }),
   mounted () {
     this.redoPageContent();
@@ -183,6 +193,8 @@ export default {
     },
     showClicked () {
       this.showRest = true;
+      this.showFaucet = (this.getContractValuesIC.networkChoice === 'testnet');
+      console.log(this.getContractValuesIC.networkChoice);
     },
     // copies contract address to clipboard
     btnCopyAddressClicked () {
@@ -265,7 +277,7 @@ export default {
     cursor: pointer;
   }
   .q__backup__link:hover {
-    transform: translateY(-0.1vmin);
+    background-color: rgb(230, 149, 0)
   }
   .q__backup__link:active {
     transform: translateY(0.1vmin);
@@ -336,7 +348,7 @@ export default {
     border-right: 1.2vmin solid transparent;
   }
   .q__btnShow:hover {
-    transform: translateY(-0.1vmin);
+    background-color: rgb(230, 149, 0)
   }
   .q__btnShow:active {
     transform: translateY(0.1vmin);
@@ -384,5 +396,18 @@ export default {
       0.1vmin -0.1vmin 0.05vmin #FFF,
       -0.1vmin 0.1vmin 0.05vmin #FFF,
       0.1vmin 0.1vmin 0.05vmin #FFF;
+  }
+  .faucet {
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2vmin;
+    padding: 0.3vmin 1vmin;
+    font-size: 2vmin;
+    color: white;
+    margin: 2vmin;
+  }
+  .faucet:hover {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 </style>
