@@ -26,8 +26,10 @@
           class="q__lbl2"
           v-if="utxo.length"
         >
-          Select confirmed outputs:<br><br>
-          BTC locked and time it's unlocked for the heir
+          Select confirmed outputs:<br>
+          <div class="q__lbl2___sidenote">
+            Amount BTC locked and when it's unlocked for the heir
+          </div>
         </div>
         <div
           class="utxoItem"
@@ -252,5 +254,9 @@ export default {
   .unlocked {
     background-color: rgb(122, 0, 0);
     background-color: rgba(122, 0, 0, 0.5);
+  }
+  .q__lbl2___sidenote {
+    margin-left: 5vmin;
+    margin-top: 3vmin;
   }
 </style>

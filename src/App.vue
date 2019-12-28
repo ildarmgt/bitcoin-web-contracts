@@ -38,7 +38,7 @@ export default {
   }
   .app {
     display: inline-block;
-    width: 85%;
+    width: 95%;
   }
   .view {
     margin-top: 2vmin;
