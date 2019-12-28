@@ -142,34 +142,6 @@ export default {
     font-weight: bold;
     margin-bottom: 3vmin;
   }
-  .q__time {
-    display: block;
-    margin-top: 4vmin;
-    margin-bottom: 3vmin;
-    text-align: left;
-    margin-left: 10%;
-  }
-  .q__time__input {
-    font-size: 3vmin;
-    height: 4vmin;
-    width: 10vmin;
-    text-align: center;
-    border: none;
-    background-color: white;
-    color: orange;
-    display: inline-block;
-    transition: background-color 0.15s;
-  }
-  .q__time__input:focus,.q__time__input:hover {
-    background: white;
-  }
-  .q__time__label {
-    font-size: 3vmin;
-    color: white;
-    margin-left: 1vmin;
-    display: inline-block;
-    font-weight: bold;
-  }
   .q__light {
     display: block;
     font-size: 2vmin;

@@ -74,9 +74,4 @@ export default {
   .inheritance_heir {
     position: relative;
   }
-  /* .green {
-    color: white;
-    background-color: green;
-    background-color: rgba(0, 100, 0, 0.65);
-  } */
 </style>
