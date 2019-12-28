@@ -28,7 +28,7 @@
         >
           Select confirmed outputs:<br>
           <div class="q__lbl2___sidenote">
-            Amount BTC locked and when it's unlocked for the heir
+            Locked BTC and when it's unlocked for the heir
           </div>
         </div>
         <div
