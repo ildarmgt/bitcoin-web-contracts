@@ -148,7 +148,7 @@ import RoundButton from './../general/RoundButton';
 import Details from './../general/Details';
 
 export default {
-  name: 'InheritanceOwnerStep3Form',
+  name: 'InheritanceHeirStep3Form',
   components: {
     RoundButton,
     Details
@@ -172,7 +172,7 @@ export default {
   //   }
   // },
   computed: {
-    ...mapGetters('inheritanceOwner', [
+    ...mapGetters('inheritanceHeir', [
       'getContractValues'
     ]),
     tx () {
@@ -197,7 +197,7 @@ export default {
     this.updateFromState();
   },
   methods: {
-    ...mapActions('inheritanceOwner', [
+    ...mapActions('inheritanceHeir', [
       'changeContractValues'
     ]),
     calcTxid (hash) {
@@ -305,7 +305,7 @@ export default {
     width: 95%;
     text-align: center;
     background-color: white;
-    color: rgb(102, 102, 255);
+    color: rgb(0, 134, 0);
     border: 0.1vmin solid white;
     border-right: 0.3vmin solid white;
     border-left: 0.3vmin solid white;
