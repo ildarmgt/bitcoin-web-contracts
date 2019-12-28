@@ -3,6 +3,10 @@ import bip68 from 'bip68';
 
 // === OWNER SPENDING TRANSACTION GENERATION ==
 
+export const heirTx = (contract) => {
+
+};
+
 export const ownerTx = (contract) => {
   try {
     const op = bitcoin.opcodes; // abreviation for op codes
