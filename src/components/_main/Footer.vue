@@ -73,6 +73,6 @@ export default {
     height: 1.5vmin;
     width: 1.5vmin;
     fill: rgb(149, 149, 167);
-
+    vertical-align: middle;
   }
 </style>
