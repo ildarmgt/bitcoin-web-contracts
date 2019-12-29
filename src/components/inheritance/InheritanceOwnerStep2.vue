@@ -28,7 +28,9 @@
         >
           Select confirmed outputs:<br>
           <div class="q__lbl2___sidenote">
-            Locked BTC and when it's unlocked for the heir
+            Locked
+            {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+            and when it's unlocked for the heir
           </div>
         </div>
         <div
@@ -45,7 +47,8 @@
           <span
             class="q__utxoItem__lblTime"
           >
-            {{ output.utxoValue + ' BTC ' }}
+            {{ output.utxoValue }}
+            {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
           </span>
           <span
             class="locked"
@@ -230,9 +233,6 @@ export default {
     line-height: 2.5vmin;
     cursor: pointer;
   }
-  .utxoItem:hover {
-    background-color: rgba(10,10,10,0.3);
-  }
   .q__plus {
     padding: 0 0.5vmin;
   }
@@ -258,5 +258,8 @@ export default {
   .q__lbl2___sidenote {
     margin-left: 5vmin;
     margin-top: 3vmin;
+  }
+  .utxoItem:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 </style>

@@ -21,7 +21,7 @@
         @input="textChanged"
       />
       <div class="label">
-        Amount ( BTC )
+        Amount ( {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }} )
       </div>
       <textarea
         id="toAmount"
@@ -62,10 +62,17 @@
         Timer reset output removed to send all
       </div>
       <div v-else-if="parseFloat(changeAmount) > parseFloat(getContractValues.feeAmount)">
-        <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
+        <span class="change">
+          {{ this.changeAmount }}
+          {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+        </span> left for timer reset.
       </div>
       <div v-else>
-        Only <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
+        Only
+        <span class="change">
+          {{ this.changeAmount }}
+          {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+        </span> left for timer reset.
         <div class="suggestion">
           Use Send All to save on fees by not reseting any and send more.
         </div>

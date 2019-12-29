@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="sum">
-      Total selected: <span class="amt">{{ this.utxoValue }}</span> BTC
+      Total selected: <span class="amt">{{ this.utxoValue }}</span>
+      {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
     </div>
     <Details
       :buttonText="'See details'"
@@ -37,7 +38,7 @@
         </div>
         <div class="form_line1">
           <div class="label">
-            Selected output's value (BTC)
+            Selected output's value ({{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }})
           </div>
           <textarea
             id="utxovalue"

@@ -6,7 +6,8 @@
         <div class="q__strong_text">
           What to do with
           <span class="amt">{{ getContractValues.sumOfUTXO }}</span>
-          BTC selected?
+          {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+          selected?
         </div>
         <div class="q__lbl1">
           <RoundButton

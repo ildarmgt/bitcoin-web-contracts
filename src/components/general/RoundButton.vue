@@ -42,7 +42,7 @@ export default {
     padding-top: 0.6vmin;
     cursor: pointer;
     margin: 1vmin;
-    transition: background-color 0.1s linear;
+    transition: background-color 0.05s linear;
     text-align: center;
   }
   .RoundButton:hover {
