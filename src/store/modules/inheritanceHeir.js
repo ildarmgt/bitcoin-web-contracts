@@ -26,24 +26,20 @@ const state = {
     networkChoice: '',
     addressType: '',
     daysLocked: '',
+    relativeLockTime: '',
 
     // outputs to spend
     txid: '',
     vout: '',
     utxoValue: '',
     sumOfUTXO: '', // for future use, derived
-    spending: true, // use spending utxo or not
-    change: true, // use change utxo to reset timer
-    showForm: false, // show form if not first time
 
     // destination information
     toAddress: '',
-    toAmount: '0',
     feeRate: '1', // (sat/vByte)
-    changeAddress: '',
+    toAmount: '0', // derived here since all is sent
     feeAmount: '0', // derived
-    changeAmount: '0', // derived
-    vSize: 100, // derived
+    vSize: 100, // derived)
 
     // buffer of current tx
     tx: ''
@@ -121,47 +117,27 @@ const actions = {
     // sum all input utxo values, just 1 utxo at first
     const sumOfUTXO = contract.utxoValue;
     commit('setContractValues', { sumOfUTXO });
-
-    // change address should be this contracts address so money isn't lost
-    const changeAddress = contract.address;
-    commit('setContractValues', { changeAddress });
-
-    // tx building choices on which outputs to keep to save space and fees
-    if (!contract.spending) {
-      // remove remaining balance from toAmount
-      // and put all instead into changeAmount (for fee estimat)
-      commit('setContractValues', {
-        toAmount: '0',
-        change: true
-      });
-    }
   },
 
   deriveFromLastData ({ commit, state }) {
     const contract = state.contractValues;
 
     // make sure amounts are consistent
-    // priority: inputs & fee > target > change
+    // priority: inputs & fee > target
     const tx = contract.tx;
     const vSize = tx ? tx.virtualSize() : contract.vSize;
     let minFee = Math.floor(vSize * parseFloat(contract.feeRate));
     const inputs = Math.floor(1e8 * parseFloat(contract.sumOfUTXO));
-    let target = Math.floor(1e8 * parseFloat(contract.toAmount));
+    // let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
-    let remaining = Math.floor(inputs - minFee - target);
-    if (remaining < 0 || !contract.change) {
-      // take sats out of target's to cover missing sats.
-      // similarly if coins aren't to be reset, add to target
-      target = Math.floor(target + remaining);
-      remaining = 0;
-    }
+    let target = Math.floor(inputs - minFee);
+    // target = Math.floor(target + remaining);
 
     // update state
     commit('setContractValues', {
       vSize,
       feeAmount: (minFee * 1e-8).toFixed(8),
-      toAmount: (target * 1e-8).toFixed(8),
-      changeAmount: (remaining * 1e-8).toFixed(8)
+      toAmount: (target * 1e-8).toFixed(8)
     });
   },
   // update backup file data provided
@@ -221,29 +197,18 @@ const actions = {
 
     // page 3
     const isToAddressDone = !!contract.toAddress;
-    const isChangeAmountDone = !!contract.changeAmount;
     const isFeeRateDone = !!contract.feeRate;
-    const isToAmountEnough = parseFloat(contract.toAmount) > 0;
-    const isChangeAmountEnough = parseFloat(contract.changeAmount) > 0;
-    const isFeeRateEnough = parseFloat(contract.feeRate) > 0;
+    const isToAmountEnough = parseFloat(contract.toAmount) > 0.0;
+    const isFeeRateEnough = parseFloat(contract.feeRate) >= 1.0;
     const isTxReady = !!contract.tx;
 
     const isPage3Valid = (
-      (isToAddressDone || !contract.spending) &&
-      (isChangeAmountDone || !contract.change) &&
+      isToAddressDone &&
       isFeeRateDone &&
-      (isToAmountEnough || isChangeAmountEnough) &&
+      isToAmountEnough &&
       isFeeRateEnough &&
       isTxReady
     );
-    // console.log(
-    //   (isToAddressDone || !contract.spending),
-    //   (isChangeAmountDone || !contract.change),
-    //   isFeeRateDone,
-    //   (isToAmountEnough || isChangeAmountEnough),
-    //   isFeeRateEnough,
-    //   isTxReady
-    // );
 
     // update pages
     commit('setPageStatus', {

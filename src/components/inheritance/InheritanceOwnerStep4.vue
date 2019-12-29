@@ -37,7 +37,13 @@
               Transaction in hex form - safe to broadcast to the Bitcoin network<br>
               (contains signatures and no private keys):
             </div>
-            <span class="hex">{{ getContractValues.tx.toHex() }}</span>
+            <div class="hex">
+              {{ getContractValues.tx ? getContractValues.tx.toHex() : '' }}
+            </div>
+            <div>
+              decode the transaction hex independently if desired via tools such as:
+              https://testnet.smartbit.com.au/txs/decodetx
+            </div>
           </div>
         </Details>
         <Details

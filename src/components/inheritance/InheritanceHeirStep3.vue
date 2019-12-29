@@ -4,24 +4,13 @@
       <!-- main question -->
       <div class="q__strong">
         <div class="q__strong_text">
-          What to do with
+          Where to send
           <span class="amt">{{ getContractValues.sumOfUTXO }}</span>
-          BTC selected?
-        </div>
-        <div class="q__lbl1">
-          <RoundButton
-            textContent="Spend"
-            textColor="white"
-            @click="showSpendingForm"
-          />
-          <RoundButton
-            textContent="Only reset timer"
-            textColor="white"
-            @click="showResetForm"
-          />
+          {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+          selected?
         </div>
       </div>
-      <div v-show="showForm">
+      <div>
         <InheritanceHeirStep3Form
           class="form"
         />
@@ -40,24 +29,17 @@
 import { mapActions, mapGetters } from 'vuex'; // state
 
 import ArrowButton from './../general/ArrowButton';
-import RoundButton from './../general/RoundButton';
+// import RoundButton from './../general/RoundButton';
 import InheritanceHeirStep3Form from './InheritanceHeirStep3Form';
 
 export default {
   name: 'InheritanceHeirStep3',
   components: {
     ArrowButton,
-    RoundButton,
     InheritanceHeirStep3Form
   },
-  data: () => ({
-    showForm: false
-  }),
-  mounted () {
-    if (this.getContractValues.showForm) {
-      this.showForm = true;
-    }
-  },
+  data: () => ({}),
+  mounted () {},
   computed: {
     ...mapGetters('inheritanceHeir', [
       'getContractValues'
@@ -72,16 +54,6 @@ export default {
     // next button event
     onNextButtonClick () {
       this.changePage(4);
-    },
-
-    showSpendingForm () {
-      this.showForm = true;
-      this.changeContractValues({ showForm: true, spending: true });
-    },
-
-    showResetForm () {
-      this.showForm = true;
-      this.changeContractValues({ showForm: true, spending: false });
     }
   }
 };

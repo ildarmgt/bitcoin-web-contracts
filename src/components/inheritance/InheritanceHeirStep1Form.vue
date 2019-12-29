@@ -90,7 +90,8 @@ export default {
   data: () => ({
     address: '',
     scriptHex: '',
-    heirPrivateKeyWIF: ''
+    heirPrivateKeyWIF: '',
+    relativeLockTime: ''
   }),
   props: {
     showDetails: { type: Boolean, default: false }
@@ -139,13 +140,17 @@ export default {
       try {
         this.daysLocked = contract.daysAfterConfirmForUnlock;
       } catch (e) { errors.daysLocked = true; }
+      try {
+        this.relativeLockTime = contract.relativeLockTime;
+      } catch (e) { errors.relativeLockTime = true; }
 
       // update vuex
       this.changeContractValues({
         heirPrivateKeyWIF: this.heirPrivateKeyWIF,
         address: this.address,
         scriptHex: this.scriptHex,
-        daysLocked: this.daysLocked
+        daysLocked: this.daysLocked,
+        relativeLockTime: this.relativeLockTime
       });
     },
     // textbox contents changed

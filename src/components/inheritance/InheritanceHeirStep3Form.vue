@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="getContractValues.spending">
+    <div>
       <div class="label">
         Send to
         <RoundButton
@@ -19,24 +19,6 @@
         spellcheck="false"
         :value="toAddress"
         @input="textChanged"
-      />
-      <div class="label">
-        Amount ( BTC )
-      </div>
-      <textarea
-        id="toAmount"
-        placeholder="BTC to send"
-        rows="1"
-        class="textBox txtAmount"
-        ref="q__input2"
-        spellcheck="false"
-        :value="toAmount"
-        @input="textChanged"
-      />
-      <RoundButton
-        textContent="Send All"
-        class="btnMax"
-        @click="onMaxClick"
       />
     </div>
     <div class="label">
@@ -57,19 +39,7 @@
       class="btnFee"
       @click="onFeeClick"
     />
-    <div class="lblReturn">
-      <div v-if="!getContractValues.change">
-        Timer reset output removed to send all
-      </div>
-      <div v-else-if="parseFloat(changeAmount) > parseFloat(getContractValues.feeAmount)">
-        <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
-      </div>
-      <div v-else>
-        Only <span class="change">{{ this.changeAmount }} BTC</span> left for timer reset.
-        <div class="suggestion">
-          Use Send All to save on fees by not reseting any and send more.
-        </div>
-      </div>
+    <div class="divFormFooter">
       <Details
         class="details"
         :alignment="'middle'"
@@ -127,10 +97,11 @@
         <div class="lblInfoBlob">
           [Check net] button fetches fee rate recommendations from blockstream.info and fills in the fee expected to allow confirmation within 2 blocks or ~20 min (always mainnet prices)
         </div>
-        <div class="lblInfoBlob">
-          The timer for relocked funds
-          is reset via sending them back
-          to this contract's address
+        <div
+          class="lblInfoBlob"
+          v-if="getContractValues.networkChoice === 'testnet'"
+        >
+          If testnet is used, [testnet faucet] button can fill a faucet's address to help them out.
         </div>
       </Details>
     </div>
@@ -156,21 +127,11 @@ export default {
   data: () => ({
     lastTimer: {
       toAddress: null,
-      toAmount: null,
       feeRate: null
     },
     toAddress: '',
-    toAmount: '',
-    feeRate: '',
-    changeAddress: '',
-    changeAmount: ''
+    feeRate: ''
   }),
-  // props: {
-  //   showSending: {
-  //     type: Boolean,
-  //     default: false
-  //   }
-  // },
   computed: {
     ...mapGetters('inheritanceHeir', [
       'getContractValues'
@@ -184,15 +145,8 @@ export default {
     getContractValues (newValue, oldValue) {
       this.updateFromState();
     }
-    // if type of tx change, update calculations
-    // showSending (newValue, oldValue) {
-    //   this.changeContractValues({
-    //     spending: newValue,
-    //     change: true
-    //   });
-    //   console.log('test', newValue, oldValue);
-    // }
   },
+  // first thing it does
   mounted () {
     this.updateFromState();
   },
@@ -210,28 +164,14 @@ export default {
       const contract = this.getContractValues;
       // update display variables
       this.toAddress = contract.toAddress;
-      this.toAmount = contract.toAmount;
       this.feeRate = contract.feeRate;
-      this.changeAddress = contract.changeAddress;
-      this.changeAmount = contract.changeAmount;
-    },
-    // max button clicked
-    onMaxClick () {
-      // TODO this needs to subtract fee but skipping for a moment
-      this.toAmount = this.getContractValues.sumOfUTXO;
-
-      this.changeContractValues({
-        toAmount: this.toAmount,
-        change: false
-      });
     },
     // fee button clicked
     async onFeeClick () {
       const feeEstimates = await fees();
       this.feeRate = feeEstimates['2']; // 2 block estimate for now
       this.changeContractValues({
-        feeRate: this.feeRate,
-        change: true
+        feeRate: this.feeRate
       });
     },
     // textbox contents changed
@@ -250,11 +190,6 @@ export default {
         if (event.target.id === 'toAddress') {
           fixedString = sanitize(event.target.value, 'basic');
         }
-        if (event.target.id === 'toAmount') {
-          fixedString = sanitize(event.target.value, 'fractions');
-          fixedString = parseFloat(fixedString).toFixed(8);
-          fixedString = isNaN(fixedString) ? (0).toFixed(8) : fixedString;
-        }
         if (event.target.id === 'feeRate') {
           fixedString = sanitize(event.target.value, 'fractions');
         }
@@ -265,7 +200,6 @@ export default {
         // update vuex
         this.changeContractValues({
           toAddress: this.toAddress,
-          toAmount: this.toAmount,
           feeRate: this.feeRate,
           changeAddress: this.changeAddress,
           change: true
@@ -289,7 +223,7 @@ export default {
     margin-bottom: 0.5vmin;
     margin-top: 2vmin;
   }
-  .lblReturn {
+  .divFormFooter {
     font-size: 2.5vmin;
     text-align: center;
     margin-bottom: 0.5vmin;
@@ -317,9 +251,6 @@ export default {
     cursor: default;
     vertical-align: middle;
   }
-  .txtAmount {
-    width: 60%;
-  }
   .txtFee {
     width: 60%;
   }
@@ -334,18 +265,13 @@ export default {
   .error {
     background: rgb(194, 0, 0);
   }
-  .btnMax, .btnFee {
+  .btnFee {
     vertical-align: middle;
     margin: 0;
   }
   .details {
     margin-top: 2vmin;
     transform: scale(0.9);
-  }
-  .change {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.1vmin 1vmin;
-    border-radius: 1vmin;
   }
   .btnTestnet {
     display: block;
@@ -356,6 +282,8 @@ export default {
     background-color: rgba(0, 0, 0, 0.1);
     transform: scale(0.6);
     float: right;
+    position: relative;
+    top: -0.5vmin;
   }
   .btnTestnet:active {
     transform: scale(0.6);

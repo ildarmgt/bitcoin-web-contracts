@@ -128,9 +128,13 @@
           [Check net] button fetches fee rate recommendations from blockstream.info and fills in the fee expected to allow confirmation within 2 blocks or ~20 min (always mainnet prices)
         </div>
         <div class="lblInfoBlob">
-          The timer for relocked funds
-          is reset via sending them back
-          to this contract's address
+          The timer for relocked funds is reset via sending them back to this contract's address
+        </div>
+        <div
+          class="lblInfoBlob"
+          v-if="getContractValues.networkChoice === 'testnet'"
+        >
+          If testnet is used, [testnet faucet] button can fill a faucet's address to help them out.
         </div>
       </Details>
     </div>
@@ -165,12 +169,6 @@ export default {
     changeAddress: '',
     changeAmount: ''
   }),
-  // props: {
-  //   showSending: {
-  //     type: Boolean,
-  //     default: false
-  //   }
-  // },
   computed: {
     ...mapGetters('inheritanceOwner', [
       'getContractValues'
@@ -184,14 +182,6 @@ export default {
     getContractValues (newValue, oldValue) {
       this.updateFromState();
     }
-    // if type of tx change, update calculations
-    // showSending (newValue, oldValue) {
-    //   this.changeContractValues({
-    //     spending: newValue,
-    //     change: true
-    //   });
-    //   console.log('test', newValue, oldValue);
-    // }
   },
   mounted () {
     this.updateFromState();
@@ -356,6 +346,8 @@ export default {
     background-color: rgba(0, 0, 0, 0.1);
     transform: scale(0.6);
     float: right;
+    position: relative;
+    top: -0.5vmin;
   }
   .btnTestnet:active {
     transform: scale(0.6);

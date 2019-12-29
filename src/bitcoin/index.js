@@ -11,13 +11,10 @@ export const heirTx = (contract) => {
 
     const heirKeys = bitcoin.ECPair.fromWIF(contract.heirPrivateKeyWIF, network);
     const scriptHex = contract.scriptHex;
-    const spending = contract.spending; // to include or not the spending utxo
 
     // amounts conversions to satoshi
     const satToAmount = Math.floor(parseFloat(contract.toAmount) * 1e8);
-    const satChangeAmount = Math.floor(parseFloat(contract.changeAmount) * 1e8);
-    const satFromAmount = Math.floor(parseFloat(contract.utxoValue) * 1e8);
-    // const satFeeAmount = Math.floor(parseFloat(contract.feeAmount) * 1e8);
+    const satFromAmount = Math.floor(parseFloat(contract.sumOfUTXO) * 1e8);
 
     // redeemScript is referenced as a hash in an unspent p2sh output (scriptPubKey)
     // and requires to provide it to run the script now
@@ -25,25 +22,23 @@ export const heirTx = (contract) => {
     const redeemScript = Buffer.from(scriptHex, 'hex');
     const witnessScript = redeemScript; // for now no difference
 
-    // get current time
-    // const now = Math.floor(Date.now() / 1000);
-    // console.log('Current time data:', now);
-
     // start tx assemble
     const buildTx = new bitcoin.TransactionBuilder(network);
 
+    // when redeeming OP_CHECKSEQUENCEVERIFY (CSV) have to set sequence field
+    // (normally e.g. 0xfffffffe) to the value of the bip68 encoded timelock
+    // owner doesn't have to deal with this branch of the script tree so not necessary there
+    const relativeLockTime = parseInt(contract.relativeLockTime, 10);
+
     // adding contract's chosen unspent output for input
     // for some reason buffer has to be reversed
-    buildTx.addInput(Buffer.from(contract.txid, 'hex').slice().reverse(), parseInt(contract.vout), 0xfffffffe);
+    buildTx.addInput(
+      Buffer.from(contract.txid, 'hex').slice().reverse(),
+      parseInt(contract.vout, 10),
+      relativeLockTime
+    );
 
-    // adding desired destination output if spending selected
-    if (spending && (satToAmount !== 0)) {
-      buildTx.addOutput(contract.toAddress, satToAmount);
-    }
-    // adding change output (if user allowed the change output)
-    if (contract.change) {
-      buildTx.addOutput(contract.changeAddress, satChangeAmount);
-    }
+    buildTx.addOutput(contract.toAddress, satToAmount);
 
     // pre-build tx so it can be signed
     const tx = buildTx.buildIncomplete();
@@ -96,12 +91,6 @@ export const heirTx = (contract) => {
       throw new Error('my errors: address type unknown');
     }
 
-    // console.log('');
-    // Object.keys(tx.outs).forEach(item => {
-    //   console.log(item, ':', tx.outs[item].value);
-    // });
-    // console.log('');
-
     return tx;
   } catch (e) {
     // console.log(e);
@@ -140,7 +129,7 @@ export const ownerTx = (contract) => {
 
     // adding contract's chosen unspent output for input
     // for some reason buffer has to be reversed
-    buildTx.addInput(Buffer.from(contract.txid, 'hex').slice().reverse(), parseInt(contract.vout), 0xfffffffe);
+    buildTx.addInput(Buffer.from(contract.txid, 'hex').slice().reverse(), parseInt(contract.vout, 10), 0xfffffffe);
 
     // adding desired destination output if spending selected
     if (spending && (satToAmount !== 0)) {
