@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build && npm run zip",
     "lint": "vue-cli-service lint",
-    "zip": "zip -r ./public/dapp.zip docs"
+    "zip": "zip -x *.zip -r ./docs/dapp.zip docs"
   },
   "dependencies": {
     "axios": "^0.19.0",
