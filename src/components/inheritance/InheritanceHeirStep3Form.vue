@@ -48,7 +48,7 @@
           class="lblInfoBlob"
           v-if="tx"
         >
-          Your transaction information:<br>
+          Your future transaction information:<br>
           <table>
             <tr>
               <td>fee:</td>

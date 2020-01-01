@@ -65,14 +65,16 @@
         <span class="change">
           {{ this.changeAmount }}
           {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
-        </span> left for timer reset.
+        </span>
+        left for timer reset.
       </div>
       <div v-else>
         Only
         <span class="change">
           {{ this.changeAmount }}
           {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
-        </span> left for timer reset.
+        </span>
+        left for timer reset.
         <div class="suggestion">
           Use Send All to save on fees by not reseting any and send more.
         </div>
@@ -85,7 +87,7 @@
           class="lblInfoBlob"
           v-if="tx"
         >
-          Your transaction information:<br>
+          Your future transaction information:<br>
           <table>
             <tr>
               <td>fee:</td>
@@ -341,7 +343,8 @@ export default {
   }
   .change {
     background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.1vmin 1vmin;
+    padding: 0.1vmin 0.5vmin;
+    margin-right: 0.5vmin;
     border-radius: 1vmin;
   }
   .btnTestnet {
