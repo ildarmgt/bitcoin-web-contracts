@@ -20,6 +20,18 @@
         Key and address are not of same network
       </div>
       <div
+        v-if="getIssues.relativeLockTime"
+        class="notice error"
+      >
+        Relative lock time can't be blank
+      </div>
+      <div
+        v-if="getIssues.scriptHex"
+        class="notice error"
+      >
+        Script can't be blank
+      </div>
+      <div
         v-if="getIssues.heirPrivateKeyWIFInfo"
         class="notice"
       >
@@ -44,7 +56,6 @@
         id="address"
         rows="1"
         class="textBox"
-        ref="q__input3"
         spellcheck="false"
         :value="address"
         @input="textChanged"
@@ -56,7 +67,6 @@
         id="heirPrivateKeyWIF"
         rows="1"
         class="textBox"
-        ref="q__input1"
         spellcheck="false"
         :value="heirPrivateKeyWIF"
         @input="textChanged"
@@ -68,9 +78,19 @@
         id="scriptHex"
         rows="1"
         class="textBox"
-        ref="q__input2"
         spellcheck="false"
         :value="scriptHex"
+        @input="textChanged"
+      />
+      <div class="label">
+        relativeLockTime (dec) {{ tryToCalcDays() ? ' ~' + tryToCalcDays() + ' days' : '' }}
+      </div>
+      <textarea
+        id="relativeLockTime"
+        rows="1"
+        class="textBox"
+        spellcheck="false"
+        :value="relativeLockTime"
         @input="textChanged"
       />
     </Details>
@@ -120,6 +140,7 @@ export default {
       this.address = contract.address;
       this.scriptHex = contract.scriptHex;
       this.heirPrivateKeyWIF = contract.heirPrivateKeyWIF;
+      this.relativeLockTime = contract.relativeLockTime;
     },
     // update contract data from file data if necessary
     updateFromFile (file) {
@@ -138,10 +159,8 @@ export default {
         this.heirPrivateKeyWIF = contract.heirPrivateKeyWIF;
       } catch (e) { errors.heirPrivateKeyWIF = true; }
       try {
-        this.daysLocked = contract.daysAfterConfirmForUnlock;
-      } catch (e) { errors.daysLocked = true; }
-      try {
         this.relativeLockTime = contract.relativeLockTime;
+        this.daysLocked = this.tryToCalcDays();
       } catch (e) { errors.relativeLockTime = true; }
 
       // update vuex
@@ -166,6 +185,9 @@ export default {
       if (event.target.id === 'scriptHex') {
         fixedString = sanitize(event.target.value, 'hex');
       }
+      if (event.target.id === 'relativeLockTime') {
+        fixedString = sanitize(event.target.value, 'numbers');
+      }
       event.target.value = fixedString;
       this[event.target.id] = fixedString;
 
@@ -177,8 +199,18 @@ export default {
       this.changeContractValues({
         heirPrivateKeyWIF: this.heirPrivateKeyWIF,
         address: this.address,
-        scriptHex: this.scriptHex
+        scriptHex: this.scriptHex,
+        relativeLockTime: this.relativeLockTime,
+        daysLocked: this.tryToCalcDays()
       });
+    },
+    tryToCalcDays () {
+      try {
+        // BIP 68 spec
+        // converting from relative lock time to time via bit masks and shifts
+        const days = ((this.relativeLockTime & 0x0000ffff) << 9) / 60 / 60 / 24;
+        return days.toFixed(3);
+      } catch (e) {}
     }
   }
 };

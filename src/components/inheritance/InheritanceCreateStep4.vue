@@ -4,6 +4,9 @@
       <div class="q__lbl1 noselect">
         Contract calculation done:
       </div>
+      <div class="q__lbl2 noselect">
+        DO THIS BACKUP FIRST!
+      </div>
       <!-- owner -->
       <div class="q__lblWho noselect">
         for <span class="owner">Owner</span> :
@@ -46,7 +49,7 @@
       <div class="q__note1 noselect">
         Save your backup to be able to spend!<br>
         Give Heir their backup. It doesn't have your key.<br>
-        Keep backups private! Lose it, lose access!<br>
+        Keep backup private! Lose it, lose access!<br>
       </div>
       <br>
       <!-- address hidden at first -->
@@ -55,7 +58,7 @@
         v-if="!showRest"
         @click="showClicked"
       >
-        Show address when ready
+        My backup is ready. Show the contract!
       </div>
       <div
         class="q__contract noselect"
@@ -238,6 +241,17 @@ export default {
     text-align: left;
     margin-bottom: 3vmin;
   }
+  .q__lbl2 {
+    display: block;
+    font-size: 3vmin;
+    font-weight: normal;
+    color: white;
+    margin-top: 7vmin;
+    margin-right: 3vmin;
+    margin-left: 12%;
+    text-align: left;
+    margin-bottom: 3vmin;
+  }
   .q__lblWho {
     display: inline-block;
     vertical-align: middle;
@@ -325,13 +339,13 @@ export default {
   .q__btnShow {
     display: inline-block;
     position: relative;
-    padding: 0.2vmin 2vmin;
+    padding: 1vmin 2vmin;
     padding-left: 5vmin;
     margin-bottom: 1vmin;
     margin-top: 1vmin;
     color: white;
     background-color: orange;
-    border: 0.15vmin solid white;
+    border: 0.2vmin solid white;
     border-radius: 3vmin;
     cursor: pointer;
   }
@@ -341,7 +355,7 @@ export default {
     width: 0;
     height: 0;
     left: 1.5vmin;
-    top: 0.8vmin;
+    top: 1.7vmin;
     border-top: 2vmin solid white;
     border-left: 1.2vmin solid transparent;
     border-right: 1.2vmin solid transparent;

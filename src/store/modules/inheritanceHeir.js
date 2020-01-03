@@ -184,8 +184,21 @@ const actions = {
     if (address.substring(0, 2) === 'tb') { addressType = 'p2wsh'; }
     commit('setContractValues', { addressType });
 
+    // is relative locktime not blank?
+    const isRelativeLockTime = !!contract.relativeLockTime;
+    commit('setIssues', { relativeLockTime: !isRelativeLockTime });
+    // is script hex not blank?
+    const isScriptHex = !!contract.scriptHex;
+    commit('setIssues', { scriptHex: !isScriptHex });
+
     // page 1: finalize page 1
-    const isPage1Valid = keyNetwork && addressNetwork && doNetworksMatch;
+    const isPage1Valid = (
+      keyNetwork &&
+      addressNetwork &&
+      doNetworksMatch &&
+      isRelativeLockTime &&
+      isScriptHex
+    );
 
     // page 2
 
