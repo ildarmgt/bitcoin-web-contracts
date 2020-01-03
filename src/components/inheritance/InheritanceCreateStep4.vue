@@ -384,7 +384,7 @@ export default {
     vertical-align: top;
   }
   .btnCopy:hover {
-    transform: translateY(-0.1vmin);
+    background-color: rgba(0, 0, 0, 0.2);
   }
   .btnCopy:active {
     transform: translateY(0.2vmin);

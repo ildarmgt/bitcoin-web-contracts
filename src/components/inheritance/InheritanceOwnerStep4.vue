@@ -5,6 +5,7 @@
         <div class="q__strong_text">
           Transaction is ready
         </div>
+        You are sending 0.02145658 BTC to Y, reseting 1.02145658 BTC, and paying fee of 0.00005658 BTC
         <RoundButton
           class="btnSend"
           textContent="Send via blockstream.info"
