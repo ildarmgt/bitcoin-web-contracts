@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="sum">
+    <div
+      class="sum"
+      v-show="( this.utxoValue !== '' )"
+    >
       Total selected: <span class="amt">{{ this.utxoValue }}</span>
       {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
     </div>

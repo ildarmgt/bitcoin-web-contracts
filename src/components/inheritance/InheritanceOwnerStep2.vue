@@ -121,6 +121,7 @@ export default {
     // show the form
     showFormNow () {
       this.showDetails = true;
+      this.showForm = true;
     },
 
     // returns if specific utxo from api list was selected
