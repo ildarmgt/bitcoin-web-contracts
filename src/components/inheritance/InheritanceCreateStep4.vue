@@ -69,7 +69,7 @@
       </Details>
       <Details
         class="detailsPlaintext"
-        buttonText="Backed up content"
+        buttonText="Details"
         :showAtStart="false"
       >
         <pre>{{ backupDataOwner }}</pre>
@@ -252,7 +252,9 @@ export default {
         ? this.contract
         : { ...this.contract, ownerPrivateKeyWIF: '' };
 
-      const contractText = JSON.stringify(filteredContract, null, 2);
+      const contractText = sjcl.encrypt(this.cryptoKey,
+        JSON.stringify(filteredContract, null, 2)
+      );
       if (copyToClipboard(contractText)) {
       // notify user
         this.flash('Contract info copied to clipboard!', 'success', {
