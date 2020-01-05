@@ -3,18 +3,23 @@
     <div class="footer__warning text_light">
       Warning: Demonstration only. Not reviewed for public use.
     </div>
-
+    <a
+      class="footer__address text_light"
+      href="https://blockstream.info/address/1HYhi1D8VCv4dRZhbAy1ghKGRv3UU34pb6"
+      target="_blank"
+    >
+      donate: 1HYhi1D8VCv4dRZhbAy1ghKGRv3UU34pb6
+    </a>
     <a
       class="footer__source text_light"
       href="https://github.com/ildarmgt/bitcoin-web-contracts"
+      target="_blank"
     >
       &lt; Source Code &gt;
     </a>
-
     <div class="footer__email text_light">
       ildarmgt@gmail.com
     </div>
-
     <br>
     <a
       class="footer__dl text_light"
@@ -51,13 +56,11 @@ export default {
     margin-bottom: 5vmin;
     vertical-align: middle;
   }
-
   .footer__warning {
     display: block;
     margin: 0 1vmin;
     margin-bottom: 0.2vmin;
   }
-
   .footer__source,
   .footer__email,
   .footer__dl {
@@ -74,5 +77,16 @@ export default {
     width: 1.5vmin;
     fill: rgb(149, 149, 167);
     vertical-align: middle;
+  }
+  .footer__address {
+    margin-top: 1vmin;
+    margin-bottom: 0.5vmin;
+    display: block;
+  }
+  a:hover {
+    color: black;
+  }
+  a:hover .icon {
+    fill: black;
   }
 </style>

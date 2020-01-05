@@ -81,3 +81,7 @@ Alternative methods:
 2. The transaction can be done without custom scripts by including a [locktime](https://bitcoin.org/en/transactions-guide#locktime-and-sequence-number) as blockheight or unix time at which point it becomes spendable. The owner can render the heir transaction useless by spending the output before that time. Downside is once again having to resign updated transactions, sharing them with the heir, and heir having to back up the information frequently.
 
 The approach used requires the least amount of work for both parties while having it accessible to spend by owner.
+
+## Donations
+
+BTC: 1HYhi1D8VCv4dRZhbAy1ghKGRv3UU34pb6
