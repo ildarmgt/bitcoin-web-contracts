@@ -4,31 +4,6 @@
       <div class="q__lbl1 noselect">
         Backup the access data first!
       </div>
-      <Details
-        class="detailsEncryption"
-        buttonText="Encrypt the backup? (Optional)"
-        :showAtStart="false"
-      >
-        <div class="q__lbl2 noselect">
-          An additional secret password can be used to hide (encrypt) the information inside the backup.<br><br>
-          Please note that without knowing this secret password the backup is useless and all access and funds are equivalent to lost.<br><br>
-          <textarea
-            rows="1"
-            class="txtKey"
-            spellcheck="false"
-            @input="updateEncryption"
-            :value="cryptoKey"
-            placeholder="no password used (blank)"
-          />
-        </div>
-      </Details>
-      <Details
-        class="detailsPlaintext"
-        buttonText="Backed up content"
-        :showAtStart="false"
-      >
-        <pre>{{ backupDataOwner }}</pre>
-      </Details>
       <!-- owner -->
       <div class="q__lblWho noselect">
         for <span class="owner">Owner</span> :
@@ -74,6 +49,31 @@
         Keep backup private! Lose it, lose access!<br>
       </div>
       <br>
+      <Details
+        class="detailsEncryption"
+        buttonText="Encrypt the backup? (Optional)"
+        :showAtStart="false"
+      >
+        <div class="q__lbl2 noselect">
+          An additional secret password can be used to hide (encrypt) the information inside the backup.<br><br>
+          Please note that without knowing this secret password the backup is useless and all access and funds are equivalent to lost.<br><br>
+          <textarea
+            rows="1"
+            class="txtKey"
+            spellcheck="false"
+            @input="updateEncryption"
+            :value="cryptoKey"
+            placeholder="no password used (blank)"
+          />
+        </div>
+      </Details>
+      <Details
+        class="detailsPlaintext"
+        buttonText="Backed up content"
+        :showAtStart="false"
+      >
+        <pre>{{ backupDataOwner }}</pre>
+      </Details>
       <!-- address hidden at first -->
       <ArrowButton
         class="btnShow"
@@ -335,6 +335,7 @@ export default {
   }
   .q__contract {
     text-align: center;
+    margin-top: 3vmin;
   }
   .q__contract__text {
     display: inline-block;
