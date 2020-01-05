@@ -2,11 +2,33 @@
   <div>
     <div class="q noselect">
       <div class="q__lbl1 noselect">
-        Contract calculation done:
+        Backup the access data first!
       </div>
-      <div class="q__lbl2 noselect">
-        DO THIS BACKUP FIRST!
-      </div>
+      <Details
+        class="detailsEncryption"
+        buttonText="Encrypt the backup? (Optional)"
+        :showAtStart="false"
+      >
+        <div class="q__lbl2 noselect">
+          An additional secret password can be used to hide (encrypt) the information inside the backup.<br><br>
+          Please note that without knowing this secret password the backup is useless and all access and funds are equivalent to lost.<br><br>
+          <textarea
+            rows="1"
+            class="txtKey"
+            spellcheck="false"
+            @input="updateEncryption"
+            :value="cryptoKey"
+            placeholder="no password used (blank)"
+          />
+        </div>
+      </Details>
+      <Details
+        class="detailsPlaintext"
+        buttonText="Backed up content"
+        :showAtStart="false"
+      >
+        <pre>{{ backupDataOwner }}</pre>
+      </Details>
       <!-- owner -->
       <div class="q__lblWho noselect">
         for <span class="owner">Owner</span> :
@@ -115,17 +137,23 @@ import qrimage from 'qr-image'; // creates qr png
 import { inhertianceContract } from './../../bitcoin';
 import copyToClipboard from './../../helpers/copyToClipboard';
 import ArrowButton from './../general/ArrowButton';
+import Details from './../general/Details';
+import sanitize from './../../helpers/sanitize';
+import sjcl from './../../library/sjcl'; // Stanford Javascript Crypto Library
 
 export default {
   name: 'InheritanceCreateStep4',
   components: {
-    ArrowButton
+    ArrowButton,
+    Details
   },
   data: () => ({
     address: '',
     showRest: false,
     contract: {},
-    showFaucet: false
+    showFaucet: false,
+    cryptoKey: '',
+    backupDataOwner: ''
   }),
   mounted () {
     this.redoPageContent();
@@ -171,21 +199,28 @@ export default {
       // assemble owner data to back up (complete)
       const backupObjectOwner = contract;
 
+      // encrypt data
+      const backupDataOwner = JSON.stringify(backupObjectOwner, null, 2);
+      this.backupDataOwner = backupDataOwner;
+      const encryptedDataOwner = sjcl.encrypt(this.cryptoKey, backupDataOwner);
+
       // creates the right link for downloading the data
-      const dataOwner = 'text/json;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(backupObjectOwner, null, 2));
+      const dataOwner = encodeURIComponent(encryptedDataOwner);
       const a1 = this.$refs.backupOwner;
-      a1.href = 'data:' + dataOwner;
+      a1.href = 'data:text/json;charset=utf-8,' + dataOwner;
       a1.download = 'Inhertiance Owner Backup.txt';
 
       // assemble owner data to back up (no owner key)
       const backupObjectHeir = { ...backupObjectOwner, ownerPrivateKeyWIF: '' };
 
+      // encrypt data
+      const backupDataHeir = JSON.stringify(backupObjectHeir, null, 2);
+      const encryptedDataHeir = sjcl.encrypt(this.cryptoKey, backupDataHeir);
+
       // creates the right link for downloading the data
-      const dataHeir = 'text/json;charset=utf-8,' +
-        encodeURIComponent(JSON.stringify(backupObjectHeir, null, 2));
+      const dataHeir = encodeURIComponent(encryptedDataHeir);
       const a2 = this.$refs.backupHeir;
-      a2.href = 'data:' + dataHeir;
+      a2.href = 'data:text/json;charset=utf-8,' + dataHeir;
       a2.download = 'Inhertiance Heir Backup.txt';
     },
     // qr refresh
@@ -225,6 +260,12 @@ export default {
           important: true
         });
       }
+    },
+    updateEncryption (event) {
+      // encryption key changed
+      let fixedKey = sanitize(event.target.value, 'oneline');
+      event.target.value = fixedKey;
+      this.cryptoKey = fixedKey;
     }
   }
 };
@@ -232,7 +273,6 @@ export default {
 
 <style scoped>
   .q {
-    /* text-align: left; */
     margin: 0vmin 2vmin;
   }
   .q__lbl1 {
@@ -242,17 +282,6 @@ export default {
     margin-right: 3vmin;
     margin-left: 5%;
     font-weight: bold;
-    text-align: left;
-    margin-bottom: 3vmin;
-  }
-  .q__lbl2 {
-    display: block;
-    font-size: 3vmin;
-    font-weight: normal;
-    color: white;
-    margin-top: 7vmin;
-    margin-right: 3vmin;
-    margin-left: 12%;
     text-align: left;
     margin-bottom: 3vmin;
   }
@@ -268,8 +297,6 @@ export default {
     margin-top: 2vmin;
   }
   .q__backup {
-    /* margin-top: 6vmin; */
-    /* margin-bottom: 6vmin; */
     text-align: left;
     display: inline-block;
     vertical-align: middle;
@@ -399,5 +426,65 @@ export default {
   }
   .faucet:hover {
     background-color: rgba(0, 0, 0, 0.2);
+  }
+  .detailsEncryption {
+    color: white;
+    text-align: center;
+  }
+  .q__lbl2 {
+    display: block;
+    font-size: 2.5vmin;
+    font-weight: normal;
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 3vmin;
+    border-radius: 1vmin;
+  }
+  .txtKey {
+    font-family: 'Montserrat';
+    display: inline-block;
+    resize: none;
+    font-size: 2.3vmin;
+    padding: 0.2vmin 1vmin;
+    height: 3.6vmin;
+    text-align: center;
+    background-color: white;
+    color: rgb(230, 149, 0);
+    border: 0.1vmin solid white;
+    border-right: 0.3vmin solid white;
+    border-left: 0.3vmin solid white;
+    border-top: 0.5vmin solid white;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+    cursor: default;
+    vertical-align: middle;
+    width: 70%;
+    margin-top: 1vmin;
+    margin-bottom: 1vmin;
+  }
+  .detailsPlaintext {
+    color: white;
+    text-align: center;
+  }
+  .detailsPlaintext pre {
+    color: white;
+    font-size: 2vmin;
+    font-family: 'Montserrat';
+
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 1vmin;
+    padding: 1vmin;
+    text-align: left;
+
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;
+    word-break: break-all;
+
+    user-select: text;
   }
 </style>

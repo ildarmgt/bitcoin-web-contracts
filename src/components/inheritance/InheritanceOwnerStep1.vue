@@ -52,10 +52,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'; // state
-
+import Vue from 'vue';
 import ArrowButton from './../general/ArrowButton';
 import RoundButton from './../general/RoundButton';
 import InheritanceOwnerStep1Form from './InheritanceOwnerStep1Form';
+import InputPrompt from './../general/InputPrompt';
+
+import sjcl from './../../library/sjcl'; // Stanford Javascript Crypto Library
 
 export default {
   name: 'InheritanceOwnerStep1',
@@ -108,9 +111,44 @@ export default {
         reader.onload = () => resolve(reader.result);
         reader.readAsText(file);
       });
-      this.fileName = file.name;
-      this.showUpload = false;
-      this.changeFile({ data: result, name: this.fileName });
+      let decryptedResult;
+      // try blank encryption, otherwise ask for info
+      try {
+        decryptedResult = sjcl.decrypt('', result);
+        this.fileName = file.name;
+        this.showUpload = false;
+        this.changeFile({ data: decryptedResult, name: this.fileName });
+        console.log('Blank encryption key (default) worked');
+      } catch (e) {
+        console.log('Blank encryption key (default) did not work');
+        // prompt user for pin
+        // https://stackoverflow.com/questions/50306236/render-a-vue-app-using-a-promise-and-await-user-input
+        const askForPin = () => {
+          return new Promise(resolve => {
+            const InputUIVue = Vue.extend(InputPrompt);
+            const inputUI = new InputUIVue();
+            inputUI.$once('submit', value => {
+              inputUI.$destroy();
+              inputUI.$el.remove();
+              resolve(value);
+            });
+            inputUI.$mount();
+            document.body.appendChild(inputUI.$el);
+          });
+        };
+        const resultOfTheAwait = await askForPin();
+        try {
+          decryptedResult = sjcl.decrypt(resultOfTheAwait, result);
+          this.fileName = file.name;
+          this.showUpload = false;
+          this.changeFile({ data: decryptedResult, name: this.fileName });
+          console.log('User provided a working pin to decrypt backup');
+        } catch (e) {
+          console.log('Error decrypting file');
+          this.fileName = 'Error reading file. Wrong pin?';
+          this.showUpload = false;
+        }
+      }
     },
     manuallyClicked () {
       this.showUpload = false;

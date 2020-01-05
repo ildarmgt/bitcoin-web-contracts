@@ -194,7 +194,6 @@ export default {
     cursor: default;
     vertical-align: middle;
   }
-
   .txidbox {
     width: 70%;
     margin-left: 5%;
