@@ -79,8 +79,8 @@ export default {
     vertical-align: middle;
   }
   .footer__address {
-    margin-top: 1vmin;
-    margin-bottom: 0.5vmin;
+    margin-top: 1.2vmin;
+    margin-bottom: 0.3vmin;
     display: block;
   }
   a:hover {
