@@ -56,8 +56,10 @@ const script = bitcoin.script.compile([
 
     // abort if still locked, returns locktime
     encode(relLockTime), op.OP_CHECKSEQUENCEVERIFY,
+
     // clear locktime from stack
     op.OP_DROP,
+
     // check submitted signature vs this public key
     // if a match, puts TRUE on top of stack, otherwise FALSE
     heirKeys.publicKey, op.OP_CHECKSIG,
