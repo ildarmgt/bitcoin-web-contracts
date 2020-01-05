@@ -66,6 +66,8 @@ export default {
   .footer__dl {
     display: inline-block;
     margin: 2vmin;
+    margin-left: 1vmin;
+    margin-right: 1vmin;
     margin-bottom: 0;
     margin-top: 0;
   }

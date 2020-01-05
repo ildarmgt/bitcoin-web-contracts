@@ -44,9 +44,8 @@
         </div>
       </div>
       <div class="q__note1 noselect">
-        Save your backup to be able to spend!<br>
-        Give Heir their backup. It doesn't have your key.<br>
         Keep backup private! Lose it, lose access!<br>
+        Give Heir their backup. It doesn't have your key.<br>
       </div>
       <br>
       <Details

@@ -1,8 +1,9 @@
 <template>
-  <a
-    href="https://bitcoin.org/"
+  <div
     class="logo noselect"
-  >₿</a>
+  >
+    ₿
+  </div>
 </template>
 
 <script>
