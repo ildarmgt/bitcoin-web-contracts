@@ -26,12 +26,6 @@
         &nbsp;&nbsp;&nbsp;Value of up to 388 days.
       </div>
       <!-- buttons to go to next pages -->
-      <!-- <div
-        class="arrowButton"
-        @click="onNextButtonClick"
-      >
-        Next
-      </div> -->
       <ArrowButton
         textContent="Complete with random keys"
         textColor="orange"

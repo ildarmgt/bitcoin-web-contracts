@@ -53,13 +53,13 @@
       </div>
       <br>
       <!-- address hidden at first -->
-      <div
-        class="q__btnShow noselect"
+      <ArrowButton
+        class="btnShow"
+        textContent="My backup is ready. Show the contract!"
+        textColor="orange"
         v-if="!showRest"
         @click="showClicked"
-      >
-        My backup is ready. Show the contract!
-      </div>
+      />
       <div
         class="q__contract noselect"
         v-if="showRest"
@@ -114,9 +114,13 @@ import { mapGetters } from 'vuex'; // state
 import qrimage from 'qr-image'; // creates qr png
 import { inhertianceContract } from './../../bitcoin';
 import copyToClipboard from './../../helpers/copyToClipboard';
+import ArrowButton from './../general/ArrowButton';
 
 export default {
   name: 'InheritanceCreateStep4',
+  components: {
+    ArrowButton
+  },
   data: () => ({
     address: '',
     showRest: false,
@@ -336,35 +340,8 @@ export default {
     display: inline-block;
     margin: 0 auto;
   }
-  .q__btnShow {
-    display: inline-block;
-    position: relative;
-    padding: 1vmin 2vmin;
-    padding-left: 5vmin;
-    margin-bottom: 1vmin;
+  .btnShow {
     margin-top: 1vmin;
-    color: white;
-    background-color: orange;
-    border: 0.2vmin solid white;
-    border-radius: 3vmin;
-    cursor: pointer;
-  }
-  .q__btnShow:before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: 1.5vmin;
-    top: 1.7vmin;
-    border-top: 2vmin solid white;
-    border-left: 1.2vmin solid transparent;
-    border-right: 1.2vmin solid transparent;
-  }
-  .q__btnShow:hover {
-    background-color: rgb(230, 149, 0)
-  }
-  .q__btnShow:active {
-    transform: translateY(0.1vmin);
   }
   .btnCopy {
     display: block;

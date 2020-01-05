@@ -5,7 +5,16 @@
     @mouseenter="menuClicked"
     @mouseleave="leftMenu"
   >
-    ...
+    <div class="btnMenu">
+      <!-- svg from https://iconmonstr.com -->
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+      >
+        <path d="M19 18c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zm-14-3c-1.654 0-3 1.346-3 3s1.346 3 3 3h14c1.654 0 3-1.346 3-3s-1.346-3-3-3h-14zm19 3c0 2.761-2.239 5-5 5h-14c-2.761 0-5-2.239-5-5s2.239-5 5-5h14c2.761 0 5 2.239 5 5zm0-12c0 2.761-2.239 5-5 5h-14c-2.761 0-5-2.239-5-5s2.239-5 5-5h14c2.761 0 5 2.239 5 5zm-15 0c0-1.104-.896-2-2-2s-2 .896-2 2 .896 2 2 2 2-.896 2-2z" />
+      </svg>
+    </div>
     <div
       v-if="showMenu"
       class="m__wrap"
@@ -106,9 +115,9 @@ export default {
   /* visually just a button */
   .m {
     height: 7vmin;
-    width: 7vmin;
-    line-height: 1vmin;
-    font-size: 6vmin;
+    width: 9vmin;
+    line-height: 2.5vmin;
+    font-size: 2.5vmin;
     color: white;
     position: absolute;
     right: 1vmin;
@@ -122,7 +131,7 @@ export default {
     line-height: 7vmin;
     position: absolute;
     right: 0;
-    top: 0;
+    top: -1vmin;
   }
   /* offset menu with options */
   .m__wrap__list {
@@ -150,5 +159,11 @@ export default {
   .selected {
     background-color: rgba(255, 255, 255, 0.226);
     border-radius: 1vmin;
+  }
+  .btnMenu svg {
+    fill: white;
+    fill: rgba(255, 255, 255, 0.5);
+    height: 4vmin;
+    width: 4vmin;
   }
 </style>
