@@ -467,11 +467,13 @@ export default {
   .detailsPlaintext {
     color: white;
     text-align: center;
+    margin-top: 1vmin;
   }
   .detailsPlaintext pre {
     color: white;
     font-size: 2vmin;
     font-family: 'Montserrat';
+    margin-top: 0;
 
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 1vmin;
