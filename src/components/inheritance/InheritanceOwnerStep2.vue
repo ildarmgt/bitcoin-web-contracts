@@ -67,7 +67,7 @@
       <!-- next button -->
       <ArrowButton
         textContent="Next"
-        textColor="rgb(102, 102, 255)"
+        textColor="var(--color-owner-solid, rgb(102, 102, 255))"
         @click="onNextButtonClick"
       />
     </div>
@@ -197,70 +197,67 @@ export default {
 <style scoped>
   .q {
     text-align: center;
-    margin: 0vmin 2vmin;
+    margin: 0 var(--s2);
   }
   .q__strong {
     display: block;
-    font-size: 3vmin;
-    color: white;
-    margin-right: 3vmin;
+    font-size: var(--s3);
+    color: var(--background, white);
+    margin-right: var(--s3);
     margin-left: 5%;
     font-weight: bold;
     text-align: left;
   }
   .q__lbl1 {
-    margin-top: 6vmin;
-    margin-bottom: 6vmin;
+    margin-top: calc(6.0 * var(--s));
+    margin-bottom: calc(6.0 * var(--s));
     text-align: center;
-    color: white;
-    font-size: 3vmin;
-    line-height: 5vmin;
+    color: var(--background, white);
+    font-size: var(--s3);
+    line-height: var(--s5);
   }
   .q__lbl2 {
-    /* margin-top: 6vmin; */
-    margin-bottom: 3vmin;
+    margin-bottom: var(--s3);
     text-align: center;
-    color: white;
-    font-size: 2.5vmin;
-    /* line-height: 5vmin; */
+    color: var(--background, white);
+    font-size: var(--s2-5);
     margin-left: 10%;
     text-align: left;
   }
   .utxoItem {
     margin-left: 10%;
     text-align: left;
-    color: white;
-    font-size: 2.5vmin;
-    line-height: 2.5vmin;
+    color: var(--background, white);
+    font-size: var(--s2-5);
+    line-height: var(--s2-5);
     cursor: pointer;
   }
   .q__plus {
-    padding: 0 0.5vmin;
+    padding: 0 var(--s0-5);
   }
   .utxoList {
-    margin-bottom: 3vmin;
+    margin-bottom: var(--s3);
   }
   .form {
     width: 85%;
     display: inline-block;
   }
   .locked {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 1.5vmin;
-    padding: 0.2vmin;
-    padding-left: 1vmin;
-    padding-right: 1vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s1-5);
+    padding: var(--s0-2);
+    padding-left: var(--s1);
+    padding-right: var(--s1);
     vertical-align: baseline;
   }
   .unlocked {
-    background-color: rgb(122, 0, 0);
-    background-color: rgba(122, 0, 0, 0.5);
+    background-color: var(--color-error-light, rgba(141, 70, 70, 0.5));
   }
   .q__lbl2___sidenote {
-    margin-left: 5vmin;
-    margin-top: 3vmin;
+    margin-left: var(--s5);
+    margin-top: var(--s3);
   }
   .utxoItem:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
   }
 </style>

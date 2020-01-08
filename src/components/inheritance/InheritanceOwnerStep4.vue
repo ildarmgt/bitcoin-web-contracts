@@ -5,17 +5,36 @@
         <div class="q__strong_text">
           Transaction is ready
         </div>
-        You are sending 0.02145658 BTC to Y, reseting 1.02145658 BTC, and paying fee of 0.00005658 BTC
+        <div class="q__strong_info">
+          You are<br><br>
+          <div v-show="parseFloat(this.getContractValues.toAmount) > 0">
+            sending
+            {{ this.getContractValues.toAmount }}
+            {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+            to<br>
+            {{ this.getContractValues.toAddress }}
+            <br><br>
+          </div>
+          <div v-show="parseFloat(this.getContractValues.changeAmount) > 0">
+            reseting
+            {{ this.getContractValues.changeAmount }}
+            {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+            <br><br>
+          </div>
+          and paying a fee of
+          {{ this.getContractValues.feeAmount }}
+          {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+        </div>
         <RoundButton
           class="btnSend"
           textContent="Send via blockstream.info"
-          textColor="white"
+          textColor="var(--background, white)"
           @click="btnBroadcast"
         />
         <RoundButton
           class="btnCopy"
           textContent="Copy it to clipboard"
-          textColor="white"
+          textColor="var(--background, white)"
           @click="btnCopy"
         />
         <div
@@ -125,76 +144,82 @@ export default {
 <style scoped>
   .q {
     text-align: left;
-    margin: 0vmin 2vmin;
+    margin: 0 var(--s2);
   }
   .q__strong {
     display: block;
     text-align: center;
-    font-size: 3vmin;
-    color: white;
-    margin-right: 3vmin;
+    font-size: var(--s3);
+    color: var(--background, white);
+    margin-right: var(--s3);
     margin-left: 5%;
     font-weight: bold;
   }
   .q__strong_text {
     text-align: left;
-    margin-bottom: 2vmin;
+    margin-bottom: var(--s2);
+  }
+  .q__strong_info {
+    font-size: var(--s2-5);
+    font-weight: normal;
+    text-align: left;
+    margin: var(--s3);
   }
   .txHex {
-    font-size: 2vmin;
+    font-size: var(--s2);
     font-weight: normal;
     width: 80%;
     word-wrap: break-word;
     display: inline-block;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 2vmin;
-    padding: 2vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s2);
+    padding: var(--s2);
     text-align: left;
     user-select: text;
   }
   .txHex div {
-    margin-bottom: 1vmin;
+    margin-bottom: var(--s1);
   }
   .btnSend {
     display: inline-block;
   }
   .hex {
-    color: greenyellow;
+    color: var(--color-info, rgb(173, 255, 47));
   }
   .apiResponse {
-    color: rgb(255, 217, 93);
+    color: var(--bitcoin-orange, orange);
     font-weight: bold;
-    font-size: 2.5vmin;
-    background-color:rgba(0, 0, 0, 0.1);
-    padding: 1vmin;
+    font-size: var(--s2-5);
+    background-color:var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s1);
     text-align: center;
     width: 80%;
     word-wrap: break-word;
     display: inline-block;
     user-select: text;
-    margin-top: 2vmin;
+    margin-top: var(--s2);
   }
   .details {
-    margin-top: 2vmin;
-    font-size: 2vmin;
+    margin-top: var(--s2);
+    font-size: var(--s2);
     font-weight: normal;
   }
   .txid {
-    color: rgb(121, 255, 150);
+    color: var(--color-info, rgb(173, 255, 47));
     text-decoration: none;
-    font-size: 2vmin;
+    font-size: var(--s2);
     word-wrap: break-word;
     word-break: break-all;
   }
   .txid:hover {
-    color: yellow;
+    opacity: 0.9;
   }
   .pushInfo {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 2vmin;
-    padding: 2vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s2);
+    padding: var(--s2);
     text-align: left;
     user-select: text;
-    line-height: 3vmin;
+    line-height: var(--s3);
   }
 </style>

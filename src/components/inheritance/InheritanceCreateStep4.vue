@@ -51,7 +51,7 @@
       <!-- address hidden at first -->
       <ArrowButton
         class="btnShow"
-        textContent="My backup done. Show contract!"
+        textContent="Backup done. Show contract!"
         textColor="var(--bitcoin-orange, orange)"
         v-if="!showRest"
         @click="showClicked"
@@ -336,6 +336,8 @@ export default {
     color: var(--background, white);
     margin-top: var(--s1);
     line-height: var(--s3);
+    text-align: left;
+    margin-left: 10%;
   }
   .q__contract {
     text-align: center;

@@ -228,6 +228,7 @@ export default {
     async onFeeClick () {
       const feeEstimates = await fees();
       this.feeRate = feeEstimates['2']; // 2 block estimate for now
+      // (TODO) give option menu
       this.changeContractValues({
         feeRate: this.feeRate,
         change: true
@@ -278,42 +279,29 @@ export default {
 
 <style scoped>
   .form {
-    color: white;
-    font-size: 3vmin;
+    color: var(--background, white);
+    font-size: var(--s3);
     text-align: left;
   }
   .label {
-    font-size: 2vmin;
+    font-size: var(--s2);
     text-align: left;
-    margin-bottom: 0.5vmin;
-    margin-top: 2vmin;
+    margin-bottom: var(--s0-5);
+    margin-top: var(--s2);
   }
   .lblReturn {
-    font-size: 2.5vmin;
+    font-size: var(--s2-5);
     text-align: center;
-    margin-bottom: 0.5vmin;
-    margin-top: 2vmin;
+    margin-bottom: var(--s0-5);
+    margin-top: var(--s2);
   }
   .textBox {
-    font-family: 'Montserrat';
     display: inline-block;
-    resize: none;
-    font-size: 2.3vmin;
-    padding: 0.2vmin 1vmin;
-    height: 3.6vmin;
+    font-size: calc(2.3 * var(--s));
+    padding: var(--s0-2) var(--s1);
+    height: calc(3.6 * var(--s));
     width: 95%;
-    text-align: center;
-    background-color: white;
-    color: rgb(102, 102, 255);
-    border: 0.1vmin solid white;
-    border-right: 0.3vmin solid white;
-    border-left: 0.3vmin solid white;
-    border-top: 0.5vmin solid white;
-    transition: background-color 0.15s;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    white-space: nowrap;
-    cursor: default;
+    color: var(--color-owner-solid, rgb(102, 102, 255));
     vertical-align: middle;
   }
   .txtAmount {
@@ -325,39 +313,39 @@ export default {
   .notice {
     margin: 0 auto;
     width: 90%;
-    padding: 1vmin;
-    border-radius: 1vmin;
-    margin-bottom: 1vmin;
-    margin-top: 0.5vmin;
+    padding: var(--s1);
+    border-radius: var(--s1);
+    margin-bottom: var(--s1);
+    margin-top: var(--s0-5);
   }
   .error {
-    background: rgb(194, 0, 0);
+    background: var(--color-error-strong, rgb(175, 27, 27));
   }
   .btnMax, .btnFee {
     vertical-align: middle;
     margin: 0;
   }
   .details {
-    margin-top: 2vmin;
+    margin-top: var(--s2);
     transform: scale(0.9);
   }
   .change {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.1vmin 0.5vmin;
-    margin-right: 0.5vmin;
-    border-radius: 1vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s0-1) var(--s0-5);
+    margin-right: var(--s0-5);
+    border-radius: var(--s1);
   }
   .btnTestnet {
     display: block;
-    width: 25vmin;
+    width: calc(25 * var(--s));
     margin: 0;
     opacity: 0.65;
     border: none;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--brighter1, rgba(255, 255, 255, 0.1));
     transform: scale(0.6);
     float: right;
     position: relative;
-    top: -0.5vmin;
+    top: calc(-0.5 * var(--s));
   }
   .btnTestnet:active {
     transform: scale(0.6);
@@ -366,22 +354,21 @@ export default {
     background-color: rgba(0, 0, 0, 0.2);
   }
   .lblInfoBlob {
-    font-size: 2vmin;
-    background-color: rgba(0,0,0,0.1);
-    border-radius: 2vmin;
-    padding: 2vmin;
-    margin-bottom: 1vmin;
+    font-size: var(--s2);
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s2);
+    padding: var(--s2);
+    margin-bottom: var(--s1);
     text-align: left;
   }
   table {
     border-collapse: collapse;
-    /* border: red 1px solid; */
     text-align: right;
     user-select: text;
   }
   td:nth-child(even) {
-    padding: 1vmin;
-    color: greenyellow;
+    padding: var(--s1);
+    color: var(--color-info, rgb(173, 255, 47));
     word-break: break-all;
     text-align: left;
     text-justify: distribute;
@@ -390,7 +377,7 @@ export default {
     white-space: nowrap;
   }
   .suggestion {
-    margin-top: 1vmin;
+    margin-top: var(--s1);
     width: 70%;
     display: inline-block;
   }

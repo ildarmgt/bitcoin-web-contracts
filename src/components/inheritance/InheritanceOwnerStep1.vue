@@ -55,7 +55,7 @@
       <!-- next button  -->
       <ArrowButton
         textContent="Next"
-        textColor="rgb(102, 102, 255)"
+        textColor="var(--color-owner-solid, rgb(102, 102, 255))"
         @click="onNextButtonClick"
         v-if="getPagesInfo[1].usable"
       />
@@ -181,42 +181,42 @@ export default {
 <style scoped>
   .q {
     text-align: center;
-    margin: 0vmin 2vmin;
-    color: white;
-    font-size: 2.5vmin;
+    margin: 0 var(--s2);
+    color: var(--background, white);
+    font-size: var(--s2-5);
   }
   .q__strong {
     display: block;
     text-align: left;
-    font-size: 3vmin;
-    color: white;
-    margin-right: 3vmin;
+    font-size: var(--s3);
+    color: var(--background, white);
+    margin-right: var(--s3);
     margin-left: 5%;
     font-weight: bold;
-    margin-bottom: 3vmin;
+    margin-bottom: var(--s3);
   }
   .q__light {
     display: block;
-    font-size: 2vmin;
-    color: white;
-    margin-top: 2vmin;
-    line-height: 3vmin;
+    font-size: var(--s2);
+    color: var(--background, white);
+    margin-top: var(--s2);
+    line-height: var(--s3);
     margin-left: 15%;
   }
   .dropper {
     display: inline-block;
     width: 50%;
-    height: 15vmin;
-    border: 0.5vmin dotted rgba(255, 255, 255, 0.534);
-    border-radius: 5vmin;
+    height: calc(15 * var(--s));
+    border: var(--s0-5) dotted var(--text-lighterondark, rgba(255, 225, 225, 0.6));
+    border-radius: var(--s5);
 
-    line-height: 15vmin;
+    line-height: calc(15 * var(--s));
     position: relative;
-    color: white;
-    margin: 1vmin;
+    color: var(--background, white);
+    margin: var(--s1);
   }
   .dropper:hover {
-    background-color: rgba(238, 238, 238, 0.13);
+    background-color: var(--brighter1, rgba(255, 255, 255, 0.1));
   }
   #file {
     width: 100%;
@@ -228,13 +228,13 @@ export default {
     cursor: pointer;
   }
   .fileInfo {
-    border: 0.5vmin dotted rgba(255, 255, 255, 0.534);
-    border-radius: 3vmin;
-    line-height: 3vmin;
+    border: var(--s0-5) dotted var(--text-lighterondark, rgba(255, 225, 225, 0.6));
+    border-radius: var(--s3);
+    line-height: var(--s3);
     display: block;
-    padding: 0.3vmin;
-    padding-right: 5vmin;
-    padding-left: 1.3vmin;
+    padding: var(--s0-3);
+    padding-right: var(--s5);
+    padding-left: calc(1.3 * var(--s));
     position: relative;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -245,18 +245,18 @@ export default {
     margin: auto;
   }
   .fileInfo:hover {
-    background-color: rgba(238, 238, 238, 0.13);
+    background-color: var(--brighter1, rgba(255, 255, 255, 0.1));
   }
   .fileInfo:after {
     line-height: 0;
-    font-size: 5vmin;
+    font-size: var(--s5);
     content: "×";
-    color: rgba(255, 255, 255, 0.534);
-    height: 0.1vmin;
-    width: 0.1vmin;
-    border-radius: 3vmin;
-    right: 3.5vmin;
-    top: 1.8vmin;
+    color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
+    height: var(--s0-1);
+    width: var(--s0-1);
+    border-radius: var(--s3);
+    right: calc(3.5 * var(--s));
+    top: calc(1.8 * var(--s));
     position: absolute;
   }
   .form {
@@ -272,7 +272,7 @@ export default {
     font-size: var(--s2);
     font-weight: normal;
     background-color: var(--darker1, rgba(0, 0, 0, 0.1));
-    border-radius: var(--s2);
+    border-radius: var(--s1);
     padding: var(--s2) var(--s3);
     margin: var(--s2);
     margin-top: 0;

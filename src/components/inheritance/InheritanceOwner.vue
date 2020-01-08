@@ -5,7 +5,7 @@
       :pageWanted="getPageSelected"
       :pageInfo="getPagesInfo"
       @newPageClicked="stepperPageChangeRequested"
-      :primaryColor="{'--primaryColor': 'rgb(102, 102, 255)'}"
+      :primaryColor="{'--primaryColor': 'var(--color-owner-solid, rgb(102, 102, 255))'}"
     >
       <StepperStep
         :pageTitle="getPagesInfo[0].pageTitle"

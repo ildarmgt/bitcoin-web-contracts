@@ -273,7 +273,7 @@ export default {
     font-size: var(--s2);
     font-weight: normal;
     background-color: var(--darker1, rgba(0, 0, 0, 0.1));
-    border-radius: var(--s2);
+    border-radius: var(--s1);
     padding: var(--s2) var(--s3);
     margin: var(--s2);
     margin-top: 0;

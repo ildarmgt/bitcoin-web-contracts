@@ -219,47 +219,35 @@ export default {
 
 <style scoped>
   .info {
-    margin-top: 6vmin;
-    margin-bottom: 3vmin;
+    margin-top: calc(6 * var(--s));
+    margin-bottom: var(--s3);
   }
   .textBox {
-    font-family: 'Montserrat';
     display: inline-block;
-    resize: none;
-    font-size: 2.3vmin;
-    padding: 0.2vmin 1vmin;
-    height: 3.6vmin;
+    font-size: calc(2.3 * var(--s));
+    padding: var(--s0-2) var(--s1);
+    height: calc(3.6 * var(--s));
     width: 95%;
-    text-align: center;
-    background-color: white;
-    color: rgb(102, 102, 255);
-    border: 0.1vmin solid white;
-    border-right: 0.3vmin solid white;
-    border-left: 0.3vmin solid white;
-    border-top: 0.5vmin solid white;
-    transition: background-color 0.15s;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    white-space: nowrap;
+    color: var(--color-owner-solid, rgb(102, 102, 255));
     cursor: default;
   }
   .label {
-    font-size: 2vmin;
+    font-size: var(--s2);
     text-align: left;
-    margin-bottom: 0.5vmin;
-    margin-top: 2vmin;
+    margin-bottom: var(--s0-5);
+    margin-top: var(--s2);
   }
   .notice {
     margin: 0 auto;
     text-align: left;
     width: 90%;
-    padding: 1vmin;
-    padding-left: 2vmin;
-    border-radius: 1vmin;
-    margin-bottom: 1vmin;
-    margin-top: 0.5vmin;
+    padding: var(--s1);
+    padding-left: var(--s2);
+    border-radius: var(--s1);
+    margin-bottom: var(--s1);
+    margin-top: var(--s0-5);
   }
   .error {
-    background: rgba(194, 0, 0, 0.5);
+    background: var(--color-error-light, rgba(141, 70, 70, 0.314));
   }
 </style>
