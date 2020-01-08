@@ -120,72 +120,64 @@ export default {
 
 <style scoped>
   .nav {
-    /* background-color: orange; */
     background-color: var(--primaryColor, grey);
   }
   .nav__name {
     display: block;
     background-color: var(--primaryColor, grey);
-    color: rgba(255, 225, 225, 0.6);
-    padding-top: 1vmin;
-    padding-bottom: 2vmin;
-    margin-top: 3vmin;
-    font-size: 3vmin;
+    color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
+    padding-top: var(--s1);
+    padding-bottom: var(--s2);
+    margin-top: var(--s3);
+    font-size: var(--s3);
     text-align: center;
   }
   .nav__view {
-    padding: 2vmin 2vmin;
-    margin-bottom: 4vmin;
-    margin-top: 4vmin
+    padding: var(--s2) var(--s2);
+    margin-bottom: var(--s4);
+    margin-top: var(--s4)
   }
   .nav__steps {
-    margin-left: 1vmin;
-    margin-right: 1vmin;
+    margin-left: var(--s1);
+    margin-right: var(--s1);
     white-space: normal;
     display: flex;
     justify-content: space-between;
   }
   .nav__steps__step {
     display: inline-block;
-    margin: 0 2vmin;
-    margin-bottom: 1vmin;
-    padding-top: 1vmin;
+    margin: 0 var(--s2);
+    margin-bottom: var(--s1);
+    padding-top: var(--s1);
     cursor: pointer;
   }
-  /* .nav__steps__step:hover { */
-    /* transform: translateY(-0.2vmin); */
-  /* } */
-  /* .nav__steps__step:active { */
-    /* transform: translateY(0.2vmin); */
-  /* } */
   .nav__steps__step__number {
     display: inline-block;
-    height: 3vmin;
-    width: 3vmin;
-    padding: 0.5vmin;
-    line-height: 3vmin;
-    background-color: rgba(255, 225, 225, 0.6);
+    height: var(--s3);
+    width: var(--s3);
+    padding: var(--s0-5);
+    line-height: var(--s3);
+    background-color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
     color: var(--primaryColor, grey);
-    border-radius: 3vmin;
-    font-size: 2.5vmin;
+    border-radius: var(--s3);
+    font-size: var(--s2-5);
     cursor: pointer;
-    margin-bottom: 1vmin;
+    margin-bottom: var(--s1);
   }
   .nav__steps__step__title {
     display: inline-block;
-    margin: 0 2vmin;
-    color: rgba(255, 225, 225, 0.7);
-    font-size: 2.5vmin;
+    margin: 0 var(--s2);
+    color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
+    font-size: var(--s2-5);
     cursor: pointer;
   }
   .stepNumberSelected {
-    /* border: 0.15vmin solid white; */
-    box-shadow: 0 0 0 0.15vmin white;
-    color: white;
+    box-shadow: 0 0 0 calc(0.15 * var(--s)) var(--background, white);
+    color: var(--background, white);
     background-color: var(--primaryColor, grey);
   }
   .stepTitleSelected {
-    color: white;
+    color: var(--background, white);
   }
   .noselect {
     -webkit-user-select: none;
@@ -194,16 +186,11 @@ export default {
     user-select: none;
   }
   .stepNumberInvalid {
-    /* color: white; */
-    background-color: rgba(141, 70, 70, 0.314);
-    /* border: rgba(133, 0, 0, 0.514) solid 0.15vmin; */
-    /* color: rgb(255, 0, 0); */
-    /* box-shadow: 0 0 0 0.15vmin rgba(255, 225, 225, 0.7); */
-    /* background-color: orange; */
+    background-color: var(--color-error-light, rgba(141, 70, 70, 0.314));
   }
   .stepNumberLocked {
     background-color: var(--primaryColor, grey);
-    color: rgba(255, 225, 225, 0.7);
+    color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
   }
   .stepLocked {
     cursor: default;

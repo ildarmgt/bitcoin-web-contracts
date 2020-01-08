@@ -31,7 +31,7 @@ export default {
 <style scoped>
   .flashMessage {
     position: fixed;
-    top: 2vmin;
+    bottom: 2vmin;
     left: 25%;
     width: 50%;
     z-index: 100;

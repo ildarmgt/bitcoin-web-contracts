@@ -4,7 +4,51 @@
 }
 
 html {
+  font-size: 2.5vmin;
+  font-family: 'Montserrat';
   overflow-y: scroll;
+
+  /* sizes */
+
+  /* this provides a global css variable that scales
+  * with viewport height and width average and reduces
+  * effect at very small vmin or very large vmax.
+  * 0.5 for both is equivalent to 0.5vh + 0.5vw expression.
+  * If unreadable text at very small vmin still a problem
+  * can adjust ratio to 0.4vmin + 0.6vmax.
+  * 0.9 factor there to correct to w/h ratio typically used.
+  */
+  --s: calc(0.9 * (0.5vmin + 0.5vmax));
+  /* some standard sizes for shorthand (could be done in sass mixin) */
+  /* ideally only standard sizes below are used */
+  --s5: calc(5.0 * var(--s)); /* largest scale */
+  --s4: calc(4.0 * var(--s));
+  --s3-5: calc(3.5 * var(--s));
+  --s3: calc(3.0 * var(--s)); /* font */
+  --s2-5: calc(2.5 * var(--s)); /* font */
+  --s2: calc(2.0 * var(--s)); /* font */
+  --s1-5: calc(1.5 * var(--s));
+  --s1: calc(1.0 * var(--s)); /* typical spacing */
+  --s0-7: calc(0.7 * var(--s));
+  --s0-5: calc(0.5 * var(--s));
+  --s0-3: calc(0.3 * var(--s));
+  --s0-2: calc(0.2 * var(--s)); /* button offset */
+  --s0-1: calc(0.1 * var(--s)); /* smallest scale */
+
+  /* colors */
+  --bitcoin-orange: orange; /* var(--bitcoin-orange, orange) */
+  --bitcoin-blue: rgb(17, 17, 51); /* var(--bitcoin-blue, rgb(17, 17, 51)) */
+  --background: white; /* var(--background, white) */
+  --color-disabled: gray; /* var(--color-disabled, gray) */
+  --darker2: rgba(0, 0, 0, 0.2); /* var(--darker2, rgba(0, 0, 0, 0.2)) */
+  --darker2: rgba(0, 0, 0, 0.1); /* var(--darker1, rgba(0, 0, 0, 0.1)) */
+  --brighter2: rgba(255, 255, 255, 0.2); /* var(--brighter2, rgba(255, 255, 255, 0.2)) */
+  --brighter1: rgba(255, 255, 255, 0.1); /* var(--brighter1, rgba(255, 255, 255, 0.1)) */
+  --transparent: rgba(255, 255, 255, 0); /* var(--transparent, rgba(255, 255, 255, 0)) */
+  --text-lighterondark: rgba(255, 225, 225, 0.6); /* var(--text-lighterondark, rgba(255, 225, 225, 0.6)) */
+  --text-darkeronlight: rgb(149, 149, 167); /* var(--text-darkeronlight, rgb(149, 149, 167)) */
+  --color-selection: rgba(0, 0, 233, 0.2); /* var(--color-selection, rgba(0, 0, 233, 0.2)) */
+  --color-error-light: rgba(141, 70, 70, 0.314); /* var(--color-error-light, rgba(141, 70, 70, 0.314)) */
 }
 
 body {
@@ -12,24 +56,24 @@ body {
   padding: 0;
   font-family: 'Montserrat';
   text-align: center;
-  font-size: 2.5vmin;
+  font-size: var(--s2-5);
 }
 
 .title {
-  font-size: 5vmin;
+  font-size: var(--s5);
 }
 
 h2 {
   display: block;
 
-  padding: 1vmin 2vmin;
+  padding: var(--s1) var(--s2);
 
-  font-size: 3vmin;
+  font-size: var(--s3);
 
-  background-color: orange;
-  color: white;
+  background-color: var(--bitcoin-orange, orange);
+  color: var(--background, white);
 
-  margin-bottom: 3vmin;
+  margin-bottom: var(--s3);
   text-decoration: none;
   font-weight: normal;
 }
@@ -37,22 +81,22 @@ h2 {
 h1 {
   display: block;
 
-  padding: 1vmin 2vmin;
+  padding: var(--s1) var(--s1);
 
-  font-size: 3vmin;
+  font-size: var(--s3);
   font-weight: 700;
 
   background-color: none;
-  color: rgb(17, 17, 51);
+  color: var(--bitcoin-blue, rgb(17, 17, 51));
 
-  margin-bottom: 3vmin;
+  margin-bottom: var(--s3);
   text-decoration: none;
 }
 
 .text_light {
   text-decoration: none;
-  color:rgb(149, 149, 167);
-  font-size: 2vmin;
+  color:var(--text-darkeronlight, rgb(149, 149, 167));
+  font-size: var(--s2);
 }
 
 div {
@@ -62,12 +106,14 @@ div {
 .button {
   display: inline-block;
 
-  padding: 1vmin 2vmin;
-  margin: 1vmin 1vmin;
-  font-size: 2.5vmin;
-  border-radius: 3vmin;
+  padding: var(--s1) var(--s2);
+  margin: var(--s1) var(--s1);
+
+
+  font-size: var(--s2-5);
+  border-radius: var(--s0-7);
   background-color: rgba(17, 17, 51, 0.65);
-  color: white;
+  color: var(--background, white);
 
   text-decoration: none;
   -webkit-user-select: none;
@@ -79,12 +125,12 @@ div {
 }
 
 .button:hover {
-  background-color: rgba(17, 17, 51, 0.9);
+  background-color: var(--bitcoin-blue, rgb(17, 17, 51));
   cursor: pointer;
 }
 
 .button:active {
-  transform: translateY(0.2vmin);
+  transform: translateY(var(--s0-2));
 }
 
 ul {
@@ -95,18 +141,18 @@ ul {
 }
 
 li {
-  margin-bottom: 2vmin;
-  line-height: 3.5vmin;
-  text-indent: -2.5vmin;
-  padding-left: 5vmin;
+  margin-bottom: var(--s2);
+  line-height: var(--s3-5);
+  text-indent: var(--s2-5);
+  padding-left: var(--s5);
 }
 
 ul li::before {
-  color: orange;
+  color: var(--bitcoin-orange, orange);
   content: "\25CF";
   position: relative;
-  font-size: 2vmin;
-  left: -1vmin;
+  font-size: var(--s2);
+  left: calc(-1 * var(--s));
 }
 
 .noselect {
@@ -117,39 +163,39 @@ ul li::before {
 }
 
 ::selection {
-  background-color: rgba(0, 0, 233, 0.2); /* WebKit/Blink Browsers */
+  background-color: var(--color-selection, rgba(0, 0, 233, 0.2)); /* WebKit/Blink Browsers */
 }
 ::-moz-selection {
-  background-color: rgba(0, 0, 233, 0.2); /* WebKit/Blink Browsers */
+  background-color: var(--color-selection, rgba(0, 0, 233, 0.2)); /* WebKit/Blink Browsers */
 }
 
 input {
-  border-radius: 0.5vmin;
+  border-radius: var(--s0-5);
 }
 
 textarea {
-  border-radius: 0.5vmin;
+  border-radius: var(--s0-5);
   /* firefox */
-  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0);
+  scrollbar-color: var(--darker2, rgba(0, 0, 0, 0.2)) var(--transparent, rgba(255, 255, 255, 0));
   scrollbar-width: thin;
 }
 
 textarea::-webkit-scrollbar {
   /* chrome scroll bar */
-  background: rgba(255, 255, 255, 0);
-  height: 1vmin;
+  background: var(--transparent, rgba(255, 255, 255, 0));
+  height: var(--s1);
 }
 
 textarea::-webkit-scrollbar-track {
   /* chrome scroll bar background */
-  background: rgba(255, 255, 255, 0);
+  background: var(--transparent, rgba(255, 255, 255, 0));
 }
 
 textarea::-webkit-scrollbar-thumb {
   /* scroll bar itself */
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 1vmin;
-  box-shadow: inset 0 0 0 0.1vmin white;
+  background-color: var(--darker2, rgba(0, 0, 0, 0.2));
+  border-radius: var(--s1);
+  box-shadow: inset 0 0 0 var(--s0-1) var(--background, white);
 }
 textarea:focus {
   outline: none;

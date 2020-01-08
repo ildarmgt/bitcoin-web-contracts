@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
   .view {
-    margin-top: 3vmin;
-    margin-bottom: 3vmin;
+    margin-top:  var(--s3);
+    margin-bottom:  var(--s3);
   }
 </style>

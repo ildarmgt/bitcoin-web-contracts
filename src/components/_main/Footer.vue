@@ -53,36 +53,36 @@ export default {
 <style scoped>
   .footer {
     margin: 0 0 0 0;
-    margin-bottom: 5vmin;
+    margin-bottom: var(--s5);
     vertical-align: middle;
   }
   .footer__warning {
     display: block;
-    margin: 0 1vmin;
-    margin-bottom: 0.2vmin;
+    margin: 0 var(--s1);
+    margin-bottom: var(--s0-2);
   }
   .footer__source,
   .footer__email,
   .footer__dl {
     display: inline-block;
-    margin: 2vmin;
-    margin-left: 1vmin;
-    margin-right: 1vmin;
+    margin: var(--s2);
+    margin-left: var(--s1);
+    margin-right: var(--s1);
     margin-bottom: 0;
     margin-top: 0;
   }
   .footer__logo {
-    margin-top: 1vmin;
+    margin-top: var(--s1);
   }
   .icon {
-    height: 1.5vmin;
-    width: 1.5vmin;
+    height: var(--s1-5);
+    width: var(--s1-5);
     fill: rgb(149, 149, 167);
     vertical-align: middle;
   }
   .footer__address {
-    margin-top: 1.2vmin;
-    margin-bottom: 0.3vmin;
+    margin-top: calc(1.2 * var(--s));
+    margin-bottom: calc(0.3 * var(--s));
     display: block;
   }
   a:hover {

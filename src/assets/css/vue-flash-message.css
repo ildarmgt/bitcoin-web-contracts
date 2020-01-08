@@ -2,18 +2,19 @@
   box-sizing: border-box;
   padding: 15px 30px 15px 15px;
   margin-bottom: 10px;
-  border: 1px solid transparent;
-  border-radius: 12px;
+  border: 5px solid transparent;
+  border-radius: var(--s1);
   background-color: #ccc;
   position: relative
 }
 
 .flash__message.success {
-  font-size: 3vmin;
-  color: white;
-  background-color: #48a025;
-  border: white;
-  opacity: 0.9;
+  font-size: var(--s3);
+  color: var(--background, white);
+  background-color: var(--bitcoin-blue, rgb(17, 17, 51));
+  /* border: var(--s0-3) solid var(--background, white); */
+  border-radius: var(--s1);
+  opacity: 0.95;
 }
 
 .flash__message.warning {

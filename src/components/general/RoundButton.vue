@@ -31,29 +31,29 @@ export default {
     font-weight: normal;
     display: inline-block;
     text-decoration: none;
-    font-size: 2.5vmin;
-    line-height: 2.5vmin;
-    color: white;
-    background-color: rgba(255, 255, 255, 0);
-    border: 0.2vmin solid white;
-    border-radius: 1.5vmin;
-    padding: 0.4vmin 2vmin;
-    padding-bottom: 0.6vmin;
-    padding-top: 0.6vmin;
+    font-size: var(--s2-5);
+    line-height: var(--s2-5);
+    color: var(--background, white);
+    background-color: var(--transparent, rgba(255, 255, 255, 0));
+    border: var(--s0-2) solid var(--background, white);
+    border-radius: var(--s1-5);
+    padding: calc(0.4 * var(--s)) var(--s2);
+    padding-bottom: calc(0.6 * var(--s));
+    padding-top: calc(0.6 * var(--s));
     cursor: pointer;
-    margin: 1vmin;
+    margin: var(--s1);
     transition: background-color 0.05s linear;
     text-align: center;
   }
   .RoundButton:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
   }
   .RoundButton:active {
-    transform: translateY(0.2vmin);
+    transform: translateY(var(--s0-2));
   }
   .pushedIn,
   .pushedIn:hover {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: var(--background, white);
   }
   .noselect {
   -webkit-user-select: none;

@@ -51,17 +51,17 @@ export default {
   .divInput input {
     font-family: 'Montserrat';
     display: inline-block;
-    font-size: 5vmin;
+    font-size: var(--s5);
     font-weight: bold;
-    padding: 0.2vmin 1vmin;
-    height: 5vmin;
+    padding: var(--s0-2) var(--s1);
+    height: var(--s5);
     text-align: center;
     background-color: white;
     color: black;
-    border: 0.1vmin solid white;
-    border-right: 0.3vmin solid white;
-    border-left: 0.3vmin solid white;
-    border-top: 0.5vmin solid white;
+    border: var(--s0-1) solid white;
+    border-right: var(--s0-3) solid white;
+    border-left: var(--s0-3) solid white;
+    border-top: var(--s0-5) solid white;
     overflow-y: hidden;
     overflow-x: scroll;
     white-space: nowrap;
@@ -71,19 +71,19 @@ export default {
   }
   .divInput div {
     display: block;
-    font-size: 5vmin;
+    font-size: var(--s5);
     font-family: 'Montserrat';
-    color: white;
-    border: white;
-    border-radius: 2vmin;
-    padding: 1vmin;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--background, white);
+    border: var(--background, white);
+    border-radius: var(--s2);
+    padding: var(--s1);
+    background-color: var(--brighter1, rgba(255, 255, 255, 0.1));
     width: 50%;
     margin: auto;
-    margin-top: 2vmin;
+    margin-top: var(--s2);
     cursor: pointer;
   }
   .divInput div:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--brighter2, rgba(255, 255, 255, 0.2));
   }
 </style>

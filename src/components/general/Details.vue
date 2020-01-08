@@ -61,9 +61,22 @@ export default {
 </script>
 
 <style scoped>
+  .arrow:before {
+    content: '';
+    position: absolute;
+    top: calc(0.5 * var(--s));
+    left: calc(0.35 * var(--s));
+    width: 0;
+    height: 0;
+    border-left: var(--s0-7) solid transparent;
+    border-right: var(--s0-7) solid transparent;
+    border-bottom: 0 solid transparent;
+    border-top: calc(1.2 * var(--s)) solid white;
+    margin: 0;
+  }
   .arrow {
-    width: 2.2vmin;
-    height: 2.2vmin;
+    width: calc(2.2 * var(--s));
+    height: calc(2.2 * var(--s));
     position: relative;
     display: inline-block;
     vertical-align: middle;
@@ -73,45 +86,25 @@ export default {
     transition: transform 0.1s linear;
     margin: 0;
   }
-  .arrow:before {
-    content: '';
-    position: absolute;
-    top: 0.5vmin;
-    left: 0.35vmin;
-    width: 0;
-    height: 0;
-    border-left: 0.7vmin solid transparent;
-    border-right: 0.7vmin solid transparent;
-    border-bottom: 0 solid transparent;
-    border-top: 1.2vmin solid white;
-    margin: 0;
-  }
   .btnExpand {
-    /* border: 1px solid white; */
     cursor: pointer;
-    /* border: 0.15vmin solid white; */
     display: inline-block;
-    /* margin-left: 5%; */
-    padding: 1vmin;
-    /* background-color: rgba(0, 0, 0, 0.1); */
+    padding: var(--s1);
     opacity: var(--opacity, 0.7);
     transition: background-color 0.1s linear;
-    /* border-radius: 1.5vmin; */
     font-weight: normal;
     display: inline-block;
     text-decoration: none;
-    font-size: 2.5vmin;
-    line-height: 2.5vmin;
-    padding: 0.7vmin 2vmin;
-    margin-bottom: 1vmin;
+    font-size: var(--s2-5);
+    line-height: var(--s2-5);
+    padding: var(--s0-7) var(--s2);
+    margin-bottom: var(--s1);
   }
   .btnExpand:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--darker2, rgba(0, 0, 0, 0.2));
   }
   .divDetails {
-    /* border: 1px solid white; */
     transition: background-color 0.1s linear;
-    /* padding: 0.5vmin; */
   }
   .wrapper {
     text-align: var(--alignment, 'right');
@@ -120,7 +113,4 @@ export default {
   .down {
     transform: rotate(0deg);
   }
-  /* .btnExpand:hover ~ .divDetails {
-    background-color: rgba(0, 0, 0, 0.1);
-  } */
 </style>

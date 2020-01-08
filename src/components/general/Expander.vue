@@ -77,7 +77,7 @@ export default {
     overflow: hidden;
     height: auto;
     transform: translateZ(0);
-    -webkit-transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0, 0, 0);
   }
 
   /* force animation of text if visual bug */

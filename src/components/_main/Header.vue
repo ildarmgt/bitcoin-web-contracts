@@ -17,16 +17,16 @@ export default {
   .title {
     display: inline-block;
     /* color:rgb(17, 17, 51); */
-    color:rgb(255, 255, 255);
-    background-color: rgb(17, 17, 51);
-    margin: 1vmin 0;
-    padding: 1.5vmin 0;
+    color: var(--background, white);
+    background-color: var(--bitcoin-blue, rgb(17, 17, 51));
+    margin: var(--s1) 0;
+    padding: var(--s1-5) 0;
     width: 100%;
     text-decoration: none;
   }
 
   .title__bitcoin {
     /* color:rgb(255, 218, 51); */
-    color:orange;
+    color: var(--bitcoin-orange, orange);
   }
 </style>

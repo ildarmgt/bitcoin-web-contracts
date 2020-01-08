@@ -31,8 +31,9 @@ export default {
     determineStyle () {
       if (this.meaning === this.meaningSelected) {
         return {
-          'background-color': 'rgba(17, 17, 51, 0.65)',
-          transform: 'translateY(0.2vmin)'
+          'background-color': 'var(--bitcoin-blue, rgb(17, 17, 51))'
+          // 'background-color': 'rgba(17, 17, 51, 0.65)'
+          // transform: 'translateY(0.2vmin)'
         };
       } else {
         return {
@@ -45,6 +46,9 @@ export default {
     // on click, if not already selected, emit it selected,
     // otherwise emit no selection
     onButtonClick () {
+      // scroll to the top to avoid bouncing effect from resizing animation
+      window.scrollTo(0, 0);
+      // let parent know of choice
       if (this.meaning === this.meaningSelected) {
         this.$emit('selectionChoice', '');
       } else {
@@ -59,9 +63,12 @@ export default {
   .selectionButton {
     display: inline-block;
     margin: 1vmin 1vmin;
+    margin: var(--s1) var(--s1);
     font-size: 2.5vmin;
-    border-radius: 3vmin;
-    background-color: rgba(17, 17, 51, 0.65);
+    font-size: calc(2.5 * var(--s));
+    border-radius: 0.7vmin;
+    border-radius: var(--s0-7);
+    background-color: var(--bitcoin-blue, rgb(17, 17, 51));
     color: white;
 
     text-decoration: none;
@@ -74,14 +81,17 @@ export default {
   }
   .darken {
     padding: 1vmin 2vmin;
-    border-radius: 3vmin;
+    padding: var(--s1) var(--s2);
+    border-radius: 0.7vmin;
+    border-radius: var(--s0-7);
     transition: background-color 0.05s linear;
     cursor: pointer;
   }
   .darken:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--darker2, rgba(0, 0, 0, 0.2));
   }
   .selectionButton:active {
     transform: translateY(0.1vmin);
+    transform: translateY(var(--s0-1));
   }
 </style>
