@@ -3,25 +3,24 @@
     <div class="q fa">
       <div class="q__strong">
         <div class="q__strong_text">
-          Transaction is ready
+          Your transaction is going to
         </div>
         <div class="q__strong_info">
-          You are<br><br>
           <div v-show="parseFloat(this.getContractValues.toAmount) > 0">
-            sending
+            send
             {{ this.getContractValues.toAmount }}
             {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
-            to<br>
-            {{ this.getContractValues.toAddress }}
+            <br>
+            to {{ this.getContractValues.toAddress }}
             <br><br>
           </div>
           <div v-show="parseFloat(this.getContractValues.changeAmount) > 0">
-            reseting
+            reset
             {{ this.getContractValues.changeAmount }}
             {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
             <br><br>
           </div>
-          and paying a fee of
+          and pay a fee of
           {{ this.getContractValues.feeAmount }}
           {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
         </div>
@@ -162,8 +161,10 @@ export default {
   .q__strong_info {
     font-size: var(--s2-5);
     font-weight: normal;
-    text-align: left;
+    text-align: right;
     margin: var(--s3);
+    word-wrap: break-word;
+    word-break: break-all;
   }
   .txHex {
     font-size: var(--s2);

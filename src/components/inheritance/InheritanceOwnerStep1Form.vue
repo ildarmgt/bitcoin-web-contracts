@@ -224,12 +224,8 @@ export default {
   }
   .textBox {
     display: inline-block;
-    font-size: calc(2.3 * var(--s));
-    padding: var(--s0-2) var(--s1);
-    height: calc(3.6 * var(--s));
     width: 95%;
     color: var(--color-owner-solid, rgb(102, 102, 255));
-    cursor: default;
   }
   .label {
     font-size: var(--s2);

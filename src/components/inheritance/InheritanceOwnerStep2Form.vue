@@ -167,20 +167,14 @@ export default {
   }
   .textbox {
     display: inline-block;
-    font-size: calc(2.3 * var(--s));
-    padding: 0.2vmin var(--s1);
-    height: 3.6vmin;
-    background-color: var(--background, white);
     color: var(--color-owner-solid, rgb(102, 102, 255));
-    vertical-align: middle;
   }
-
   .txidbox {
     width: 70%;
     margin-left: 5%;
   }
   .voutbox {
-    width: 5vmin;
+    width: var(--s5);
   }
   .utxovalue {
     margin-left: 5%;

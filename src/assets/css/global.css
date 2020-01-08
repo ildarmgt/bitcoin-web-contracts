@@ -188,8 +188,10 @@ textarea {
   text-align: center;
   resize: none;
   font-size: calc(2.3 * var(--s));
-  padding: var(--s0-2) var(--s1);
+  padding: var(--s0-5) var(--s1);
+  padding-top: 0;
   height: calc(3.6 * var(--s));
+  line-height: calc(3.6 * var(--s));
   border-radius: var(--s0-5);
   background-color: var(--background, white);
   border: var(--s0-1) solid var(--background, white);
@@ -200,6 +202,7 @@ textarea {
   overflow-x: scroll;
   white-space: nowrap;
   cursor: default;
+  vertical-align: middle;
 
   /* firefox */
   scrollbar-color: var(--darker2, rgba(0, 0, 0, 0.2)) var(--transparent, rgba(255, 255, 255, 0));

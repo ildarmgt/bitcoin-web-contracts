@@ -7,7 +7,6 @@
         type="password"
         ref="inputPin"
         @keyup.enter="$emit('submit', value)"
-        autofocus
       >
       <div
         @click="$emit('submit', value)"
