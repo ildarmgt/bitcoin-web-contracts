@@ -150,7 +150,8 @@ export default {
         const res = await axios.get(apiPath);
         const outputs = res.data;
         // update local storage
-        this.utxo = outputs.map((out, i) => {
+        // for now just removing unconfirmed tx
+        this.utxo = outputs.reduce((acc, out, i) => {
           if (out.status.block_time) {
             const { daysLocked } = this.getContractValues;
             const ago = timeDiff(out.status.block_time * 1000, daysLocked);
@@ -163,9 +164,11 @@ export default {
               vout: out.vout.toString(),
               time: out.status.block_time
             };
-            return info;
+            return [...acc, info];
+          } else {
+            return acc;
           }
-        });
+        }, []);
       } catch (e) {
         console.log('Error while trying api request from blockstream.info\n', e);
       }
