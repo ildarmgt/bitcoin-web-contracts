@@ -18,7 +18,7 @@
       <!-- next button -->
       <ArrowButton
         textContent="Next"
-        textColor="rgb(0, 134, 0)"
+        textColor="var(--color-heir-solid, rgba(0, 134, 0))"
         @click="onNextButtonClick"
       />
     </div>
@@ -62,20 +62,20 @@ export default {
 <style scoped>
   .q {
     text-align: left;
-    margin: 0vmin 2vmin;
+    margin: 0 var(--s2);
   }
   .q__strong {
     display: block;
     text-align: center;
-    font-size: 3vmin;
-    color: white;
-    margin-right: 3vmin;
+    font-size: var(--s3);
+    color: var(--background, white);
+    margin-right: var(--s3);
     margin-left: 5%;
     font-weight: bold;
   }
   .q__strong_text {
     text-align: left;
-    margin-bottom: 2vmin;
+    margin-bottom: var(--s2);
   }
   .form {
     width: 88%;
@@ -84,12 +84,12 @@ export default {
   }
   .q__lbl1 {
     display: inline-block;
-    margin-top: 2vmin;
+    margin-top: var(--s2);
   }
   .amt {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.1vmin 1vmin;
-    border-radius: 1vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s0-1) var(--s1);
+    border-radius: var(--s1);
     font-weight: normal;
   }
 </style>
