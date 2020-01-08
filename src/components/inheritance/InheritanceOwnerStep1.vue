@@ -278,5 +278,6 @@ export default {
     margin-top: 0;
     text-align: left;
     display: inline-block;
+    opacity: 0.7;
   }
 </style>

@@ -16,6 +16,19 @@
           >
           submit backup file
         </div>
+        <Details
+          buttonText="Not an upload. Your browser only."
+          class="detailsSubmit"
+        >
+          <div>
+            This app is designed to read your backup directly via only your browser.<br>
+            Its contents are not coded to be sent anywhere by the app w/o permission.<br><br>
+            The app provides convinience buttons to allow use of API endpoints for fee estimates, scanning confirmed funds by contract's address, and broadcasting the finished transaction.<br>
+            Fees and unspent outputs in address can be filled out offline manually.<br>
+            Raw transaction can also be copied to be broadcast later somewhere else.<br><br>
+            Cautious users could use the app in a clean browser instance, via incognito/private mode with no 3rd party extensions, and even offline.<br>
+          </div>
+        </Details>
         <div>
           or
           <RoundButton
@@ -57,6 +70,7 @@ import ArrowButton from './../general/ArrowButton';
 import RoundButton from './../general/RoundButton';
 import InheritanceHeirStep1Form from './InheritanceHeirStep1Form';
 import InputPrompt from './../general/InputPrompt';
+import Details from './../general/Details';
 
 import sjcl from './../../library/sjcl'; // Stanford Javascript Crypto Library
 
@@ -65,7 +79,8 @@ export default {
   components: {
     ArrowButton,
     RoundButton,
-    InheritanceHeirStep1Form
+    InheritanceHeirStep1Form,
+    Details
   },
   data: () => ({
     showUpload: true,
@@ -249,5 +264,21 @@ export default {
     width: 85%;
     display: block;
     margin: auto;
+  }
+  .detailsSubmit {
+    text-align: right;
+    margin: var(--s2);
+  }
+  .detailsSubmit div {
+    font-size: var(--s2);
+    font-weight: normal;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s2);
+    padding: var(--s2) var(--s3);
+    margin: var(--s2);
+    margin-top: 0;
+    text-align: left;
+    display: inline-block;
+    opacity: 0.7;
   }
 </style>
