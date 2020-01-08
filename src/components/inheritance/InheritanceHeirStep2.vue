@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import getUTXO from '../../api/utxo';
 import timeDiff from './../../helpers/timeDiff';
 
 import { mapActions, mapGetters } from 'vuex'; // state
@@ -137,18 +137,13 @@ export default {
 
     // get a list of outputs for the address in step 1
     async getOutputs () {
-      const MAIN_PATH = 'https://blockstream.info/api/address/';
-      const TEST_PATH = 'https://blockstream.info/testnet/api/address/';
       const { address, networkChoice } = this.getContractValues;
 
       try {
         if (!address) { throw new Error('no address'); }
         if (!networkChoice) { throw new Error('unknown network'); }
 
-        const apiRoot = (networkChoice === 'bitcoin') ? MAIN_PATH : TEST_PATH;
-        const apiPath = apiRoot + address + '/utxo';
-        const res = await axios.get(apiPath);
-        const outputs = res.data;
+        const outputs = await getUTXO(address, networkChoice);
         // update local storage
         // for now just removing unconfirmed tx
         this.utxo = outputs.reduce((acc, out, i) => {
@@ -158,7 +153,6 @@ export default {
             const ago = timeDiff(out.status.block_time * 1000, daysLocked);
             const value = (out.value / 1e8).toFixed(8);
             const info = {
-              index: i,
               utxoValue: value,
               ago: ago,
               txid: out.txid,
@@ -171,7 +165,7 @@ export default {
           }
         }, []);
       } catch (e) {
-        console.log('Error while trying api request from blockstream.info\n', e);
+        console.log(e);
       }
     },
 
