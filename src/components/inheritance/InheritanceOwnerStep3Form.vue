@@ -242,7 +242,7 @@ export default {
       this[event.target.id] = event.target.value = sanitize(event.target.value, 'oneline');
 
       // put 3 second delay on correcting inputs, refresh delay if changed
-      const DELAY_MS = 2000;
+      const DELAY_MS = 1000;
       clearTimeout(this.lastTimer[event.target.id]);
       this.lastTimer[event.target.id] = setTimeout(() => {
         // remove unwanted chars (depends on box)
@@ -257,6 +257,7 @@ export default {
         }
         if (event.target.id === 'feeRate') {
           fixedString = sanitize(event.target.value, 'fractions');
+          fixedString = parseFloat(fixedString).toFixed(3);
         }
 
         event.target.value = fixedString;
