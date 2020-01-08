@@ -36,6 +36,7 @@ html {
   --s0-1: calc(0.1 * var(--s)); /* smallest scale */
 
   /* colors */
+
   --bitcoin-orange: orange; /* var(--bitcoin-orange, orange) */
   --bitcoin-blue: rgb(17, 17, 51); /* var(--bitcoin-blue, rgb(17, 17, 51)) */
   --background: white; /* var(--background, white) */

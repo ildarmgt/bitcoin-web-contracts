@@ -51,8 +51,8 @@
       <!-- address hidden at first -->
       <ArrowButton
         class="btnShow"
-        textContent="My backup is ready. Show the contract!"
-        textColor="orange"
+        textContent="My backup done. Show contract!"
+        textColor="var(--bitcoin-orange, orange)"
         v-if="!showRest"
         @click="showClicked"
       />
