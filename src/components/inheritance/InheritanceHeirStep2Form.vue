@@ -86,22 +86,13 @@ export default {
   watch: {
     // if vuex contract values change, update this component
     getContractValues (contract) {
-      // (TODO) replace with updateFromState
       this.updateFromState(contract);
-      // this.txid = contract.txid;
-      // this.vout = contract.vout;
-      // this.utxoValue = contract.value;
     }
   },
   mounted () {
     // update txid & vout from vuex
     const contract = this.getContractValues;
-    // (TODO) replace with updateFromState
     this.updateFromState(contract);
-
-    // this.txid = contract.txid;
-    // this.vout = contract.vout;
-    // this.utxoValue = contract.value;
   },
   updated () {},
   methods: {
@@ -135,7 +126,7 @@ export default {
       this.utxoValue = fixedString;
 
       // delayed so typing "." doesn't get removed instantly
-      const DELAY_MS = 2000;
+      const DELAY_MS = 1000;
       clearTimeout(this.lastTimer);
       this.lastTimer = setTimeout(() => {
         // lastTimer
@@ -161,61 +152,40 @@ export default {
 <style scoped>
   .sum {
     text-align: right;
-    margin-top: 2vmin;
+    margin-top: var(--s2);
   }
   .form {
-    color: white;
-    font-size: 3vmin;
+    color: var(--background, white);
+    font-size: var(--s3);
     text-align: left;
   }
   .label {
-    font-size: 2vmin;
+    font-size: var(--s2);
     text-align: left;
-    margin-bottom: 0.5vmin;
-    margin-top: 2vmin;
+    margin-bottom: var(--s0-5);
+    margin-top: var(--s2);
   }
   .textbox {
-    font-family: 'Montserrat';
     display: inline-block;
-    resize: none;
-    font-size: 2.3vmin;
-    padding: 0.2vmin 1vmin;
-    height: 3.6vmin;
-    text-align: center;
-    background-color: white;
-    color: rgb(0, 134, 0);
-    border: 0.1vmin solid white;
-    border-right: 0.3vmin solid white;
-    border-left: 0.3vmin solid white;
-    border-top: 0.5vmin solid white;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    white-space: nowrap;
-    cursor: default;
-    vertical-align: middle;
+    color: var(--color-heir-solid, rgba(0, 134, 0));
   }
   .txidbox {
     width: 70%;
     margin-left: 5%;
   }
   .voutbox {
-    width: 5vmin;
+    width: var(--s5);
   }
   .utxovalue {
     margin-left: 5%;
     width: 75%;
   }
-  .txidbox::placeholder,
-  .voutbox::placeholder,
-  .utxovalue::placeholder {
-    color: rgba(105, 102, 136, 0.555);
-  }
   .amt {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.1vmin 1vmin;
-    border-radius: 1vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s0-1) var(--s1);
+    border-radius: var(--s1);
   }
   .details {
-    margin-top: 1vmin;
+    margin-top: var(--s1);
   }
 </style>

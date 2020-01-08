@@ -21,15 +21,15 @@ html {
   --s: calc(0.9 * (0.5vmax + 0.5vmin));
   /* some standard sizes for shorthand (could be done in sass mixin) */
   /* ideally only standard sizes below are used */
-  --s6: calc(6.0 * var(--s));
-  --s5: calc(5.0 * var(--s));
-  --s4: calc(4.0 * var(--s));
+  --s6:   calc(6.0 * var(--s));
+  --s5:   calc(5.0 * var(--s));
+  --s4:   calc(4.0 * var(--s));
   --s3-5: calc(3.5 * var(--s));
-  --s3: calc(3.0 * var(--s)); /* font */
+  --s3:   calc(3.0 * var(--s)); /* font */
   --s2-5: calc(2.5 * var(--s)); /* font */
-  --s2: calc(2.0 * var(--s)); /* font */
+  --s2:   calc(2.0 * var(--s)); /* font */
   --s1-5: calc(1.5 * var(--s));
-  --s1: calc(1.0 * var(--s)); /* typical spacing */
+  --s1:   calc(1.0 * var(--s)); /* typical spacing */
   --s0-7: calc(0.7 * var(--s));
   --s0-5: calc(0.5 * var(--s));
   --s0-3: calc(0.3 * var(--s));
@@ -57,6 +57,7 @@ html {
   --color-owner: rgba(0, 0, 255, 0.6); /* var(--color-owner, rgba(0, 0, 255, 0.6)) */
   --color-owner-solid: rgb(102, 102, 255); /* var(--color-owner-solid, rgb(102, 102, 255)) */
   --color-info: rgb(173, 255, 47); /* var(--color-info, rgb(173, 255, 47)) */
+  --fade-background: rgba(0, 0, 0, 0.93); /* var(--fade-background, rgba(0, 0, 0, 0.93)) */
 }
 
 body {

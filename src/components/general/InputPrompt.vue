@@ -37,7 +37,7 @@ export default {
   .fadebackground {
     position: fixed;
     display: block;
-    background-color: rgba(0, 0, 0, 0.93);
+    background-color: var(--fade-background, rgba(0, 0, 0, 0.93));
     width: 100%;
     height: 100%;
     top: 0;
@@ -55,12 +55,12 @@ export default {
     padding: var(--s0-2) var(--s1);
     height: var(--s5);
     text-align: center;
-    background-color: white;
-    color: black;
+    background-color: var(--background, white);
+    color: var(--bitcoin-blue, rgb(17, 17, 51));
     border: var(--s0-1) solid white;
-    border-right: var(--s0-3) solid white;
-    border-left: var(--s0-3) solid white;
-    border-top: var(--s0-5) solid white;
+    border-right: var(--s0-3) solid var(--background, white);
+    border-left: var(--s0-3) solid var(--background, white);
+    border-top: var(--s0-5) solid var(--background, white);
     overflow-y: hidden;
     overflow-x: scroll;
     white-space: nowrap;
@@ -70,14 +70,14 @@ export default {
   }
   .divInput div {
     display: block;
-    font-size: var(--s5);
+    font-size: var(--s4);
     font-family: 'Montserrat';
     color: var(--background, white);
     border: var(--background, white);
     border-radius: var(--s2);
     padding: var(--s1);
     background-color: var(--brighter1, rgba(255, 255, 255, 0.1));
-    width: 50%;
+    width: calc(30 * var(--s));
     margin: auto;
     margin-top: var(--s2);
     cursor: pointer;

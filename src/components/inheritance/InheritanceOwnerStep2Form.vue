@@ -126,7 +126,7 @@ export default {
       this.utxoValue = fixedString;
 
       // delayed so typing "." doesn't get removed instantly
-      const DELAY_MS = 2000;
+      const DELAY_MS = 1000;
       clearTimeout(this.lastTimer);
       this.lastTimer = setTimeout(() => {
         // lastTimer
