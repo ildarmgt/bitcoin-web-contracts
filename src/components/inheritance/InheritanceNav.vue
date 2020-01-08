@@ -2,14 +2,14 @@
   <div class="inheritance_nav">
     <SelectionButton
       @selectionChoice="onButtonSelect"
-      :color="'rgba(255, 165, 0, 0.8)'"
+      :color="'var(--bitcoin-orange, orange)'"
       :meaning="'create'"
       :buttonText="'Create contract'"
       :meaningSelected="lastSelection"
     />
 
     <SelectionButton
-      :color="'rgba(0, 0, 160, 0.60)'"
+      :color="'var(--color-owner-solid, rgb(102, 102, 255))'"
       :meaning="'owner'"
       :buttonText="'Spend as Owner'"
       @selectionChoice="onButtonSelect"
@@ -17,7 +17,7 @@
     />
 
     <SelectionButton
-      :color="'rgba(0, 100, 0, 0.65)'"
+      :color="'var(--color-heir, rgba(0, 134, 0, 0.6))'"
       :meaning="'heir'"
       :buttonText="'Spend as Heir'"
       @selectionChoice="onButtonSelect"

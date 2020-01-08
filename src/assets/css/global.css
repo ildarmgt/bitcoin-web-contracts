@@ -21,7 +21,8 @@ html {
   --s: calc(0.9 * (0.5vmax + 0.5vmin));
   /* some standard sizes for shorthand (could be done in sass mixin) */
   /* ideally only standard sizes below are used */
-  --s5: calc(5.0 * var(--s)); /* largest scale */
+  --s6: calc(6.0 * var(--s));
+  --s5: calc(5.0 * var(--s));
   --s4: calc(4.0 * var(--s));
   --s3-5: calc(3.5 * var(--s));
   --s3: calc(3.0 * var(--s)); /* font */
@@ -52,6 +53,7 @@ html {
   --color-error-light: rgba(141, 70, 70, 0.5); /* var(--color-error-light, rgba(141, 70, 70, 0.5)) */
   --color-error-strong: rgb(175, 27, 27); /* var(--color-error-strong, rgb(175, 27, 27)) */
   --color-heir: rgba(0, 134, 0, 0.6); /* var(--color-heir, rgba(0, 134, 0, 0.6)) */
+  --color-heir-solid: rgba(0, 134, 0); /* var(--color-heir-solid, rgba(0, 134, 0)) */
   --color-owner: rgba(0, 0, 255, 0.6); /* var(--color-owner, rgba(0, 0, 255, 0.6)) */
   --color-owner-solid: rgb(102, 102, 255); /* var(--color-owner-solid, rgb(102, 102, 255)) */
   --color-info: rgb(173, 255, 47); /* var(--color-info, rgb(173, 255, 47)) */

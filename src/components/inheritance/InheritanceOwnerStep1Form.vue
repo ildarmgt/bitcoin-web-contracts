@@ -244,6 +244,6 @@ export default {
     margin-top: var(--s0-5);
   }
   .error {
-    background: var(--color-error-light, rgba(141, 70, 70, 0.314));
+    background: var(--color-error-strong, rgb(175, 27, 27));
   }
 </style>
