@@ -76,7 +76,7 @@
         </span>
         left for timer reset.
         <div class="suggestion">
-          Use Send All to save on fees by not reseting any and send more.
+          Use Send All to save on fees by not reseting any to send more.
         </div>
       </div>
       <Details
