@@ -15,6 +15,10 @@ export const heirTx = (contract) => {
     // amounts conversions to satoshi
     const satToAmount = Math.floor(parseFloat(contract.toAmount) * 1e8);
     const satFromAmount = Math.floor(parseFloat(contract.sumOfUTXO) * 1e8);
+    console.log('to', contract.toAmount);
+    console.log('to', satToAmount);
+    console.log('from', contract.sumOfUTXO);
+    console.log('from', satFromAmount);
 
     // redeemScript is referenced as a hash in an unspent p2sh output (scriptPubKey)
     // and requires to provide it to run the script now
@@ -29,6 +33,8 @@ export const heirTx = (contract) => {
     // (normally e.g. 0xfffffffe) to the value of the bip68 encoded timelock
     // owner doesn't have to deal with this branch of the script tree so not necessary there
     const relativeLockTime = parseInt(contract.relativeLockTime, 10);
+
+    console.log('locktime', relativeLockTime);
 
     // adding contract's chosen unspent output for input
     // for some reason buffer has to be reversed
@@ -76,12 +82,13 @@ export const heirTx = (contract) => {
       redeem: {
         input: bitcoin.script.compile([
           heirSig, // submitting sig for comparison w/ pub key
-          op.OP_TRUE // submit FALSE so it selects second branch of IF statement
+          op.OP_FALSE // submit FALSE so it selects second branch of IF statement
         ]),
         output: redeemScript
       }
     }).input;
 
+    console.log(contract.addressType);
     // adding the scriptSig or witness stack to the transaction
     if (contract.addressType === 'p2wsh') {
       tx.setWitness(0, witnessStackHeirBranch);
