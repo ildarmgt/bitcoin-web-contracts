@@ -16,12 +16,12 @@
           :value="key"
         />
         <div class="q__key__btns">
-          <div
-            class="q__key__btns__new"
+          <RoundButton
+            textColor="var(--background, white)"
+            textContent="new"
             @click="newKeyRequested"
-          >
-            new
-          </div>
+            class="q__key__btns__new"
+          />
           <div
             class="q__key__btns__warn"
             v-if="!getPagesInfoIC[1].valid"
@@ -29,7 +29,6 @@
             invalid key
           </div>
         </div>
-        <!-- for later   js .textContent -->
       </div>
       <!-- text to clarify qs and input  -->
       <div class="q__light">
@@ -44,12 +43,11 @@
         >?</a>
       </div>
       <!-- button to go to next page -->
-      <div
-        class="arrowButton"
+      <ArrowButton
+        textContent="Next"
+        textColor="var(--bitcoin-orange, orange)"
         @click="onNextButtonClick"
-      >
-        Next
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -57,13 +55,18 @@
 <script>
 import { newWIF } from './../../bitcoin';
 import { mapActions, mapGetters } from 'vuex'; // state
+import RoundButton from './../general/RoundButton';
+import ArrowButton from './../general/ArrowButton';
 
 export default {
   name: 'InheritanceCreateStep2',
   data: () => ({
     key: ''
   }),
-  components: {},
+  components: {
+    RoundButton,
+    ArrowButton
+  },
   mounted () {
     // show initial private key
     const ownerPrivateKeyWIF = this.getContractValuesIC.ownerPrivateKeyWIF;
@@ -134,8 +137,8 @@ export default {
   }
   .q__strong {
     display: block;
-    font-size: 3vmin;
-    color: white;
+    font-size: var(--s3);
+    color: var(--background, white);
     margin-left: 5%;
     font-weight: bold;
   }
@@ -143,153 +146,75 @@ export default {
     display: block;
     margin-left: 7%;
     margin-right: 7%;
-    margin-top: 4vmin;
-    margin-bottom: 3vmin;
+    margin-top: var(--s4);
+    margin-bottom: var(--s3);
     text-align: center;
   }
   .q__key__input {
-    font-family: 'Montserrat';
     display: inline-block;
-    resize: none;
-    font-size: 2.3vmin;
-    padding: 0.2vmin 1vmin;
-    height: 3.6vmin;
     width: 95%;
-    text-align: center;
-    background-color: white;
-    color: orange;
-    border: 0.1vmin solid white;
-    border-right: 0.3vmin solid white;
-    border-left: 0.3vmin solid white;
-    border-top: 0.5vmin solid white;
-    transition: background-color 0.15s;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    white-space: nowrap;
-    cursor: default;
+    color: var(--bitcoin-orange, orange);
   }
   .q__key__btns {
-    margin-top: 0.5vmin;
+    margin-top: var(--s0-5);
     margin-left: 3%;
     text-align: left;
     display: block;
   }
   .q__key__btns__new {
-    display: inline-block;
-    margin: 0 1vmin;
-    padding: 0.5vmin 1vmin;
-    font-size: 2.5vmin;
-    height: 2.5vmin;
-    line-height: 2.5vmin;
-    border-radius: 3vmin;
-    color: white;
-    border: 0.2vmin white solid;
-    text-decoration: none;
-    -webkit-user-select: none;
-    -moz-user-select: -moz-none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
-  }
-  .q__key__btns__new:hover {
-    transform: translateY(-0.1vmin);
-  }
-  .q__key__btns__new:active {
-    transform: translateY(0.1vmin);
+    margin: 0 var(--s1);
   }
   .q__light {
     display: block;
-    font-size: 2vmin;
-    color: white;
-    margin-top: 2vmin;
-    line-height: 3vmin;
+    font-size: var(--s2);
+    color: var(--background, white);
+    margin-top: var(--s2);
+    line-height: var(--s3);
     margin-left: 15%;
   }
   .q__light_link {
     display: inline-block;
     text-align: center;
     vertical-align: top;
-    font-size: 2vmin;
-    line-height: 2vmin;
-    width: 2vmin;
-    height: 2vmin;
-    padding: 0.1vmin;
+    font-size: var(--s2);
+    line-height: var(--s2);
+    width: var(--s2);
+    height: var(--s2);
+    padding: var(--s0-1);
     text-decoration: none;
-    border-radius: 2vmin;
-    background-color: rgba(255, 255, 255, 0.527);
-    color: orange;
-
-  }
-  .arrowButton {
-      font-size: 3vmin;
-      margin: 0 auto;
-      margin-top: 5vmin;
-      width: max-content;
-      height: 5vmin;
-      line-height: 5vmin;
-      text-align: center;
-      padding: 0 3vmin 0 2vmin;
-      color: orange;
-      background-color: rgb(255, 255, 255);
-      opacity: 0.75;
-      position: relative;
-      display: block;
-      border-radius: 1vmin 2vmin 2vmin 1vmin;
-      z-index: 1;
-      -webkit-user-select: none;
-      -moz-user-select: -moz-none;
-      -ms-user-select: none;
-      user-select: none;
-      cursor: pointer;
-      transition: opacity 0.15s;
-  }
-  .arrowButton:after{
-      position: absolute;
-      right: -1.37vmin;
-      top: 0;
-      content: "";
-      width: 5vmin;
-      height: 5vmin;
-      background-color: inherit;
-      border-radius: 2vmin 1.3vmin 1vmin 1.3vmin;
-      transform: rotate(-45deg) scale(0.707);
-      z-index: 0;
-  }
-  .arrowButton:hover {
-    opacity: 1;
-  }
-  .arrowButton:active {
-    transform: translateY(0.2vmin);
+    border-radius: var(--s2);
+    background-color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
+    color: var(--bitcoin-orange, orange);
   }
   .owner {
-    color: rgb(44, 44, 218);
+    color: var(--color-owner, rgba(0, 0, 255, 0.6));
     white-space: nowrap;
     font-weight: bold;
     text-shadow:
-      -0.1vmin -0.1vmin 0.05vmin #FFF,
-      0.1vmin -0.1vmin 0.05vmin #FFF,
-      -0.1vmin 0.1vmin 0.05vmin #FFF,
-      0.1vmin 0.1vmin 0.05vmin #FFF;
+      calc(-0.1 * var(--s)) calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      calc(-0.1 * var(--s)) var(--s0-1)           calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           var(--s0-1)           calc(0.05 * var(--s)) var(--background, white);
   }
   .q__key__btns__warn {
     display: inline-block;
     margin-left: 40%;
-    color: white;
-    background-color: rgb(255, 42, 42);
-    padding: 0.1vmin 2vmin 0.2vmin 2vmin;
-    font-size: 2.3vmin;
+    color: var(--background, white);
+    background-color: var(--color-error-strong);
+    padding: var(--s0-1) var(--s2) var(--s0-2) var(--s2);
+    font-size: calc(2.3 * var(--s));
     position: relative;
-    border-radius: 1vmin;
+    border-radius: var(--s1);
   }
   .q__key__btns__warn:after {
     position: absolute;
-    right: 10vmin;
-    top: -2vmin;
+    right: calc(10 * var(--s));
+    top: calc(-2 * var(--s));
     content: "";
     width: 0;
     height: 0;
-    border-left: 1vmin solid transparent;
-    border-right: 1vmin solid transparent;
-    border-bottom: 2.1vmin solid rgb(255, 42, 42);
+    border-left: var(--s1) solid transparent;
+    border-right: var(--s1) solid transparent;
+    border-bottom: calc(2.1 * var(--s)) solid var(--color-error-strong);
   }
 </style>

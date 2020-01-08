@@ -41,7 +41,7 @@ html {
   --background: white; /* var(--background, white) */
   --color-disabled: gray; /* var(--color-disabled, gray) */
   --darker2: rgba(0, 0, 0, 0.2); /* var(--darker2, rgba(0, 0, 0, 0.2)) */
-  --darker2: rgba(0, 0, 0, 0.1); /* var(--darker1, rgba(0, 0, 0, 0.1)) */
+  --darker1: rgba(0, 0, 0, 0.1); /* var(--darker1, rgba(0, 0, 0, 0.1)) */
   --brighter2: rgba(255, 255, 255, 0.2); /* var(--brighter2, rgba(255, 255, 255, 0.2)) */
   --brighter1: rgba(255, 255, 255, 0.1); /* var(--brighter1, rgba(255, 255, 255, 0.1)) */
   --transparent: rgba(255, 255, 255, 0); /* var(--transparent, rgba(255, 255, 255, 0)) */
@@ -49,6 +49,9 @@ html {
   --text-darkeronlight: rgb(149, 149, 167); /* var(--text-darkeronlight, rgb(149, 149, 167)) */
   --color-selection: rgba(0, 0, 233, 0.2); /* var(--color-selection, rgba(0, 0, 233, 0.2)) */
   --color-error-light: rgba(141, 70, 70, 0.314); /* var(--color-error-light, rgba(141, 70, 70, 0.314)) */
+  --color-error-strong: rgb(175, 27, 27); /* var(--color-error-light, rgba(141, 70, 70, 0.314)) */
+  --color-heir: rgba(0, 134, 0, 0.6); /* var(--color-heir, rgba(0, 134, 0, 0.6)) */
+  --color-owner: rgba(0, 0, 255, 0.6); /* var(--color-owner, rgba(0, 0, 255, 0.6)) */
 }
 
 body {
@@ -173,11 +176,35 @@ input {
   border-radius: var(--s0-5);
 }
 
+input:focus {
+  outline: none;
+}
+
 textarea {
+  font-family: 'Montserrat';
+  text-align: center;
+  resize: none;
+  font-size: calc(2.3 * var(--s));
+  padding: var(--s0-2) var(--s1);
+  height: calc(3.6 * var(--s));
   border-radius: var(--s0-5);
+  background-color: var(--background, white);
+  border: var(--s0-1) solid var(--background, white);
+  border-right: var(--s0-3) solid var(--background, white);
+  border-left: var(--s0-3) solid var(--background, white);
+  border-top: var(--s0-5) solid var(--background, white);
+  overflow-y: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+  cursor: default;
+
   /* firefox */
   scrollbar-color: var(--darker2, rgba(0, 0, 0, 0.2)) var(--transparent, rgba(255, 255, 255, 0));
   scrollbar-width: thin;
+}
+
+textarea::placeholder {
+  color: var(--color-disabled, gray);
 }
 
 textarea::-webkit-scrollbar {
@@ -198,9 +225,5 @@ textarea::-webkit-scrollbar-thumb {
   box-shadow: inset 0 0 0 var(--s0-1) var(--background, white);
 }
 textarea:focus {
-  outline: none;
-}
-
-input:focus {
   outline: none;
 }

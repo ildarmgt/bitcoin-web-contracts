@@ -28,12 +28,12 @@
       <!-- buttons to go to next pages -->
       <ArrowButton
         textContent="Complete with random keys"
-        textColor="orange"
+        textColor="var(--bitcoin-orange, orange)"
         @click="onDoneButtonClick"
       />
       <ArrowButton
         textContent="Edit keys..."
-        textColor="orange"
+        textColor="var(--bitcoin-orange, orange)"
         @click="onNextButtonClick"
       />
     </div>
@@ -137,63 +137,56 @@ export default {
 <style scoped>
   .q {
     text-align: left;
-    margin: 0vmin 2vmin;
+    margin: 0 var(--s2);
   }
   .q__strong {
     display: block;
-    font-size: 3vmin;
-    color: white;
-    margin-right: 3vmin;
+    font-size: var(--s3);
+    color: var(--background, white);
+    margin-right: var(--s3);
     margin-left: 5%;
     font-weight: bold;
   }
   .q__time {
     display: block;
-    margin-top: 4vmin;
-    margin-bottom: 3vmin;
+    margin-top: var(--s4);
+    margin-bottom: var(--s3);
     text-align: left;
     margin-left: 10%;
   }
   .q__time__input {
-    font-size: 3vmin;
-    height: 4vmin;
-    width: 10vmin;
+    font-size: var(--s3);
+    height: var(--s4);
+    width: calc(10 * var(--s));
     text-align: center;
     border: none;
-    background-color: white;
-    color: orange;
+    background-color: var(--background, white);
+    color: var(--bitcoin-orange, orange);
     display: inline-block;
-    transition: background-color 0.15s;
-  }
-  .q__time__input:focus,.q__time__input:hover {
-    background: white;
   }
   .q__time__label {
-    font-size: 3vmin;
-    color: white;
-    margin-left: 1vmin;
+    font-size: var(--s3);
+    color: var(--background, white);
+    margin-left: var(--s1);
     display: inline-block;
     font-weight: bold;
   }
   .q__light {
     display: block;
-    font-size: 2vmin;
-    color: white;
-    margin-top: 2vmin;
-    line-height: 3vmin;
+    font-size: var(--s2);
+    color: var(--background, white);
+    margin-top: var(--s2);
+    line-height: var(--s3);
     margin-left: 15%;
   }
-  input:focus{
-    outline: none;
-  }
   .heir {
-    color: rgb(0, 134, 0);
+    color: var(--color-heir, rgb(0, 134, 0));
     white-space: nowrap;
     font-weight: bold;
     text-shadow:
-      -0.1vmin -0.1vmin 0.05vmin #FFF,
-      0.1vmin -0.1vmin 0.05vmin #FFF,
-      -0.1vmin 0.1vmin 0.05vmin #FFF,
-      0.1vmin 0.1vmin 0.05vmin #FFF;
+      calc(-0.1 * var(--s)) calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      calc(-0.1 * var(--s)) var(--s0-1)           calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           var(--s0-1)           calc(0.05 * var(--s)) var(--background, white);
   }
 </style>

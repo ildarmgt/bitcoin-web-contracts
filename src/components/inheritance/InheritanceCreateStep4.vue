@@ -48,31 +48,6 @@
         Give Heir their backup. It doesn't have your key.<br>
       </div>
       <br>
-      <Details
-        class="detailsEncryption"
-        buttonText="Encrypt the backup? (Optional)"
-        :showAtStart="false"
-      >
-        <div class="q__lbl2 noselect">
-          An additional secret password can be used to hide (encrypt) the information inside the backup.<br><br>
-          Please note that without knowing this secret password the backup is useless and all access and funds are equivalent to lost.<br><br>
-          <textarea
-            rows="1"
-            class="txtKey"
-            spellcheck="false"
-            @input="updateEncryption"
-            :value="cryptoKey"
-            placeholder="no password used (blank)"
-          />
-        </div>
-      </Details>
-      <Details
-        class="detailsPlaintext"
-        buttonText="Details"
-        :showAtStart="false"
-      >
-        <pre>{{ backupDataOwner }}</pre>
-      </Details>
       <!-- address hidden at first -->
       <ArrowButton
         class="btnShow"
@@ -126,6 +101,32 @@
           </a>
         </div>
       </div>
+      <br>
+      <Details
+        class="detailsEncryption"
+        buttonText="Encrypt the backup? (Optional)"
+        :showAtStart="false"
+      >
+        <div class="q__lbl2 noselect">
+          An additional secret password can be used to hide (encrypt) the information inside the backup.<br><br>
+          Please note that without knowing this secret password the backup is useless and all access and funds are equivalent to lost.<br><br>
+          <textarea
+            rows="1"
+            class="txtKey"
+            spellcheck="false"
+            @input="updateEncryption"
+            :value="cryptoKey"
+            placeholder="no password used (blank)"
+          />
+        </div>
+      </Details>
+      <Details
+        class="detailsPlaintext"
+        buttonText="Details"
+        :showAtStart="false"
+      >
+        <pre>{{ backupDataOwner }}</pre>
+      </Details>
     </div>
   </div>
 </template>
@@ -274,212 +275,203 @@ export default {
 
 <style scoped>
   .q {
-    margin: 0vmin 2vmin;
+    margin: 0 var(--s2);
   }
   .q__lbl1 {
     display: block;
-    font-size: 3vmin;
-    color: white;
-    margin-right: 3vmin;
+    font-size: var(--s3);
+    color: var(--background, white);
+    margin-right: var(--s3);
     margin-left: 5%;
     font-weight: bold;
     text-align: left;
-    margin-bottom: 3vmin;
+    margin-bottom: var(--s3);
   }
   .q__lblWho {
     display: inline-block;
     vertical-align: middle;
     width: 28%;
-    font-size: 3vmin;
-    color: white;
+    font-size: var(--s2-5);
+    color: var(--background, white);
     text-align: right;
     margin-right: 5%;
-    margin-bottom: 3vmin;
-    margin-top: 2vmin;
+    margin-bottom: var(--s3);
+    margin-top: var(--s2);
   }
   .q__backup {
     text-align: left;
     display: inline-block;
     vertical-align: middle;
-    color: white;
-    font-size: 3vmin;
-    line-height: 5vmin;
+    color: var(--background, white);
+    font-size: var(--s2-5);
+    line-height: var(--s5);
     width: 50%;
     left: 30%;
-    margin-bottom: 3vmin;
-    margin-top: 2vmin;
+    margin-bottom: var(--s3);
+    margin-top: var(--s2);
   }
   .q__backup__link {
     display: inline-block;
     text-decoration: none;
-    font-size: 3vmin;
-    line-height: 3vmin;
-    color: white;
-    background-color: orange;
-    border: 0.3vmin solid white;
-    border-radius: 3vmin;
-    padding: 0.5vmin 2vmin;
+    font-size: var(--s2-5);
+    line-height: var(--s2-5);
+    color: var(--background, white);
+    background-color: var(--bitcoin-orange, orange);
+    border: var(--s0-3) solid var(--background, white);
+    border-radius: var(--s3);
+    padding: var(--s0-5) var(--s2);
     cursor: pointer;
+    margin-left: var(--s0-5);
+    margin-right: var(--s0-5);
   }
   .q__backup__link:hover {
-    background-color: rgb(230, 149, 0)
+    background-color: var(--darker2, rgba(0, 0, 0, 0.2));
   }
   .q__backup__link:active {
-    transform: translateY(0.1vmin);
+    transform: translateY(var(--s0-1));
   }
   .q__note1 {
     display: block;
-    font-size: 2vmin;
-    color: white;
-    margin-top: 1vmin;
-    line-height: 3vmin;
+    font-size: var(--s2);
+    color: var(--background, white);
+    margin-top: var(--s1);
+    line-height: var(--s3);
   }
   .q__contract {
     text-align: center;
-    margin-top: 3vmin;
+    margin-top: var(--s3);
   }
   .q__contract__text {
     display: inline-block;
     text-align: left;
     vertical-align: top;
-    margin-top: 1vmin;
-    margin-left: 2vmin;
+    margin-top: var(--s1);
+    margin-left: var(--s2);
   }
   .q__contract__lbl2 {
     margin: 0 auto;
     display: block;
-    font-size: 3vmin;
-    color: white;
+    font-size: var(--s3);
+    color: var(--background, white);
     text-align: left;
   }
   .q__contract__addy {
     display: inline-block;
     margin: 0 auto;
-    color: white;
+    color: var(--background, white);
     display: inline-block;
     word-break: break-all;
-    margin-top: 1vmin;
-    margin-bottom: 2vmin;
+    margin-top: var(--s1);
+    margin-bottom: var(--s2);
     text-decoration: none;
     text-align: left;
-    margin-left: 3vmin;
-    margin-right: 3vmin;
+    margin-left: var(--s2);
+    margin-right: var(--s2);
   }
   .q__contract__qr {
     display: inline-block;
     margin: 0 auto;
+    margin-top: var(--s1);
+    width: calc(20 * var(--s));
+    height: auto;
   }
   .btnShow {
-    margin-top: 1vmin;
+    margin-top: var(--s1);
   }
   .btnCopy {
     display: block;
-    border-radius: 3vmin;
-    border: white 0.15vmin solid;
-    height: 3vmin;
-    width: 3vmin;
-    padding: 1vmin;
-    margin-left: 6vmin;
+    border-radius: var(--s3);
+    border: var(--background, white) calc(0.15 * var(--s)) solid;
+    height: var(--s3);
+    width: var(--s3);
+    padding: var(--s1);
+    margin-left: calc(6 * var(--s));
     text-align: center;
     cursor: pointer;
   }
   .btnCopy svg {
-    fill: white;
-    height: 3vmin;
-    width: 3vmin;
+    fill: var(--background, white);
+    height: var(--s3);
+    width: var(--s3);
     vertical-align: top;
   }
   .btnCopy:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--darker2, rgba(0, 0, 0, 0.2));
   }
   .btnCopy:active {
-    transform: translateY(0.2vmin);
+    transform: translateY(var(--s0-2));
   }
   .owner {
     font-weight: bold;
-    color: rgb(44, 44, 218);
+    color: var(--color-owner, rgba(0, 0, 255, 0.6));
     white-space: nowrap;
     text-shadow:
-      -0.1vmin -0.1vmin 0.05vmin #FFF,
-      0.1vmin -0.1vmin 0.05vmin #FFF,
-      -0.1vmin 0.1vmin 0.05vmin #FFF,
-      0.1vmin 0.1vmin 0.05vmin #FFF;
+      calc(-0.1 * var(--s)) calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      calc(-0.1 * var(--s)) var(--s0-1)           calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           var(--s0-1)           calc(0.05 * var(--s)) var(--background, white);
 
   }
   .heir {
     font-weight: bold;
-    color: rgb(0, 134, 0);
+    color: var(--color-heir, rgb(0, 134, 0));
     white-space: nowrap;
     text-shadow:
-      -0.1vmin -0.1vmin 0.05vmin #FFF,
-      0.1vmin -0.1vmin 0.05vmin #FFF,
-      -0.1vmin 0.1vmin 0.05vmin #FFF,
-      0.1vmin 0.1vmin 0.05vmin #FFF;
+      calc(-0.1 * var(--s)) calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           calc(-0.1 * var(--s)) calc(0.05 * var(--s)) var(--background, white),
+      calc(-0.1 * var(--s)) var(--s0-1)           calc(0.05 * var(--s)) var(--background, white),
+      var(--s0-1)           var(--s0-1)           calc(0.05 * var(--s)) var(--background, white);
   }
   .faucet {
     display: inline-block;
     text-decoration: none;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 2vmin;
-    padding: 0.3vmin 1vmin;
-    font-size: 2vmin;
-    color: white;
-    margin: 2vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s2);
+    padding: var(--s0-3) var(--s1);
+    font-size: var(--s2);
+    color: var(--background, white);
+    margin: var(--s2);
   }
   .faucet:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-  .detailsEncryption {
-    color: white;
-    text-align: center;
+    background-color: var(--darker2, rgba(0, 0, 0, 0.2));
   }
   .q__lbl2 {
     display: block;
-    font-size: 2.5vmin;
+    font-size: var(--s2-5);
     font-weight: normal;
-    color: white;
+    color: var(--background, white);
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 3vmin;
-    border-radius: 1vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s3);
+    border-radius: var(--s1);
   }
   .txtKey {
-    font-family: 'Montserrat';
     display: inline-block;
-    resize: none;
-    font-size: 2.3vmin;
-    padding: 0.2vmin 1vmin;
-    height: 3.6vmin;
-    text-align: center;
-    background-color: white;
-    color: rgb(230, 149, 0);
-    border: 0.1vmin solid white;
-    border-right: 0.3vmin solid white;
-    border-left: 0.3vmin solid white;
-    border-top: 0.5vmin solid white;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    white-space: nowrap;
-    cursor: default;
+    color: var(--bitcoin-orange, orange);
     vertical-align: middle;
     width: 70%;
-    margin-top: 1vmin;
-    margin-bottom: 1vmin;
+    margin-top: var(--s1);
+    margin-bottom: var(--s1);
+  }
+  .detailsEncryption {
+    color: var(--background, white);
+    text-align: right;
+    margin-top: var(--s1);
   }
   .detailsPlaintext {
-    color: white;
-    text-align: center;
-    margin-top: 1vmin;
+    color: var(--background, white);
+    text-align: right;
+    margin-top: var(--s1);
   }
   .detailsPlaintext pre {
-    color: white;
-    font-size: 2vmin;
+    color: var(--background, white);
+    font-size: var(--s2);
     font-family: 'Montserrat';
     margin-top: 0;
 
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 1vmin;
-    padding: 1vmin;
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s1);
+    padding: var(--s1);
     text-align: left;
 
     white-space: pre-wrap;       /* css-3 */

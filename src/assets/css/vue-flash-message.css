@@ -14,7 +14,7 @@
   background-color: var(--bitcoin-blue, rgb(17, 17, 51));
   /* border: var(--s0-3) solid var(--background, white); */
   border-radius: var(--s1);
-  opacity: 0.95;
+  opacity: 0.93;
 }
 
 .flash__message.warning {

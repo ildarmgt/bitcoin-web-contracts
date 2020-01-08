@@ -32,46 +32,35 @@ export default {
     display: block;
     width: 90%;
     margin: 0 auto;
-    text-align: justify;;
+    text-align: justify;
   }
-
   .key_blue {
-    /* font-weight: bold; */
-    background-color: blue;
-    opacity: 0.6;
-    color: white;
-    white-space:nowrap;
-    margin: 0.4vmin;
-    padding: 0.3vmin 2vmin;
-    /* border-radius: 3vmin; */
+    background-color: var(--color-owner, rgba(0, 0, 255, 0.6));
+    color: var(--background, white);
+    white-space: nowrap;
+    margin: calc(0.4 * var(--s));
+    padding: var(--s0-3) var(--s2);
     vertical-align: middle;
   }
-
   .key_green {
-    /* font-weight: bold; */
-    background-color: green;
-    opacity: 0.6;
-    color: white;
+    background-color: var(--color-heir, rgba(0, 134, 0, 0.6));
+    color: var(--background, white);
     white-space:nowrap;
-    margin: 0.4vmin;
-    padding: 0.3vmin 2vmin;
-    /* border-radius: 3vmin; */
+    margin: calc(0.4 * var(--s));
+    padding: var(--s0-3) var(--s2);
     vertical-align: middle;
   }
-
   .example {
     width: 90%;
     display: block;
     margin: 0 auto;
-    margin-bottom: 2vmin;
+    margin-bottom: var(--s2);
   }
-
   .contractTitle {
-    background-color: orange;
-    padding: 0.3vmin 2vmin;
+    background-color: var(--bitcoin-orange, orange);
+    padding: var(--s0-3) var(--s2);
     display: inline-block;
   }
-
   .inheritance__intro {
     display: inline-block;
   }

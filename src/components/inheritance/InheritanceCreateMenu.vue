@@ -114,56 +114,54 @@ export default {
 <style scoped>
   /* visually just a button */
   .m {
-    height: 7vmin;
-    width: 9vmin;
-    line-height: 2.5vmin;
-    font-size: 2.5vmin;
-    color: white;
+    height: calc(7 * var(--s));
+    width: calc(9 * var(--s));
+    line-height: var(--s2-5);
+    font-size: var(--s2-5);
+    color: var(--background, white);
     position: absolute;
-    right: 1vmin;
-    top: 1vmin;
+    right: var(--s1);
+    top: var(--s1);
     cursor: pointer;
     z-index: 1000;
   }
   /* this just makes sure it overlaps w/ the button */
   .m__wrap {
-    font-size: 3vmin;
-    line-height: 7vmin;
+    font-size: var(--s3);
+    line-height: calc(7 * var(--s));
     position: absolute;
     right: 0;
-    top: -1vmin;
+    top: calc(-1 * var(--s));
   }
   /* offset menu with options */
   .m__wrap__list {
-    background-color: rgba(17, 17, 51, 0.904);
+    background-color: var(--bitcoin-blue, rgb(17, 17, 51));
     position: relative;
-    color: black;
-    margin: 1vmin 1vmin;
-    padding-top: 0.1vmin;
-    padding-bottom: 1vmin;
-
+    color: var(--bitcoin-blue, rgb(17, 17, 51));
+    margin: var(--s1) var(--s1);
+    padding-top: var(--s1-5);
+    padding-bottom: var(--s2-5);
   }
   .m__wrap__list div {
-    margin-top: 1vmin;
-    margin-left: 1vmin;
-    margin-right: 1vmin;
+    margin-top: var(--s1);
+    margin-left: var(--s1);
+    margin-right: var(--s1);
     white-space: nowrap;
-    padding: 0.1vmin 1vmin;
-    color: white;
+    padding: var(--s0-1) var(--s1);
+    color: var(--background, white);
   }
   .m__wrap__list__choice {
-    padding: 0.2vmin 1vmin;
-    padding-top: 0.1vmin;
+    padding: var(--s0-3) var(--s1);
+    padding-top: var(--s0-1);
     cursor: pointer;
   }
   .selected {
-    background-color: rgba(255, 255, 255, 0.226);
-    border-radius: 1vmin;
+    background-color: var(--brighter2, rgba(255, 255, 255, 0.2));
+    border-radius: var(--s1);
   }
   .btnMenu svg {
-    fill: white;
-    fill: rgba(255, 255, 255, 0.5);
-    height: 4vmin;
-    width: 4vmin;
+    fill: var(--background, white);
+    height: var(--s4);
+    width: var(--s4);
   }
 </style>
