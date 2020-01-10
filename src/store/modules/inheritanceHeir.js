@@ -214,13 +214,35 @@ const actions = {
     const isFeeRateEnough = parseFloat(contract.feeRate) >= 1.0;
     const isTxReady = !!contract.tx;
 
+    const whichNetworkAddress = whatAddress(contract.toAddress);
+    const isNetworkMatch = (whichNetworkAddress === contract.networkChoice);
+
     const isPage3Valid = (
       isToAddressDone &&
+      isNetworkMatch &&
       isFeeRateDone &&
       isToAmountEnough &&
       isFeeRateEnough &&
       isTxReady
     );
+
+    // set flags for errors I want to display
+    commit('setIssues', {
+      page3: {
+        ...((!isToAddressDone) ? {
+          isToAddressDone: 'Address can\'t be blank'
+        } : {}),
+        ...((isToAddressDone && !isNetworkMatch) ? {
+          isNetworkMatch: 'Address appears invalid for ' + contract.networkChoice
+        } : {}),
+        ...((!isFeeRateEnough) ? {
+          isFeeRateEnough: 'Fee must be > 1 sat/vByte to be relayed by most nodes.'
+        } : {}),
+        ...((!isToAmountEnough) ? {
+          enoughForFee: 'Need Amount > 0. Insufficient funds after fee.'
+        } : {})
+      }
+    });
 
     // update pages
     commit('setPageStatus', {

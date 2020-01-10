@@ -20,6 +20,7 @@
         textContent="Next"
         textColor="var(--color-heir-solid, rgba(0, 134, 0))"
         @click="onNextButtonClick"
+        class="next"
       />
     </div>
   </div>
@@ -91,5 +92,8 @@ export default {
     padding: var(--s0-1) var(--s1);
     border-radius: var(--s1);
     font-weight: normal;
+  }
+  .next {
+    margin-top: var(--s2);
   }
 </style>

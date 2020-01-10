@@ -40,6 +40,22 @@
       @click="onFeeClick"
     />
     <div class="divFormFooter">
+      <span
+        class="change"
+        :class="{ negativeAmt : toAmount < 0 }"
+      >
+        {{ this.toAmount }}
+        {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+      </span>
+      to be sent
+      <!-- display issues -->
+      <div
+        v-for="(msg, type, index) in getIssues.page3"
+        :key="index"
+        class="notice error"
+      >
+        {{ msg }}
+      </div>
       <Details
         class="details"
         :alignment="'middle'"
@@ -130,11 +146,13 @@ export default {
       feeRate: null
     },
     toAddress: '',
-    feeRate: ''
+    feeRate: '',
+    toAmount: ''
   }),
   computed: {
     ...mapGetters('inheritanceHeir', [
-      'getContractValues'
+      'getContractValues',
+      'getIssues'
     ]),
     tx () {
       return this.getContractValues.tx;
@@ -165,6 +183,7 @@ export default {
       // update display variables
       this.toAddress = contract.toAddress;
       this.feeRate = contract.feeRate;
+      this.toAmount = contract.toAmount;
     },
     // fee button clicked
     async onFeeClick () {
@@ -303,5 +322,30 @@ export default {
     margin-top: var(--s1);
     width: 70%;
     display: inline-block;
+  }
+  .notice {
+    font-size: var(--s2);
+    margin: 0 auto;
+    text-align: left;
+    width: 90%;
+    padding: var(--s1);
+    padding-left: var(--s2);
+    border-radius: var(--s1);
+    margin-bottom: var(--s1);
+    margin-top: var(--s2);
+    color: var(--background, white);
+  }
+  .error {
+    background: var(--color-error-light, rgba(141, 70, 70, 0.5));
+  }
+  .change {
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s0-1) var(--s0-5);
+    margin-right: var(--s0-5);
+    border-radius: var(--s1);
+    color: var(--background, white);
+  }
+  .negativeAmt {
+    background-color: var(--color-error-light, rgba(141, 70, 70, 0.5));
   }
 </style>

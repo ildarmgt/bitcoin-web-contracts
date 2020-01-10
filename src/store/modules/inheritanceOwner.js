@@ -149,7 +149,7 @@ const actions = {
     let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
     let remaining = Math.floor(inputs - minFee - target);
-    if (remaining < 0 || !contract.change) {
+    if (remaining <= 0 || !contract.change || target < 0) {
       // take sats out of target's to cover missing sats.
       // similarly if coins aren't to be reset, add to target
       target = Math.floor(target + remaining);
@@ -161,7 +161,8 @@ const actions = {
       vSize,
       feeAmount: (minFee * 1e-8).toFixed(8),
       toAmount: (target * 1e-8).toFixed(8),
-      changeAmount: (remaining * 1e-8).toFixed(8)
+      changeAmount: (remaining * 1e-8).toFixed(8),
+      change: (remaining !== 0)
     });
   },
   // update backup file data provided
@@ -232,23 +233,48 @@ const actions = {
 
     const isPage2Valid = isUtxoDone && isVoutDone && isUtxoValue;
 
-    // page 3
-    const isToAddressDone = !!contract.toAddress;
+    // page 3 parts
+    const isToAddressDone = !!contract.toAddress.length;
     const isChangeAmountDone = !!contract.changeAmount;
     const isFeeRateDone = !!contract.feeRate;
-    const isToAmountEnough = parseFloat(contract.toAmount) > 0.0;
+    const isToAmountEnough = parseFloat(contract.toAmount) > 0.0; // find dust limits standards (TODO)
     const isChangeAmountEnough = parseFloat(contract.changeAmount) > 0.0;
-    const isFeeRateEnough = parseFloat(contract.feeRate) > 0.0;
+    const isFeeRateEnough = parseFloat(contract.feeRate) >= 1.0; // min fee rate
     const isTxReady = !!contract.tx;
 
+    const whichNetworkAddress = whatAddress(contract.toAddress);
+    const isNetworkMatch = (whichNetworkAddress === contract.networkChoice);
+
+    // combined check
     const isPage3Valid = (
-      (isToAddressDone || !contract.spending) &&
+      ((isToAddressDone && whichNetworkAddress) || !contract.spending) &&
       (isChangeAmountDone || !contract.change) &&
       isFeeRateDone &&
       (isToAmountEnough || isChangeAmountEnough) &&
       isFeeRateEnough &&
       isTxReady
     );
+
+    // set flags for errors I want to display
+    commit('setIssues', {
+      page3: {
+        ...((!isToAddressDone && contract.spending) ? {
+          isToAddressDone: 'Address can\'t be blank'
+        } : {}),
+        ...((isToAddressDone && !isNetworkMatch && contract.spending) ? {
+          isNetworkMatch: 'Address appears invalid for ' + contract.networkChoice
+        } : {}),
+        ...((!isFeeRateEnough) ? {
+          isFeeRateEnough: 'Fee must be > 1 sat/vByte to be relayed by most nodes.'
+        } : {}),
+        ...((!isToAmountEnough && !isChangeAmountEnough) ? {
+          enoughForFee: 'Need Amount > 0. Insufficient funds after fee.'
+        } : {}),
+        ...((!isToAmountEnough && isChangeAmountEnough) ? {
+          isToAmountEnough: 'Need Amount > 0. Maybe you want to only reset timer?'
+        } : {})
+      }
+    });
 
     // update pages
     commit('setPageStatus', {

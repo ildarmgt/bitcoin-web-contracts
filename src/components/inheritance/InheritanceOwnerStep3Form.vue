@@ -19,6 +19,7 @@
         spellcheck="false"
         :value="toAddress"
         @input="textChanged"
+        :class="{ badValue : getIssues.page3.isToAddressMatch }"
       />
       <div class="label">
         Amount ( {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }} )
@@ -32,6 +33,7 @@
         spellcheck="false"
         :value="toAmount"
         @input="textChanged"
+        :class="{ badValue : toAmount <= 0 }"
       />
       <RoundButton
         textContent="Send All"
@@ -78,6 +80,14 @@
         <div class="suggestion">
           Use Send All to save on fees by not reseting any to send more.
         </div>
+      </div>
+      <!-- display issues -->
+      <div
+        v-for="(msg, type, index) in getIssues.page3"
+        :key="index"
+        class="notice error"
+      >
+        {{ msg }}
       </div>
       <Details
         class="details"
@@ -180,7 +190,8 @@ export default {
   }),
   computed: {
     ...mapGetters('inheritanceOwner', [
-      'getContractValues'
+      'getContractValues',
+      'getIssues'
     ]),
     tx () {
       return this.getContractValues.tx;
@@ -377,5 +388,23 @@ export default {
     margin-top: var(--s1);
     width: 70%;
     display: inline-block;
+  }
+  .notice {
+    font-size: var(--s2);
+    margin: 0 auto;
+    text-align: left;
+    width: 90%;
+    padding: var(--s1);
+    padding-left: var(--s2);
+    border-radius: var(--s1);
+    margin-bottom: var(--s1);
+    margin-top: var(--s2);
+    color: var(--background, white);
+  }
+  .error {
+    background-color: var(--color-error-light, rgba(141, 70, 70, 0.5));
+  }
+  .badValue {
+    color: var(--color-error-strong, rgb(175, 27, 27));
   }
 </style>
