@@ -3,7 +3,18 @@
     <div class="q fa">
       <div class="q__strong">
         <div class="q__strong_text">
-          Transaction is ready
+          Your transaction is going to
+        </div>
+        <div class="q__strong_info">
+          send
+          {{ this.getContractValues.toAmount }}
+          {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
+          <br>
+          to {{ this.getContractValues.toAddress }}
+          <br><br>
+          and pay a fee of
+          {{ this.getContractValues.feeAmount }}
+          {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
         </div>
         <RoundButton
           class="btnSend"
@@ -138,6 +149,14 @@ export default {
   .q__strong_text {
     text-align: left;
     margin-bottom: var(--s2);
+  }
+  .q__strong_info {
+    font-size: var(--s2-5);
+    font-weight: normal;
+    text-align: right;
+    margin: var(--s3);
+    word-wrap: break-word;
+    word-break: break-all;
   }
   .txHex {
     font-size: var(--s2);

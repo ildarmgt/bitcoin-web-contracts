@@ -144,7 +144,7 @@ const actions = {
     // priority: inputs & fee > target > change
     const tx = contract.tx;
     const vSize = tx ? tx.virtualSize() : contract.vSize;
-    let minFee = Math.floor(vSize * parseFloat(contract.feeRate));
+    let minFee = Math.ceil(vSize * parseFloat(contract.feeRate));
     const inputs = Math.floor(1e8 * parseFloat(contract.sumOfUTXO));
     let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
