@@ -38,7 +38,7 @@ const state = {
 
     // destination information
     toAddress: '',
-    toAmount: '0',
+    toAmount: '21000000',
     feeRate: '1.001', // (sat/vByte)
     changeAddress: '',
     feeAmount: '0', // derived

@@ -53,6 +53,7 @@
         v-for="(msg, type, index) in getIssues.page3"
         :key="index"
         class="notice error"
+        v-show="!isFreshLoad"
       >
         {{ msg }}
       </div>
@@ -147,7 +148,8 @@ export default {
     },
     toAddress: '',
     feeRate: '',
-    toAmount: ''
+    toAmount: '',
+    isFreshLoad: true
   }),
   computed: {
     ...mapGetters('inheritanceHeir', [
@@ -225,6 +227,8 @@ export default {
           changeAddress: this.changeAddress,
           change: true
         });
+        // allow error display after initial edit
+        this.isFreshLoad = false;
       }, DELAY_MS);
     }
   }
