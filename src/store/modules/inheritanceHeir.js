@@ -127,14 +127,10 @@ const actions = {
     const tx = contract.tx;
     const vSize = tx ? tx.virtualSize() : contract.vSize;
     let minFee = Math.ceil(vSize * parseFloat(contract.feeRate));
-    console.log('minfee', vSize * parseFloat(contract.feeRate));
     const inputs = Math.floor(1e8 * parseFloat(contract.sumOfUTXO));
-    console.log('input', 1e8 * parseFloat(contract.sumOfUTXO));
     // let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
     let target = Math.floor(inputs - minFee);
-    console.log('to', inputs - minFee);
-    // target = Math.floor(target + remaining);
 
     // update state
     commit('setContractValues', {
