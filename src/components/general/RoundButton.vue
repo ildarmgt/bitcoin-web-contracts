@@ -39,7 +39,7 @@ export default {
     border-radius: var(--s1-5);
     padding: calc(0.4 * var(--s)) var(--s2);
     padding-bottom: calc(0.6 * var(--s));
-    padding-top: calc(0.6 * var(--s));
+    padding-top: calc(0.4 * var(--s));
     cursor: pointer;
     margin: var(--s1);
     transition: background-color 0.05s linear;
@@ -56,9 +56,9 @@ export default {
     background-color: var(--background, white);
   }
   .noselect {
-  -webkit-user-select: none;
-  -moz-user-select: -moz-none;
-  -ms-user-select: none;
-  user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
   }
 </style>

@@ -28,13 +28,11 @@ const state = {
     daysLocked: '',
 
     // outputs to spend
-    txid: '',
-    vout: '',
-    utxoValue: '',
+    selectedUTXO: {},
     sumOfUTXO: '', // for future use, derived
     spending: true, // use spending utxo or not
     change: true, // use change utxo to reset timer
-    showForm: false, // show form if not first time
+    showForm: false, // show form if not first time (page3)
 
     // destination information
     toAddress: '',
@@ -118,8 +116,12 @@ const actions = {
   deriveSpendingInfo ({ commit, state }) {
     const contract = state.contractValues;
 
-    // sum all input utxo values, just 1 utxo at first
-    const sumOfUTXO = contract.utxoValue;
+    // sum up utxo selected
+    const sumOfUTXO = Object.keys(contract.selectedUTXO)
+      .reduce((acc, val) => {
+        return acc + (parseFloat(contract.selectedUTXO[val]) || 0);
+      }, 0)
+      .toFixed(8);
     commit('setContractValues', { sumOfUTXO });
 
     // change address should be this contracts address so money isn't lost
@@ -227,11 +229,20 @@ const actions = {
 
     // page 2
 
-    const isUtxoDone = !!contract.txid;
-    const isVoutDone = !!contract.vout;
-    const isUtxoValue = !!contract.utxoValue;
+    // non-zero amount of coins in input (TODO: dust)
+    const enoughUTXO = (contract.sumOfUTXO > 0);
+    // set done status to false if any of txid/vout/value are empty strings
+    const areValuesDone = Object.keys(contract.selectedUTXO)
+      .reduce((acc, val) => {
+        const txid = val.split('-')[0];
+        const vout = val.split('-')[1];
+        const isTxid = !!txid.length;
+        const isVout = !!vout.length;
+        const isVal = !!val.length;
+        return acc && (isTxid && isVout && isVal);
+      }, true);
 
-    const isPage2Valid = isUtxoDone && isVoutDone && isUtxoValue;
+    const isPage2Valid = areValuesDone && enoughUTXO;
 
     // page 3 parts
     const isToAddressDone = !!contract.toAddress.length;
@@ -267,10 +278,10 @@ const actions = {
         ...((!isFeeRateEnough) ? {
           isFeeRateEnough: 'Fee must be > 1 sat/vByte to be relayed by most nodes.'
         } : {}),
-        ...((!isToAmountEnough && !isChangeAmountEnough) ? {
+        ...((contract.spending && !isToAmountEnough && !isChangeAmountEnough) ? {
           enoughForFee: 'Need Amount > 0. Insufficient funds after fee.'
         } : {}),
-        ...((!isToAmountEnough && isChangeAmountEnough) ? {
+        ...((contract.spending && !isToAmountEnough && isChangeAmountEnough) ? {
           isToAmountEnough: 'Need Amount > 0. Maybe you want to only reset timer?'
         } : {})
       }

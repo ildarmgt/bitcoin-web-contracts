@@ -20,24 +20,18 @@ export default {
 
     display: inline-block;
 
-    width: 5vmin;
     width: calc(5 * var(--s));
-    height: 5vmin;
     height: calc(5 * var(--s));
-    border-radius: 5vmin;
     border-radius: calc(5 * var(--s));
-    font-size: 5vmin;
     font-size: calc(5 * var(--s));
-    line-height: 5.3vmin;
     line-height: calc(5.3 * var(--s));
-    padding: 0.7vmin;
     padding: calc(0.7 * var(--s));
     text-align: center;
     vertical-align: middle;
 
-    background: orange;
+    background: var(--bitcoin-orange, orange);
     color: white;
-    opacity: 0.6;
+    opacity: 0.7;
 
     transform: rotate(20deg);
 

@@ -77,7 +77,7 @@ export default {
   .icon {
     height: var(--s1-5);
     width: var(--s1-5);
-    fill: rgb(149, 149, 167);
+    fill: var(--text-darkeronlight, rgb(149, 149, 167));
     vertical-align: middle;
   }
   .footer__address {

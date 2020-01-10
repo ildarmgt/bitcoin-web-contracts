@@ -111,8 +111,7 @@ export const ownerTx = (contract) => {
     // amounts conversions to satoshi
     const satToAmount = Math.floor(parseFloat(contract.toAmount) * 1e8);
     const satChangeAmount = Math.floor(parseFloat(contract.changeAmount) * 1e8);
-    const satFromAmount = Math.floor(parseFloat(contract.utxoValue) * 1e8);
-    // const satFeeAmount = Math.floor(parseFloat(contract.feeAmount) * 1e8);
+    const satFromAmount = Math.floor(parseFloat(contract.sumOfUTXO) * 1e8);
 
     // redeemScript is referenced as a hash in an unspent p2sh output (scriptPubKey)
     // and requires to provide it to run the script now
@@ -129,7 +128,18 @@ export const ownerTx = (contract) => {
 
     // adding contract's chosen unspent output for input
     // for some reason buffer has to be reversed
-    buildTx.addInput(Buffer.from(contract.txid, 'hex').slice().reverse(), parseInt(contract.vout, 10), 0xfffffffe);
+    console.log('selectedUTXO', contract.selectedUTXO);
+    Object.keys(contract.selectedUTXO).forEach(utxo => {
+      const txid = utxo.split('-')[0];
+      const vout = utxo.split('-')[1];
+      // const val = contract.selectedUTXO[utxo];
+
+      buildTx.addInput(
+        Buffer.from(txid, 'hex').slice().reverse(),
+        parseInt(vout, 10),
+        0xfffffffe
+      );
+    });
 
     // adding desired destination output if spending selected
     if (spending && (satToAmount !== 0)) {
@@ -143,63 +153,78 @@ export const ownerTx = (contract) => {
     // pre-build tx so it can be signed
     const tx = buildTx.buildIncomplete();
 
-    // hash the tx so you can sign - p2wsh version (+ requires coin value of input signed)
-    const hashForSigWitness = tx.hashForWitnessV0(0, witnessScript, satFromAmount, hashType);
-    // and p2sh version
-    const hashForSig = tx.hashForSignature(0, redeemScript, hashType);
+    console.log('');
+    console.log('incomplete:');
+    tx.outs.forEach(item => {
+      console.log('outs', item, ':');
+    });
+    tx.ins.forEach(item => {
+      console.log('ins', item, ':');
+    });
+    console.log('');
 
-    // create the signatures for above tx hashes - p2wsh version
-    const ownerSigWitness = bitcoin.script.signature.encode(ownerKeys.sign(hashForSigWitness), hashType);
-    // and p2sh version
-    const ownerSig = bitcoin.script.signature.encode(ownerKeys.sign(hashForSig), hashType);
+    Object.keys(contract.selectedUTXO).forEach(utxo => {
+      // hash the tx so you can sign - p2wsh version (+ requires coin value of input signed)
+      const hashForSigWitness = tx.hashForWitnessV0(0, witnessScript, satFromAmount, hashType);
+      // and p2sh version
+      const hashForSig = tx.hashForSignature(0, redeemScript, hashType);
 
-    // generate scriptSigs = input stack (like signatures) + the redeemScript
-    // scriptSig provides data to the locked output's scriptPubKey
-    // scriptSig ~ witness and redeemScript ~ witnessScript
-    // witness = initial witness stack (variables) + witnessScript
-    // stack fed reverse with bottom item ending up on top of received stack
+      // create the signatures for above tx hashes - p2wsh version
+      const ownerSigWitness = bitcoin.script.signature.encode(ownerKeys.sign(hashForSigWitness), hashType);
+      // and p2sh version
+      const ownerSig = bitcoin.script.signature.encode(ownerKeys.sign(hashForSig), hashType);
 
-    // p2wsh version
-    const witnessStackOwnerBranch = bitcoin.payments.p2wsh({
-      redeem: {
-        input: bitcoin.script.compile([
-          ownerSigWitness, // submitting sig for comparison w/ pub key
-          op.OP_TRUE // submit TRUE so it selects first branch of IF statement
-        ]),
-        output: witnessScript
-      },
-      network
-    }).witness;
+      // generate scriptSigs = input stack (like signatures) + the redeemScript
+      // scriptSig provides data to the locked output's scriptPubKey
+      // scriptSig ~ witness and redeemScript ~ witnessScript
+      // witness = initial witness stack (variables) + witnessScript
+      // stack fed reverse with bottom item ending up on top of received stack
 
-    // p2sh version
-    const scriptStackOwnerBranch = bitcoin.payments.p2sh({
-      redeem: {
-        input: bitcoin.script.compile([
-          ownerSig, // submitting sig for comparison w/ pub key
-          op.OP_TRUE // submit TRUE so it selects first branch of IF statement
-        ]),
-        output: redeemScript
+      // p2wsh version
+      const witnessStackOwnerBranch = bitcoin.payments.p2wsh({
+        redeem: {
+          input: bitcoin.script.compile([
+            ownerSigWitness, // submitting sig for comparison w/ pub key
+            op.OP_TRUE // submit TRUE so it selects first branch of IF statement
+          ]),
+          output: witnessScript
+        },
+        network
+      }).witness;
+
+      // p2sh version
+      const scriptStackOwnerBranch = bitcoin.payments.p2sh({
+        redeem: {
+          input: bitcoin.script.compile([
+            ownerSig, // submitting sig for comparison w/ pub key
+            op.OP_TRUE // submit TRUE so it selects first branch of IF statement
+          ]),
+          output: redeemScript
+        }
+      }).input;
+
+      // adding the scriptSig or witness stack to the transaction
+      if (contract.addressType === 'p2wsh') {
+        tx.setWitness(0, witnessStackOwnerBranch);
+      } else if (contract.addressType === 'p2sh') {
+        tx.setInputScript(0, scriptStackOwnerBranch);
+      } else {
+        throw new Error('my errors: address type unknown');
       }
-    }).input;
+    });
 
-    // adding the scriptSig or witness stack to the transaction
-    if (contract.addressType === 'p2wsh') {
-      tx.setWitness(0, witnessStackOwnerBranch);
-    } else if (contract.addressType === 'p2sh') {
-      tx.setInputScript(0, scriptStackOwnerBranch);
-    } else {
-      throw new Error('my errors: address type unknown');
-    }
-
-    // console.log('');
-    // Object.keys(tx.outs).forEach(item => {
-    //   console.log(item, ':', tx.outs[item].value);
-    // });
-    // console.log('');
+    console.log('');
+    tx.outs.forEach(item => {
+      console.log('outs', item, ':');
+    });
+    tx.ins.forEach(item => {
+      console.log('ins', item, ':');
+    });
+    console.log('');
 
     return tx;
   } catch (e) {
-    // console.log(e);
+    console.log(e);
     return undefined;
   }
 };

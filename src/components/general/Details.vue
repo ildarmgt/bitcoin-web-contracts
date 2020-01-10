@@ -10,13 +10,13 @@
       {{ buttonText }}
       <div
         class="arrow"
-        :class="{ down: showDetails }"
+        :class="{ down: (showDetails) }"
       />
     </div>
     <div />
     <!-- v-show used so dom still exists for important data, just not visible if off -->
     <div
-      v-show="showDetails"
+      v-show="(showDetails)"
       class="divDetails"
     >
       <slot />
