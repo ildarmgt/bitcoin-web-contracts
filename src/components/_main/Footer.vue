@@ -3,13 +3,11 @@
     <div class="footer__warning text_light">
       Warning: Demonstration only. Not reviewed for public use.
     </div>
-    <a
+    <div
       class="footer__address text_light"
-      href="https://blockstream.info/address/1HYhi1D8VCv4dRZhbAy1ghKGRv3UU34pb6"
-      target="_blank"
     >
       donate: 1HYhi1D8VCv4dRZhbAy1ghKGRv3UU34pb6
-    </a>
+    </div>
     <a
       class="footer__source text_light"
       href="https://github.com/ildarmgt/bitcoin-web-contracts"
