@@ -213,8 +213,7 @@ export default {
       'changeContractValues'
     ]),
     calcTxid (hash) {
-      // this gives many errors if reversing source instead of copy
-      return Buffer.from(hash).reverse().toString('hex');
+      return hash.toString('hex').match(/../g).reverse().join('');
     },
     // this grabs values from vuex and puts them into page variables
     updateFromState () {

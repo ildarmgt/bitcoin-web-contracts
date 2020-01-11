@@ -111,7 +111,6 @@ export const ownerTx = (contract) => {
     // amounts conversions to satoshi
     const satToAmount = Math.floor(parseFloat(contract.toAmount) * 1e8);
     const satChangeAmount = Math.floor(parseFloat(contract.changeAmount) * 1e8);
-    const satFromAmount = Math.floor(parseFloat(contract.sumOfUTXO) * 1e8);
 
     // redeemScript is referenced as a hash in an unspent p2sh output (scriptPubKey)
     // and requires to provide it to run the script now
@@ -127,15 +126,15 @@ export const ownerTx = (contract) => {
     const buildTx = new bitcoin.TransactionBuilder(network);
 
     // adding contract's chosen unspent output for input
-    // for some reason buffer has to be reversed
-    console.log('selectedUTXO', contract.selectedUTXO);
+    // console.log('selectedUTXO', contract.selectedUTXO);
     Object.keys(contract.selectedUTXO).forEach(utxo => {
       const txid = utxo.split('-')[0];
       const vout = utxo.split('-')[1];
       // const val = contract.selectedUTXO[utxo];
 
+      // buffer is written as little endian so reverse the hex
       buildTx.addInput(
-        Buffer.from(txid, 'hex').slice().reverse(),
+        Buffer.from(txid.match(/../g).reverse().join(''), 'hex'),
         parseInt(vout, 10),
         0xfffffffe
       );
@@ -153,26 +152,51 @@ export const ownerTx = (contract) => {
     // pre-build tx so it can be signed
     const tx = buildTx.buildIncomplete();
 
-    console.log('');
-    console.log('incomplete:');
-    tx.outs.forEach(item => {
-      console.log('outs', item, ':');
-    });
-    tx.ins.forEach(item => {
-      console.log('ins', item, ':');
-    });
-    console.log('');
+    // console.log('');
+    // console.log('before the signs:');
+    // tx.outs.forEach(item => {
+    //   console.log('outs', item, ':');
+    // });
+    // tx.ins.forEach(item => {
+    //   console.log('ins', item, ':');
+    // });
+    // console.log('');
 
-    Object.keys(contract.selectedUTXO).forEach(utxo => {
+    // for each output have to submit all necessary information
+    // schnorr soft fork later would possibly allow signing once
+    tx.ins.forEach((input, index) => {
+      // index is the index of this specific input (existing utxo) in this transaction
+      const txid = input.hash.toString('hex').match(/../g).reverse().join(''); // this is this input's txid
+      const vout = input.index.toString(); // this is this input's vout
+
+      // segwit requires input amount so have to match this input's
+      // txid-vout to key inside selected inputs to find value
+      // console.log(
+      //   txid,
+      //   vout,
+      //   contract.selectedUTXO[txid + '-' + vout],
+      //   parseFloat(contract.selectedUTXO[txid + '-' + vout]) * 1e8
+      // );
+      const satFromAmount = Math.floor(
+        parseFloat(contract.selectedUTXO[txid + '-' + vout]) * 1e8
+      );
+      // Math.floor(parseFloat(contract.sumOfUTXO) * 1e8);
+
       // hash the tx so you can sign - p2wsh version (+ requires coin value of input signed)
-      const hashForSigWitness = tx.hashForWitnessV0(0, witnessScript, satFromAmount, hashType);
+      const hashForSigWitness = tx.hashForWitnessV0(index, witnessScript, satFromAmount, hashType);
       // and p2sh version
-      const hashForSig = tx.hashForSignature(0, redeemScript, hashType);
+      const hashForSig = tx.hashForSignature(index, redeemScript, hashType);
 
       // create the signatures for above tx hashes - p2wsh version
-      const ownerSigWitness = bitcoin.script.signature.encode(ownerKeys.sign(hashForSigWitness), hashType);
+      const ownerSigWitness = bitcoin.script.signature.encode(
+        ownerKeys.sign(hashForSigWitness),
+        hashType
+      );
       // and p2sh version
-      const ownerSig = bitcoin.script.signature.encode(ownerKeys.sign(hashForSig), hashType);
+      const ownerSig = bitcoin.script.signature.encode(
+        ownerKeys.sign(hashForSig),
+        hashType
+      );
 
       // generate scriptSigs = input stack (like signatures) + the redeemScript
       // scriptSig provides data to the locked output's scriptPubKey
@@ -205,26 +229,26 @@ export const ownerTx = (contract) => {
 
       // adding the scriptSig or witness stack to the transaction
       if (contract.addressType === 'p2wsh') {
-        tx.setWitness(0, witnessStackOwnerBranch);
+        tx.setWitness(index, witnessStackOwnerBranch);
       } else if (contract.addressType === 'p2sh') {
-        tx.setInputScript(0, scriptStackOwnerBranch);
+        tx.setInputScript(index, scriptStackOwnerBranch);
       } else {
-        throw new Error('my errors: address type unknown');
+        throw new Error('my errors: source address type unknown');
       }
     });
 
-    console.log('');
-    tx.outs.forEach(item => {
-      console.log('outs', item, ':');
-    });
-    tx.ins.forEach(item => {
-      console.log('ins', item, ':');
-    });
-    console.log('');
+    // console.log('');
+    // tx.outs.forEach(item => {
+    //   console.log('outs', item, ':');
+    // });
+    // tx.ins.forEach(item => {
+    //   console.log('ins', item, ':');
+    // });
+    // console.log('');
 
     return tx;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return undefined;
   }
 };
