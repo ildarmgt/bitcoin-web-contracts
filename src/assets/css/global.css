@@ -18,7 +18,7 @@ html {
   * can adjust ratio to 0.4vmin + 0.6vmax.
   * extra factor there to correct to w/h ratio typically used.
   */
-  --s: calc(0.75 * (0.3vh + 0.7vw));
+  --s: calc(0.8 * (0.4vh + 0.6vw));
   /* some standard sizes for shorthand (could be done in sass mixin) */
   /* ideally only standard sizes below are used */
   --s6:   calc(6.0 * var(--s));
@@ -104,7 +104,7 @@ h1 {
 
 .text_light {
   text-decoration: none;
-  color:var(--text-darkeronlight, rgb(149, 149, 167));
+  color: var(--text-darkeronlight, rgb(149, 149, 167));
   font-size: var(--s2);
 }
 
@@ -121,21 +121,34 @@ div {
 
   font-size: var(--s2-5);
   border-radius: var(--s0-7);
-  background-color: rgba(17, 17, 51, 0.65);
-  color: var(--background, white);
+  background-color: var(--text-darkeronlight, rgb(149, 149, 167));
 
+  color: var(--background, white);
   text-decoration: none;
   -webkit-user-select: none;
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   user-select: none;
+  cursor: pointer;
 
-  transition: background-color 0.15s;
+  /* set up for sliding animation */
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  -webkit-text-fill-color: var(--background, white);
+  background-image: linear-gradient(
+    	to right,
+	    var(--bitcoin-orange, orange),
+	    var(--bitcoin-orange, orange) 50%,
+	    var(--bitcoin-blue, rgb(17, 17, 51)) 50%);
+	    background-size: 205% 100%;
+	    background-position: 100%;
 }
 
 .button:hover {
+  /* animation curve on hover */
   background-color: var(--bitcoin-blue, rgb(17, 17, 51));
-  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.000, 0.000, 0.4, 1);
+  background-position: 0%;
 }
 
 .button:active {
