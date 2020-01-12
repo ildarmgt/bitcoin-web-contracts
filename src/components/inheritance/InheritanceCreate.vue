@@ -2,7 +2,7 @@
   <div class="inheritance_create fa">
     <InheritanceCreateMenu />
     <Stepper
-      stepperName="Create Contract"
+      :stepperName="getVersions()"
       :pageWanted="getPageSelectedIC"
       :pageInfo="getPagesInfoIC"
       @newPageClicked="stepperPageChangeRequested"
@@ -59,7 +59,8 @@ export default {
   computed: {
     ...mapGetters('inheritanceCreate', [
       'getPageSelectedIC',
-      'getPagesInfoIC'
+      'getPagesInfoIC',
+      'getContractValuesIC'
     ])
   },
   mounted () {
@@ -73,6 +74,12 @@ export default {
     // on stepper emits change page request
     stepperPageChangeRequested (inNumber) {
       this.changePageIC(inNumber);
+    },
+    // get network & address type for title
+    getVersions () {
+      const contract = this.getContractValuesIC;
+      const txtTitle = 'Create ' + contract.addressType + ' contract on ' + contract.networkChoice;
+      return txtTitle;
     }
   }
 };

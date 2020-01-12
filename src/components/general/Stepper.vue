@@ -128,6 +128,7 @@ export default {
     color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
     padding-top: var(--s1);
     padding-bottom: var(--s2);
+    margin: 0 calc(10 * var(--s));
     margin-top: var(--s3);
     font-size: var(--s3);
     text-align: center;

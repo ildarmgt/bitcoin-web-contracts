@@ -18,7 +18,7 @@ const state = {
     daysDelay: '1',
     ownerPrivateKeyWIF: '',
     heirPrivateKeyWIF: '',
-    networkChoice: 'bitcoin',
+    networkChoice: 'testnet',
     addressType: 'p2wsh'
   }
 };
