@@ -1,5 +1,7 @@
 # High priority
 
+- make versions of packages reproducible with fixed versions in package.json & package-lock.json and install via `npm ci`
+
 - versioning in backup (version 1 implied if none)
 
 - address reuse avoidance

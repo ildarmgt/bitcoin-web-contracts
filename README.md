@@ -8,6 +8,8 @@ The latest compiled release used can be found in `./docs/` folder
 
 Compiled .html build can be used offline & on air-gapped computers
 
+The `#` is used to add comments in bash scripts below.
+
 ## To run precompiled client
 ```
 ./docs/index.html # open in browser
@@ -20,7 +22,7 @@ This compiles the project in the docs folder so it's easily published on github 
 ```
 git clone https://github.com/ildarmgt/bitcoin-web-contracts.git btcdapps
 cd btcdapps
-npm install
+npm ci # to use exact versions for everything in package-lock.json (just in case)
 npm run build
 ./docs/index.html # open in browser
 ```

@@ -72,7 +72,7 @@ import InheritanceHeirStep1Form from './InheritanceHeirStep1Form';
 import InputPrompt from './../general/InputPrompt';
 import Details from './../general/Details';
 
-import sjcl from './../../library/sjcl'; // Stanford Javascript Crypto Library
+import sjcl from 'sjcl'; // Stanford Javascript Crypto Library
 
 export default {
   name: 'InheritanceHeirStep1',

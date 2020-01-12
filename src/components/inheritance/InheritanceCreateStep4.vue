@@ -139,7 +139,7 @@ import copyToClipboard from './../../helpers/copyToClipboard';
 import ArrowButton from './../general/ArrowButton';
 import Details from './../general/Details';
 import sanitize from './../../helpers/sanitize';
-import sjcl from './../../library/sjcl'; // Stanford Javascript Crypto Library
+import sjcl from 'sjcl'; // Stanford Javascript Crypto Library
 
 export default {
   name: 'InheritanceCreateStep4',
