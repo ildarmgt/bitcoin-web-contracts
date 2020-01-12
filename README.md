@@ -38,7 +38,7 @@ https://bitcoinfaucet.uo1.net/send.php (segwit compatible)
 
 In testnet mode selected, link for faucet will be available inside the app
 
-## Method
+## Method used for Inheritance Contract
 
 Contract used is the following:
 
