@@ -13,6 +13,13 @@
 
   When searching for utxo we keep checking for tx history as we add 1 to known random number until we find unused address to find the next number to use.
 
+- Find a safe wallet integration to use as well? are there standard URI for bitcoin p2sh/p2wsh use?
+
+  maybe:
+  https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki
+
+- sjcl seems to have npm library, switch to it
+
 # Low priority
 
 - multiple fee suggestions instead of just API's 2-block estimate?
@@ -24,6 +31,3 @@
 # Known Issues
 
 # Suggestions
-
-
-
