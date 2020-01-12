@@ -7,13 +7,13 @@
         </div>
         <div class="q__strong_info">
           send
-          {{ this.getContractValues.toAmount }}
+          <span class="amt">{{ this.getContractValues.toAmount }}</span>
           {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
           <br>
           to {{ this.getContractValues.toAddress }}
           <br><br>
           and pay a fee of
-          {{ this.getContractValues.feeAmount }}
+          <span class="amt">{{ this.getContractValues.feeAmount }}</span>
           {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
         </div>
         <RoundButton
@@ -214,5 +214,11 @@ export default {
     text-align: left;
     user-select: text;
     line-height: var(--s3);
+  }
+  .amt {
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s0-1) var(--s1);
+    border-radius: var(--s1);
+    font-weight: normal;
   }
 </style>

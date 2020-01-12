@@ -133,7 +133,7 @@ export default {
       this.changeContractValues({ selectedUTXO: this.selectedUTXO });
     },
 
-    // // txid changed
+    // txid changed
     txidChanged (name, value, event) {
       // sanitize and display string, update vuex
       const fixedString = sanitize(event.target.value, 'hex');
@@ -151,7 +151,7 @@ export default {
       this.changeContractValues({ selectedUTXO: this.selectedUTXO });
     },
 
-    // // vout changed
+    // vout changed
     voutChanged (name, value, event) {
       // sanitize and display string, update vuex
       const fixedString = sanitize(event.target.value, 'numbers');
@@ -169,7 +169,7 @@ export default {
       this.changeContractValues({ selectedUTXO: this.selectedUTXO });
     },
 
-    // // utxo value changed
+    // utxo value changed
     utxoValueChanged (name, value, event) {
       // sanitize and display string, update vuex
       let fixedString = sanitize(event.target.value, 'fractions');
@@ -199,7 +199,6 @@ export default {
     }
   }
 };
-
 </script>
 
 <style scoped>
@@ -214,7 +213,6 @@ export default {
   }
   .form_element {
     background-color: var(--darker2, rgba(0, 0, 0, 0.2));
-    /* border: var(--s0-5) solid var(--darker2, rgba(0, 0, 0, 0.2)); */
     padding: var(--s1);
     padding-top: var(--s1);
     margin: var(--s1);
@@ -235,13 +233,11 @@ export default {
   }
   .txidbox {
     width: 70%;
-    /* margin-left: 5%; */
   }
   .voutbox {
     width: var(--s5);
   }
   .utxovalue {
-    /* margin-left: 5%; */
     width: 75%;
   }
   .amt {

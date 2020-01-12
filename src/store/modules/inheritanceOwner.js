@@ -37,7 +37,7 @@ const state = {
     // destination information
     toAddress: '',
     toAmount: '21000000',
-    feeRate: '1.001', // (sat/vByte)
+    feeRate: '1.000', // (sat/vByte)
     changeAddress: '',
     feeAmount: '0', // derived
     changeAmount: '0', // derived
@@ -146,7 +146,7 @@ const actions = {
     // priority: inputs & fee > target > change
     const tx = contract.tx;
     const vSize = tx ? tx.virtualSize() : contract.vSize;
-    let minFee = Math.ceil(vSize * parseFloat(contract.feeRate));
+    let minFee = Math.ceil(vSize * parseFloat(contract.feeRate) + 1e-8);
     const inputs = Math.floor(1e8 * parseFloat(contract.sumOfUTXO));
     let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
@@ -196,13 +196,13 @@ const actions = {
     const doNetworksMatch = (keyNetwork === addressNetwork);
     commit('setIssues', { addressNetwork: !doNetworksMatch });
 
-    // page 1: update state if known from above
+    // page 1: update networkChoice if known from above
     commit('setContractValues', {
       networkChoice: (doNetworksMatch && keyNetwork) ? keyNetwork : ''
     });
 
     // page 1: should check if p2sh or p2wsh address
-    // and then update state
+    // and then update addressType if possible
     const address = contract.address;
     let addressType;
     if (address.substring(0, 1) === '3') { addressType = 'p2sh'; }

@@ -83,7 +83,7 @@
         @input="textChanged"
       />
       <div class="label">
-        relativeLockTime (dec) {{ tryToCalcDays() ? ' ~' + tryToCalcDays() + ' days' : '' }}
+        Relative lock time (dec) {{ tryToCalcDays() ? ' ~' + tryToCalcDays() + ' days' : '' }}
       </div>
       <textarea
         id="relativeLockTime"

@@ -4,7 +4,7 @@
       <!-- main question -->
       <div class="q__strong">
         <div class="q__strong_text">
-          What to do with
+          Where to send
           <span class="amt">{{ getContractValues.sumOfUTXO }}</span>
           {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
           selected?

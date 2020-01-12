@@ -174,7 +174,6 @@ export default {
       this.fileName = '';
       this.changeFile(undefined);
     }
-
   }
 };
 </script>
@@ -208,7 +207,7 @@ export default {
     display: inline-block;
     width: 50%;
     height: calc(15 * var(--s));
-    border: var(--s0-5) dotted rgba(255, 255, 255, 0.534);
+    border: var(--s0-5) dotted var(--text-lighterondark, rgba(255, 225, 225, 0.6));
     border-radius: var(--s5);
 
     line-height: calc(15 * var(--s));
@@ -229,7 +228,7 @@ export default {
     cursor: pointer;
   }
   .fileInfo {
-    border: var(--s0-5) dotted rgba(255, 255, 255, 0.534);
+    border: var(--s0-5) dotted var(--text-lighterondark, rgba(255, 225, 225, 0.6));
     border-radius: var(--s3);
     line-height: var(--s3);
     display: block;
@@ -252,7 +251,7 @@ export default {
     line-height: 0;
     font-size: var(--s5);
     content: "×";
-    color: rgba(255, 255, 255, 0.534);
+    color: var(--text-lighterondark, rgba(255, 225, 225, 0.6));
     height: var(--s0-1);
     width: var(--s0-1);
     border-radius: var(--s3);

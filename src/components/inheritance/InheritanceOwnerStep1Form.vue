@@ -219,7 +219,7 @@ export default {
 
 <style scoped>
   .info {
-    margin-top: calc(6 * var(--s));
+    margin-top: var(--s6);
     margin-bottom: var(--s3);
   }
   .textBox {

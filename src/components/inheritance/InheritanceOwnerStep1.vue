@@ -33,7 +33,7 @@
           or
           <RoundButton
             textContent="manually fill out"
-            textColor="white"
+            textColor="var(--background, white)"
             @click="manuallyClicked"
           />
         </div>
@@ -255,7 +255,7 @@ export default {
     height: var(--s0-1);
     width: var(--s0-1);
     border-radius: var(--s3);
-    right: calc(3.5 * var(--s));
+    right: var(--s3-5);
     top: calc(1.8 * var(--s));
     position: absolute;
   }

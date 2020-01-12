@@ -205,6 +205,7 @@ export default {
       this.updateFromState();
     }
   },
+  // first thing it does
   mounted () {
     this.updateFromState();
   },
@@ -243,7 +244,7 @@ export default {
       // (TODO) give option menu
       this.changeContractValues({
         feeRate: this.feeRate,
-        change: true
+        change: true // in case fee gets smaller, might have extra left over
       });
     },
     // textbox contents changed
@@ -272,6 +273,7 @@ export default {
           fixedString = parseFloat(fixedString).toFixed(3);
         }
 
+        // replace content with the new sanitized string
         event.target.value = fixedString;
         this[event.target.id] = fixedString;
 

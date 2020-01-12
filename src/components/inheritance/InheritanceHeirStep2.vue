@@ -20,7 +20,6 @@
         />
         ?
       </div>
-
       <div class="utxoList">
         <div
           class="q__lbl2"
@@ -30,7 +29,7 @@
           <div class="q__lbl2___sidenote">
             Locked
             {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
-            and when it's unlocked
+            and when it's unlocked for you
           </div>
         </div>
         <div
@@ -93,9 +92,7 @@ export default {
   },
   data: () => ({
     utxo: [],
-    txid: '',
-    vout: '',
-    utxoValue: '',
+    selectedUTXO: {},
     selected: -1,
     showForm: false,
     showDetails: false
@@ -103,8 +100,15 @@ export default {
   mounted () {
     // if page 2 utxo and vout filled out, show them at start
     const contract = this.getContractValues;
-    if (contract.txid && contract.vout) {
+    this.selectedUTXO = contract.selectedUTXO;
+    if (Object.keys(contract.selectedUTXO).length) {
       this.showForm = true;
+    }
+  },
+  watch: {
+    // if vuex contract values change, update this component
+    getContractValues (contract) {
+      this.selectedUTXO = contract.selectedUTXO;
     }
   },
   computed: {
@@ -120,13 +124,16 @@ export default {
 
     // show the form
     showFormNow () {
-      this.showDetails = true;
+      this.showDetails = !this.showDetails;
       this.showForm = true;
     },
 
     // returns if specific utxo from api list was selected
     isSelected (i) {
-      return this.selected === i;
+      const txid = this.utxo[i].txid;
+      const vout = this.utxo[i].vout;
+      const isMatch = !!this.selectedUTXO[txid + '-' + vout];
+      return isMatch;
     },
 
     // next button event
@@ -147,7 +154,6 @@ export default {
         // update local storage
         // for now just removing unconfirmed tx
         this.utxo = outputs.reduce((acc, out, i) => {
-          // if confirmed so it has blocktime
           if (out.status.block_time) {
             const { daysLocked } = this.getContractValues;
             const ago = timeDiff(out.status.block_time * 1000, daysLocked);
@@ -165,7 +171,7 @@ export default {
           }
         }, []);
       } catch (e) {
-        console.log(e);
+        console.log('Error while trying api request from blockstream.info\n', e);
       }
     },
 
@@ -174,18 +180,27 @@ export default {
       // show form
       this.showForm = true;
 
-      // mark option selected
-      this.selected = i;
-      // (TODO)
-      // put selected utxo (1 at first, multiple later) into local storage
-      this.txid = this.utxo[i].txid;
-      this.vout = this.utxo[i].vout;
-      this.utxoValue = this.utxo[i].utxoValue;
+      // grab important data from the api
+      const txid = this.utxo[i].txid;
+      const vout = this.utxo[i].vout;
+      const value = this.utxo[i].utxoValue;
+
+      // select if unselected, unselect if selected
+      const isOldSelection = !!this.selectedUTXO[txid + '-' + vout];
+      if (isOldSelection) {
+        // already exists so remove
+        delete this.selectedUTXO[txid + '-' + vout];
+      } else {
+        // add since not selected yet
+        this.selectedUTXO = {
+          ...this.selectedUTXO,
+          [txid + '-' + vout]: value
+        };
+      }
+
       // put selected into vuex
       this.changeContractValues({
-        txid: this.txid,
-        vout: this.vout,
-        utxoValue: this.utxoValue
+        selectedUTXO: this.selectedUTXO
       });
     }
   }
@@ -207,8 +222,8 @@ export default {
     text-align: left;
   }
   .q__lbl1 {
-    margin-top: var(--s6);
-    margin-bottom: var(--s6);
+    margin-top: calc(6.0 * var(--s));
+    margin-bottom: calc(6.0 * var(--s));
     text-align: center;
     color: var(--background, white);
     font-size: var(--s3);
@@ -230,9 +245,6 @@ export default {
     line-height: var(--s2-5);
     cursor: pointer;
   }
-  .utxoItem:hover {
-    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
-  }
   .q__plus {
     padding: 0 var(--s0-5);
   }
@@ -245,11 +257,13 @@ export default {
   }
   .locked {
     background-color: var(--color-error-light, rgba(141, 70, 70, 0.5));
+
     border-radius: var(--s1-5);
     padding: var(--s0-2);
     padding-left: var(--s1);
     padding-right: var(--s1);
     vertical-align: baseline;
+    white-space: nowrap;
   }
   .unlocked {
     background-color: var(--darker1, rgba(0, 0, 0, 0.1));
@@ -257,5 +271,8 @@ export default {
   .q__lbl2___sidenote {
     margin-left: var(--s5);
     margin-top: var(--s3);
+  }
+  .utxoItem:hover {
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
   }
 </style>

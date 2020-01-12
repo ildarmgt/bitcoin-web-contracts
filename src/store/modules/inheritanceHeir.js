@@ -29,14 +29,12 @@ const state = {
     relativeLockTime: '',
 
     // outputs to spend
-    txid: '',
-    vout: '',
-    utxoValue: '',
+    selectedUTXO: {},
     sumOfUTXO: '', // for future use, derived
 
     // destination information
     toAddress: '',
-    feeRate: '1.001', // (sat/vByte)
+    feeRate: '1.000', // (sat/vByte)
     toAmount: '21000000', // derived here since all is sent
     feeAmount: '0', // derived
     vSize: 100, // derived)
@@ -114,8 +112,12 @@ const actions = {
   deriveSpendingInfo ({ commit, state }) {
     const contract = state.contractValues;
 
-    // sum all input utxo values, just 1 utxo at first
-    const sumOfUTXO = contract.utxoValue;
+    // sum up utxo selected
+    const sumOfUTXO = Object.keys(contract.selectedUTXO)
+      .reduce((acc, val) => {
+        return acc + (parseFloat(contract.selectedUTXO[val]) || 0);
+      }, 0)
+      .toFixed(8);
     commit('setContractValues', { sumOfUTXO });
   },
 
@@ -126,9 +128,8 @@ const actions = {
     // priority: inputs & fee > target
     const tx = contract.tx;
     const vSize = tx ? tx.virtualSize() : contract.vSize;
-    let minFee = Math.ceil(vSize * parseFloat(contract.feeRate));
+    let minFee = Math.ceil(vSize * parseFloat(contract.feeRate) + 1e-8);
     const inputs = Math.floor(1e8 * parseFloat(contract.sumOfUTXO));
-    // let target = Math.floor(1e8 * parseFloat(contract.toAmount));
 
     let target = Math.floor(inputs - minFee);
 
@@ -201,22 +202,32 @@ const actions = {
 
     // page 2
 
-    const isUtxoDone = !!contract.txid;
-    const isVoutDone = !!contract.vout;
-    const isUtxoValue = !!contract.utxoValue;
+    // non-zero amount of coins in input (TODO: dust)
+    const enoughUTXO = (contract.sumOfUTXO > 0);
+    // set done status to false if any of txid/vout/value are empty strings
+    const areValuesDone = Object.keys(contract.selectedUTXO)
+      .reduce((acc, val) => {
+        const txid = val.split('-')[0];
+        const vout = val.split('-')[1];
+        const isTxid = !!txid.length;
+        const isVout = !!vout.length;
+        const isVal = !!val.length;
+        return acc && (isTxid && isVout && isVal);
+      }, true);
 
-    const isPage2Valid = isUtxoDone && isVoutDone && isUtxoValue;
+    const isPage2Valid = areValuesDone && enoughUTXO;
 
-    // page 3
-    const isToAddressDone = !!contract.toAddress;
+    // page 3 parts
+    const isToAddressDone = !!contract.toAddress.length;
     const isFeeRateDone = !!contract.feeRate;
-    const isToAmountEnough = parseFloat(contract.toAmount) > 0.0;
-    const isFeeRateEnough = parseFloat(contract.feeRate) >= 1.0;
+    const isToAmountEnough = parseFloat(contract.toAmount) > 0.0; // find dust limits standards (TODO)
+    const isFeeRateEnough = parseFloat(contract.feeRate) >= 1.0; // min fee rate
     const isTxReady = !!contract.tx;
 
     const whichNetworkAddress = whatAddress(contract.toAddress);
     const isNetworkMatch = (whichNetworkAddress === contract.networkChoice);
 
+    // combined check
     const isPage3Valid = (
       isToAddressDone &&
       isNetworkMatch &&

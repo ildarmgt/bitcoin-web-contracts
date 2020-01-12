@@ -19,6 +19,7 @@
         spellcheck="false"
         :value="toAddress"
         @input="textChanged"
+        :class="{ badValue : getIssues.page3.isToAddressMatch }"
       />
     </div>
     <div class="label">
@@ -41,7 +42,7 @@
     />
     <div class="divFormFooter">
       <span
-        class="change"
+        class="sending"
         :class="{ negativeAmt : toAmount < 0 }"
       >
         {{ this.toAmount }}
@@ -175,8 +176,8 @@ export default {
       'changeContractValues'
     ]),
     calcTxid (hash) {
-      // this gives many errors if reversing source instead of copy
-      return Buffer.from(hash).reverse().toString('hex');
+      // have to read the hex backwards of little endian buffer
+      return hash.toString('hex').match(/../g).reverse().join('');
     },
     // this grabs values from vuex and puts them into page variables
     updateFromState () {
@@ -223,9 +224,7 @@ export default {
         // update vuex
         this.changeContractValues({
           toAddress: this.toAddress,
-          feeRate: this.feeRate,
-          changeAddress: this.changeAddress,
-          change: true
+          feeRate: this.feeRate
         });
         // allow error display after initial edit
         this.isFreshLoad = false;
@@ -342,7 +341,7 @@ export default {
   .error {
     background: var(--color-error-light, rgba(141, 70, 70, 0.5));
   }
-  .change {
+  .sending {
     background-color: var(--darker1, rgba(0, 0, 0, 0.1));
     padding: var(--s0-1) var(--s0-5);
     margin-right: var(--s0-5);
@@ -352,4 +351,8 @@ export default {
   .negativeAmt {
     background-color: var(--color-error-light, rgba(141, 70, 70, 0.5));
   }
+  .badValue {
+    color: var(--color-error-strong, rgb(175, 27, 27));
+  }
+
 </style>

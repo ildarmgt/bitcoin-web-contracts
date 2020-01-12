@@ -8,7 +8,7 @@
         <div class="q__strong_info">
           <div v-show="parseFloat(this.getContractValues.toAmount) > 0">
             send
-            {{ this.getContractValues.toAmount }}
+            <span class="amt">{{ this.getContractValues.toAmount }}</span>
             {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
             <br>
             to {{ this.getContractValues.toAddress }}
@@ -16,12 +16,12 @@
           </div>
           <div v-show="parseFloat(this.getContractValues.changeAmount) > 0">
             reset
-            {{ this.getContractValues.changeAmount }}
+            <span class="amt">{{ this.getContractValues.changeAmount }}</span>
             {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
             <br><br>
           </div>
           and pay a fee of
-          {{ this.getContractValues.feeAmount }}
+          <span class="amt">{{ this.getContractValues.feeAmount }}</span>
           {{ getContractValues.networkChoice === 'testnet' ? 'tBTC' : 'BTC' }}
         </div>
         <RoundButton
@@ -191,7 +191,7 @@ export default {
     color: var(--bitcoin-orange, orange);
     font-weight: bold;
     font-size: var(--s2-5);
-    background-color:var(--darker1, rgba(0, 0, 0, 0.1));
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
     padding: var(--s1);
     text-align: center;
     width: 80%;
@@ -222,5 +222,11 @@ export default {
     text-align: left;
     user-select: text;
     line-height: var(--s3);
+  }
+  .amt {
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    padding: var(--s0-1) var(--s1);
+    border-radius: var(--s1);
+    font-weight: normal;
   }
 </style>
