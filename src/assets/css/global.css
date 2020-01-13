@@ -207,7 +207,7 @@ textarea {
   padding: var(--s0-5) var(--s1);
   padding-top: 0;
   height: calc(3.6 * var(--s));
-  line-height: calc(3.6 * var(--s));
+  line-height: calc(3 * var(--s));
   border-radius: var(--s0-5);
   background-color: var(--background, white);
   border: var(--s0-1) solid var(--background, white);
