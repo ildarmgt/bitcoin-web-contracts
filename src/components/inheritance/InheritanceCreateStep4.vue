@@ -127,6 +127,16 @@
       >
         <pre>{{ backupDataOwner }}</pre>
       </Details>
+      <Details
+        class="detailsPlaintext"
+        buttonText="How does it have an address already?"
+        :showAtStart="false"
+      >
+        <div class="q__lbl2 lbl3">
+          Contract addresses for pay-to-script-hash (p2sh, p2wsh) can be derived from the contract script itself, which depends on your (public) keys, timer setting, and network - all of which are known and represented with a short unique representative address. <br><br>
+          Spending funds from contract requires you to submit the actual script used which has to match the short address digest for it to work. Once contract receives your transaction outputs, everything necessary to spend those should be included in the backup file above and other pages of this app.
+        </div>
+      </Details>
     </div>
   </div>
 </template>
@@ -446,6 +456,10 @@ export default {
     background-color: var(--darker1, rgba(0, 0, 0, 0.1));
     padding: var(--s3);
     border-radius: var(--s1);
+  }
+  .lbl3 {
+    text-align: left;
+    font-size: var(--s2);
   }
   .txtKey {
     display: inline-block;
