@@ -6,7 +6,7 @@ import VueFlashMessage from 'vue-flash-message'; // flash msg
 
 // components
 import IntroPage from './components/_main/IntroPage';
-import Inheritance from './components/inheritance/Inheritance';
+// import Inheritance from './components/inheritance/Inheritance';
 import PuzzleDelay from './components/puzzledelay/PuzzleDelay';
 
 // global css
@@ -23,7 +23,7 @@ export const router = new VueRouter({
   // mode: 'history', // needs to be off for offline routing
   routes: [
     { path: '/', component: IntroPage },
-    { path: '/inheritance', component: Inheritance },
+    { path: '/inheritance', component: () => import('./components/inheritance/Inheritance.vue') },
     { path: '/puzzledelay', component: PuzzleDelay }
   ]
 });
