@@ -22,6 +22,19 @@
       </div>
       <div class="utxoList">
         <div
+          class="apiWaiting"
+          v-if="apiWaiting"
+        >
+          API: Fetching...
+        </div>
+        <div
+          class="apiFailed"
+          v-if="apiFailed"
+        >
+          {{ apiFailed === 'API_BAD' ? 'API: Could not connect' : '' }}
+          {{ apiFailed === 'API_NONE' ? 'API: No confirmed funds found' : '' }}
+        </div>
+        <div
           class="q__lbl2"
           v-if="utxo.length"
         >
@@ -74,7 +87,7 @@
 </template>
 
 <script>
-import getUTXO from '../../api/utxo';
+import getUTXO from '../../api/utxo'; // api
 import timeDiff from './../../helpers/timeDiff';
 
 import { mapActions, mapGetters } from 'vuex'; // state
@@ -91,11 +104,12 @@ export default {
     InheritanceOwnerStep2Form
   },
   data: () => ({
-    utxo: [],
-    selectedUTXO: {},
-    selected: -1,
-    showForm: false,
-    showDetails: false
+    utxo: [], // all found utxo from API
+    selectedUTXO: {}, // array of selected utxo
+    showForm: false, // show selected utxo totals + details option
+    showDetails: false, // show each individual utxo details
+    apiWaiting: false, // show loading screen
+    apiFailed: undefined // 'API_BAD' - api error, 'API_NONE' - no confirmed utxo
   }),
   mounted () {
     // if page 2 utxo and vout filled out, show them at start
@@ -146,6 +160,8 @@ export default {
     async getOutputs () {
       const { address, networkChoice } = this.getContractValues;
 
+      this.apiWaiting = true; // show loading animation
+      this.apiFailed = false; // hide past failure notice
       try {
         if (!address) { throw new Error('no address'); }
         if (!networkChoice) { throw new Error('unknown network'); }
@@ -170,7 +186,13 @@ export default {
             return acc;
           }
         }, []);
+        // if empty array, say nothing found
+        this.apiFailed = !this.utxo.length ? 'API_NONE' : undefined;
+        this.apiWaiting = false; // remove loading animation
       } catch (e) {
+        // if api error, show trouble connecting
+        this.apiFailed = 'API_BAD';
+        this.apiWaiting = false; // remove loading animation
         console.log('Error while trying api request from blockstream.info\n', e);
       }
     },
@@ -223,7 +245,7 @@ export default {
   }
   .q__lbl1 {
     margin-top: calc(6.0 * var(--s));
-    margin-bottom: calc(6.0 * var(--s));
+    margin-bottom: calc(4.0 * var(--s));
     text-align: center;
     color: var(--background, white);
     font-size: var(--s3);
@@ -273,5 +295,23 @@ export default {
   }
   .utxoItem:hover {
     background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+  }
+  .apiWaiting {
+    display: inline-block;
+    margin: var(--s1) var(--s1);
+    background-color: var(--darker1, rgba(0, 0, 0, 0.1));
+    border-radius: var(--s0-5);
+    padding: var(--s0-5) var(--s2);
+    margin-bottom: var(--s4);
+    color: var(--background, white);
+  }
+  .apiFailed {
+    display: inline-block;
+    margin: var(--s1) var(--s1);
+    background-color: var(--color-error-light, rgba(141, 70, 70, 0.5));
+    border-radius: var(--s0-5);
+    padding: var(--s0-5) var(--s2);
+    margin-bottom: var(--s4);
+    color: var(--background, white);
   }
 </style>

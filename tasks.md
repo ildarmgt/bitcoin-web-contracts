@@ -1,6 +1,10 @@
 # High priority
 
+- bad utxo info detection
+
 - versioning in backup (version 1 implied if none)
+
+- add note people can use keys generated elsewhere
 
 - address reuse avoidance
 
@@ -26,6 +30,8 @@
 
 - multiple fee suggestions instead of just API's 2-block estimate?
 
+- api visual failure reactions (page 3 for fee and page 4 for push not vital)
+
 # Not sure
 
 - dollar values for owner spending. must be optional, default off.
@@ -35,6 +41,8 @@
 # Suggestions
 
 # Done
+
+- api visual failure reactions (page2 on both most important)
 
 - make versions of packages reproducible with fixed versions in package.json & package-lock.json and install via `npm ci`
 
