@@ -118,13 +118,16 @@ export default {
       'changeContractValues'
     ]),
     async btnBroadcast () {
-      const res = await blockstreamPush(this.getContractValues.tx.toHex());
-      if (res.status === 200) {
-        this.bRes = res.data;
+      const res = await blockstreamPush(
+        this.getContractValues.tx.toHex(),
+        this.getContractValues.networkChoice
+      );
+      if (res.txid) {
         this.bOk = true;
+        this.bRes = res.txid;
       } else {
-        this.bRes = res.response.data;
         this.bOk = false;
+        this.bRes = res.error;
       }
     },
     btnCopy () {

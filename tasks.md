@@ -40,12 +40,3 @@
 
 # Suggestions
 
-# Done
-
-- api visual failure reactions (page2 on both most important)
-
-- make versions of packages reproducible with fixed versions in package.json & package-lock.json and install via `npm ci`
-
-- sjcl seems to have npm library, switch to it
-
-- add detail explanation why contract address is known before any transaction is done
