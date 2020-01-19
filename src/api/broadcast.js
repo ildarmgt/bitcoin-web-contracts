@@ -3,7 +3,7 @@ import axios from 'axios';
 /**
  * Broadcasts content onto the blockchain
  * parameters: (content, network)
- * @param {object} content - raw hex content of transaction
+ * @param {string} content - raw hex content of transaction
  * @param {string} network - 'testnet' or 'bitcoin' to match bitcoinjs-lib
  * @returns {string} - Successful broadcast returns txid, otherwise error reason
  */
