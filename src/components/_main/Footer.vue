@@ -52,6 +52,7 @@ export default {
   .footer {
     margin: 0 0 0 0;
     margin-bottom: var(--s5);
+    margin-top: var(--s5);
     vertical-align: middle;
   }
   .footer__warning {

@@ -1,5 +1,8 @@
 # Bitcoin Smart Contracts in Browser
 
+## Inheritance Contract Dapp:
+![screenshot](https://i.imgur.com/02MHsZu.png)
+
 Client side Vue based front end showing the power of Bitcoin smart contracts as various decentralized applications (dApps)
 
 [Current github pages demo.](https://ildarmgt.github.io/bitcoin-web-contracts/)
