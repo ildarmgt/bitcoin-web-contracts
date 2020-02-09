@@ -1,7 +1,11 @@
 # Bitcoin Smart Contracts in Browser
 
 ## Inheritance Contract Dapp:
-![screenshot](https://i.imgur.com/I0FCyN6.png)
+![screenshot](https://i.imgur.com/5vhKYnA.png)
+
+![screenshot](https://i.imgur.com/RryQrqI.png)
+
+![screenshot](https://i.imgur.com/4VRIzyf.png)
 
 Client side Vue based front end showing the power of Bitcoin smart contracts as various decentralized applications (dApps)
 
@@ -90,3 +94,5 @@ The approach used requires the least amount of work for both parties while havin
 ## Donations
 
 BTC: 1HYhi1D8VCv4dRZhbAy1ghKGRv3UU34pb6
+
+BTC LN: https://tippin.me/@cryptodev7285
