@@ -1,6 +1,7 @@
 # Bitcoin Smart Contracts in Browser
 
 ## Inheritance Contract Dapp:
+
 ![screenshot](https://i.imgur.com/5vhKYnA.png)
 
 ![screenshot](https://i.imgur.com/RryQrqI.png)
@@ -9,7 +10,7 @@
 
 Client side Vue based front end showing the power of Bitcoin smart contracts as various decentralized applications (dApps)
 
-[Current github pages demo.](https://ildarmgt.github.io/bitcoin-web-contracts/)
+[Current github pages demo.](https://ildarmgt.github.io/bitcoin-web-contracts/#/inheritance)
 
 The latest compiled release used can be found in `./docs/` folder
 
@@ -18,6 +19,7 @@ Compiled .html build can be used offline & on air-gapped computers
 The `#` is used to add comments in bash scripts below.
 
 ## To run precompiled client
+
 ```
 ./docs/index.html # open in browser
 ```
@@ -39,6 +41,7 @@ npm run build
 ```
 npm run serve
 ```
+
 This makes it accessible locally at http://localhost:8080
 
 ## Testnet bitcoin faucets (free testnet coins)
@@ -51,7 +54,8 @@ In testnet mode selected, link for faucet will be available inside the app
 
 Contract used is the following:
 
- `./src/bitcoin/index.js`
+`./src/bitcoin/index.js`
+
 ```
 const script = bitcoin.script.compile([
 
@@ -85,7 +89,7 @@ Alternative methods:
 
 1. LN-type punishment script where owner signs and gives heir a transaction to withdraw funds whenever. The output has an unlock script on it with a delay before it becomes spendable by the heir but before which it's only spendable by the owner. So if the owner is still around, they can monitor their address and confiscate the funds back before the heir has full access.
 
-    The main downside of this apporach is the transaction would have to be updated and resent to heir every time the owner wants to spend the outputs as he would have to sign a different output. The heir would have to possibly go through tedious process of backing up the updated information each time. The second downside would be the heir can waste owner's fees on confiscations by doing it frequently.
+   The main downside of this apporach is the transaction would have to be updated and resent to heir every time the owner wants to spend the outputs as he would have to sign a different output. The heir would have to possibly go through tedious process of backing up the updated information each time. The second downside would be the heir can waste owner's fees on confiscations by doing it frequently.
 
 2. The transaction can be done without custom scripts by including a [locktime](https://bitcoin.org/en/transactions-guide#locktime-and-sequence-number) as blockheight or unix time at which point it becomes spendable. The owner can render the heir transaction useless by spending the output before that time. Downside is once again having to resign updated transactions, sharing them with the heir, and heir having to back up the information frequently.
 

@@ -4,7 +4,6 @@
 }
 
 html {
-  font-size: 2.5vmin;
   font-family: 'Montserrat';
   overflow-y: scroll;
 
@@ -13,23 +12,19 @@ html {
   /* this provides a global css variable that scales
   * with viewport height and width average and reduces
   * effect at very small vmin or very large vmax.
-  * 0.5 for both is equivalent to 0.5vh + 0.5vw expression.
-  * If unreadable text at very small vmin still a problem
-  * can adjust ratio to 0.4vmin + 0.6vmax.
-  * extra factor there to correct to w/h ratio typically used.
   */
-  --s: calc(0.8 * (0.4vh + 0.6vw));
+  --s: calc(0.9 * (0.4vh + 0.6vw));
   /* some standard sizes for shorthand (could be done in sass mixin) */
   /* ideally only standard sizes below are used */
-  --s6:   calc(6.0 * var(--s));
-  --s5:   calc(5.0 * var(--s));
-  --s4:   calc(4.0 * var(--s));
+  --s6: calc(6 * var(--s));
+  --s5: calc(5 * var(--s));
+  --s4: calc(4 * var(--s));
   --s3-5: calc(3.5 * var(--s));
-  --s3:   calc(3.0 * var(--s)); /* font */
+  --s3: calc(3 * var(--s)); /* font */
   --s2-5: calc(2.5 * var(--s)); /* font */
-  --s2:   calc(2.0 * var(--s)); /* font */
+  --s2: calc(2 * var(--s)); /* font */
   --s1-5: calc(1.5 * var(--s));
-  --s1:   calc(1.0 * var(--s)); /* typical spacing */
+  --s1: calc(1 * var(--s)); /* typical spacing */
   --s0-7: calc(0.7 * var(--s));
   --s0-5: calc(0.5 * var(--s));
   --s0-3: calc(0.3 * var(--s));
@@ -44,20 +39,81 @@ html {
   --color-disabled: gray; /* var(--color-disabled, gray) */
   --darker2: rgba(0, 0, 0, 0.2); /* var(--darker2, rgba(0, 0, 0, 0.2)) */
   --darker1: rgba(0, 0, 0, 0.1); /* var(--darker1, rgba(0, 0, 0, 0.1)) */
-  --brighter2: rgba(255, 255, 255, 0.2); /* var(--brighter2, rgba(255, 255, 255, 0.2)) */
-  --brighter1: rgba(255, 255, 255, 0.1); /* var(--brighter1, rgba(255, 255, 255, 0.1)) */
-  --transparent: rgba(255, 255, 255, 0); /* var(--transparent, rgba(255, 255, 255, 0)) */
-  --text-lighterondark: rgba(255, 225, 225, 0.6); /* var(--text-lighterondark, rgba(255, 225, 225, 0.6)) */
-  --text-darkeronlight: rgb(149, 149, 167); /* var(--text-darkeronlight, rgb(149, 149, 167)) */
-  --color-selection: rgba(0, 0, 233, 0.2); /* var(--color-selection, rgba(0, 0, 233, 0.2)) */
-  --color-error-light: rgba(141, 70, 70, 0.5); /* var(--color-error-light, rgba(141, 70, 70, 0.5)) */
-  --color-error-strong: rgb(175, 27, 27); /* var(--color-error-strong, rgb(175, 27, 27)) */
-  --color-heir: rgba(0, 134, 0, 0.6); /* var(--color-heir, rgba(0, 134, 0, 0.6)) */
-  --color-heir-solid: rgba(0, 134, 0); /* var(--color-heir-solid, rgba(0, 134, 0)) */
-  --color-owner: rgba(0, 0, 255, 0.6); /* var(--color-owner, rgba(0, 0, 255, 0.6)) */
-  --color-owner-solid: rgb(102, 102, 255); /* var(--color-owner-solid, rgb(102, 102, 255)) */
+  --brighter2: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* var(--brighter2, rgba(255, 255, 255, 0.2)) */
+  --brighter1: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* var(--brighter1, rgba(255, 255, 255, 0.1)) */
+  --transparent: rgba(
+    255,
+    255,
+    255,
+    0
+  ); /* var(--transparent, rgba(255, 255, 255, 0)) */
+  --text-lighterondark: rgba(
+    255,
+    225,
+    225,
+    0.6
+  ); /* var(--text-lighterondark, rgba(255, 225, 225, 0.6)) */
+  --text-darkeronlight: rgb(
+    149,
+    149,
+    167
+  ); /* var(--text-darkeronlight, rgb(149, 149, 167)) */
+  --color-selection: rgba(
+    0,
+    0,
+    233,
+    0.2
+  ); /* var(--color-selection, rgba(0, 0, 233, 0.2)) */
+  --color-error-light: rgba(
+    141,
+    70,
+    70,
+    0.5
+  ); /* var(--color-error-light, rgba(141, 70, 70, 0.5)) */
+  --color-error-strong: rgb(
+    175,
+    27,
+    27
+  ); /* var(--color-error-strong, rgb(175, 27, 27)) */
+  --color-heir: rgba(
+    0,
+    134,
+    0,
+    0.6
+  ); /* var(--color-heir, rgba(0, 134, 0, 0.6)) */
+  --color-heir-solid: rgba(
+    0,
+    134,
+    0
+  ); /* var(--color-heir-solid, rgba(0, 134, 0)) */
+  --color-owner: rgba(
+    0,
+    0,
+    255,
+    0.6
+  ); /* var(--color-owner, rgba(0, 0, 255, 0.6)) */
+  --color-owner-solid: rgb(
+    102,
+    102,
+    255
+  ); /* var(--color-owner-solid, rgb(102, 102, 255)) */
   --color-info: rgb(173, 255, 47); /* var(--color-info, rgb(173, 255, 47)) */
-  --fade-background: rgba(0, 0, 0, 0.93); /* var(--fade-background, rgba(0, 0, 0, 0.93)) */
+  --fade-background: rgba(
+    0,
+    0,
+    0,
+    0.93
+  ); /* var(--fade-background, rgba(0, 0, 0, 0.93)) */
 }
 
 body {
@@ -118,7 +174,6 @@ div {
   padding: var(--s1) var(--s2);
   margin: var(--s1) var(--s1);
 
-
   font-size: var(--s2-5);
   border-radius: var(--s0-7);
   background-color: var(--text-darkeronlight, rgb(149, 149, 167));
@@ -136,18 +191,19 @@ div {
   -webkit-background-clip: padding-box;
   -webkit-text-fill-color: var(--background, white);
   background-image: linear-gradient(
-    	to right,
-	    var(--bitcoin-orange, orange),
-	    var(--bitcoin-orange, orange) 50%,
-	    var(--bitcoin-blue, rgb(17, 17, 51)) 50%);
-	    background-size: 205% 100%;
-	    background-position: 100%;
+    to right,
+    var(--bitcoin-orange, orange),
+    var(--bitcoin-orange, orange) 50%,
+    var(--bitcoin-blue, rgb(17, 17, 51)) 50%
+  );
+  background-size: 205% 100%;
+  background-position: 100%;
 }
 
 .button:hover {
   /* animation curve on hover */
   background-color: var(--bitcoin-blue, rgb(17, 17, 51));
-  transition: all 0.4s cubic-bezier(0.000, 0.000, 0.4, 1);
+  transition: all 0.4s cubic-bezier(0, 0, 0.4, 1);
   background-position: 0%;
 }
 
@@ -171,7 +227,7 @@ li {
 
 ul li::before {
   color: var(--bitcoin-orange, orange);
-  content: "\25CF";
+  content: '\25CF';
   position: relative;
   font-size: var(--s2);
   left: calc(-1 * var(--s));
@@ -185,10 +241,16 @@ ul li::before {
 }
 
 ::selection {
-  background-color: var(--color-selection, rgba(0, 0, 233, 0.2)); /* WebKit/Blink Browsers */
+  background-color: var(
+    --color-selection,
+    rgba(0, 0, 233, 0.2)
+  ); /* WebKit/Blink Browsers */
 }
 ::-moz-selection {
-  background-color: var(--color-selection, rgba(0, 0, 233, 0.2)); /* WebKit/Blink Browsers */
+  background-color: var(
+    --color-selection,
+    rgba(0, 0, 233, 0.2)
+  ); /* WebKit/Blink Browsers */
 }
 
 input {
@@ -221,7 +283,8 @@ textarea {
   vertical-align: middle;
 
   /* firefox */
-  scrollbar-color: var(--darker2, rgba(0, 0, 0, 0.2)) var(--transparent, rgba(255, 255, 255, 0));
+  scrollbar-color: var(--darker2, rgba(0, 0, 0, 0.2))
+    var(--transparent, rgba(255, 255, 255, 0));
   scrollbar-width: thin;
 }
 
@@ -248,4 +311,11 @@ textarea::-webkit-scrollbar-thumb {
 }
 textarea:focus {
   outline: none;
+}
+
+@media screen and (min-aspect-ratio: 14/10) {
+  :root,
+  html {
+    --s: calc(0.56 * (0.4vh + 0.6vw));
+  }
 }
