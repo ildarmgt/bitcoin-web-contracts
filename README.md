@@ -1,6 +1,7 @@
-# Bitcoin Smart Contracts in Browser
 
-## Inheritance Contract Dapp:
+# Inheritance Contract dApp
+
+[Current github pages demo.](https://ildarmgt.github.io/bitcoin-web-contracts/#/inheritance)
 
 ![screenshot](https://i.imgur.com/5vhKYnA.png)
 
@@ -9,8 +10,6 @@
 ![screenshot](https://i.imgur.com/4VRIzyf.png)
 
 Client side Vue based front end showing the power of Bitcoin smart contracts as various decentralized applications (dApps)
-
-[Current github pages demo.](https://ildarmgt.github.io/bitcoin-web-contracts/#/inheritance)
 
 The latest compiled release used can be found in `./docs/` folder
 
@@ -99,4 +98,4 @@ The approach used requires the least amount of work for both parties while havin
 
 BTC: 1HYhi1D8VCv4dRZhbAy1ghKGRv3UU34pb6
 
-BTC LN: https://tippin.me/@cryptodev7285
+BTC LN: http://tippin.me/@dev_bns
